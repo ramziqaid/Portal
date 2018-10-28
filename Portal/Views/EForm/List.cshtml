@@ -1,0 +1,9 @@
+﻿@model RequestListViewModel
+
+<div class="row marginTop">
+    @foreach (var item in Model.Requests)
+    {
+        @Html.Partial("RequestLink", item)
+        
+    }
+</div>
