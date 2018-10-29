@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Data.Model
 {
-    [Table("ESS-Documents")]
+    [Table("ESS_Documents")]
     public class Document
     {
         public int ID { get; set; }

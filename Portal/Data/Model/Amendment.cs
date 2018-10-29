@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Portal.Data.Model
 {
 
-    [Table("ESS_HR_Amendment")]
+    [Table("ESS_Amendment")]
     public class Amendment
     {
         public int ID { get; set; }

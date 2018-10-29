@@ -10,11 +10,11 @@ using Portal.Data.Model;
 
 namespace Portal.Controllers
 {
-    public class AmendmentsController : Controller
+    public class AmendmentController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AmendmentsController(ApplicationDbContext context)
+        public AmendmentController(ApplicationDbContext context)
         {
             _context = context;
         }
