@@ -25,9 +25,9 @@ namespace Portal.Data.Model
         public string Type { get; set; }
         public string FilePath { get; set; }
 
-        public virtual AmendmentReason AmendmentReason { get; set; }
         public int AmendmentReasonId { get; set; }
-
+        public virtual AmendmentReason AmendmentReason { get; set; }
+       
         public int DocumentID { get; set; }
         public virtual Document ESS_Documents { get; set; }
 

@@ -20,7 +20,7 @@ namespace Portal.Data.Model
         public Nullable<long> DelegateFromID { get; set; }
         public Nullable<long> DelegateToID { get; set; }
 
-        public virtual ICollection<Amendment> ESS_HR_Amendment { get; set; }
+        public virtual ICollection<Amendment> Amendments { get; set; }
 
     }
 }

@@ -25,5 +25,7 @@ namespace Portal.Data
         }
 
         public DbSet<Request> ESS_Requests { get; set; }
+
+        public DbSet<Portal.Data.Model.Amendment> Amendment { get; set; }
     }
 }

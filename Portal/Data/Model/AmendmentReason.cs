@@ -19,6 +19,6 @@ namespace Portal.Data.Model
         public string ModifiedDate { get; set; }
 
         
-        public virtual ICollection<Amendment> ESS_HR_Amendment { get; set; }
+        public virtual ICollection<Amendment> Amendments { get; set; }
     }
 }
