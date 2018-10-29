@@ -18,7 +18,6 @@ namespace PortalAspCore.Controllers
             _requestRepository = requestRepository;
         }
 
-
         public IActionResult List(int? TypeID)
         {
             IEnumerable<Request> requests;
