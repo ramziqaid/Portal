@@ -1,0 +1,114 @@
+﻿@model Portal.Data.Model.Amendment
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Amendment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonthYear)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonthDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonthDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeIn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeIn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOut)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeOut)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FilePath)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AmendmentReason)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AmendmentReason.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ESS_Documents)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ESS_Documents.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ESS_Requests)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ESS_Requests.id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

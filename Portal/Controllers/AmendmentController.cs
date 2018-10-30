@@ -15,9 +15,9 @@ namespace Portal.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public AmendmentController(IAmendmentRepository amendmentRepository)
+        public AmendmentController(IAmendmentRepository amendmentRepository, ApplicationDbContext context)
         {
-           // _context = context;
+             _context = context;
         }
 
         // GET: Amendments
@@ -51,9 +51,9 @@ namespace Portal.Controllers
         // GET: Amendments/Create
         public IActionResult Create()
         {
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID");
-            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
-            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
+            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonAr");
+            //ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
+            //ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
             return View();
         }
 
