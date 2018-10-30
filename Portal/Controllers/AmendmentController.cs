@@ -15,9 +15,9 @@ namespace Portal.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public AmendmentController(IAmendmentRepository amendmentRepository,ido)
+        public AmendmentController(IAmendmentRepository amendmentRepository)
         {
-            _context = context;
+           // _context = context;
         }
 
         // GET: Amendments

@@ -47,6 +47,7 @@ namespace Portal
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IAmendmentRepository, AmendmentRepository>();
 
             services.AddMvc();
             services.AddMemoryCache();

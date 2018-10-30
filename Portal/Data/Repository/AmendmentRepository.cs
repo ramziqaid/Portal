@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Data.Repository
 {
-    public class AmendmentRepository : Repository<Request>, IRequestRepository
+    public class AmendmentRepository : Repository<Amendment>, IAmendmentRepository
     {
         public AmendmentRepository(ApplicationDbContext context) : base(context)
         {
