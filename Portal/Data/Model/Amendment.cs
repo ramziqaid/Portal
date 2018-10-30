@@ -11,6 +11,8 @@ namespace Portal.Data.Model
     public class Amendment
     {
         public int ID { get; set; }
+        public int DocumentID { get; set; }
+        public int RequestID { get; set; }
         public Nullable<int> MonthYear { get; set; }
         public Nullable<int> MonthDate { get; set; }
         public Nullable<int> MonthDay { get; set; }
@@ -28,10 +30,10 @@ namespace Portal.Data.Model
         public int AmendmentReasonId { get; set; }
         public virtual AmendmentReason AmendmentReason { get; set; }
        
-        public int DocumentID { get; set; }
+      
         public virtual Document ESS_Documents { get; set; }
 
-        public int RequestID { get; set; }
+       
         public virtual Request ESS_Requests { get; set; }
 
     }
