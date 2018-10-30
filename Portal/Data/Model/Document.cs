@@ -10,7 +10,7 @@ namespace Portal.Data.Model
     public class Document
     {
         public int ID { get; set; }
-        public long ShabId { get; set; }
+        public long EmployeeID { get; set; }
         public Nullable<int> RequestTypeID { get; set; }
         public Nullable<int> StatusID { get; set; }
         public string CreatedBy { get; set; }

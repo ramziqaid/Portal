@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Portal.Data;
 using Portal.Data.Model;
-
+using Portal.Data.Interfaces;
+using Portal.ViewModel;
 namespace Portal.Controllers
 {
     public class AmendmentController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AmendmentController(ApplicationDbContext context)
+        public AmendmentController(IAmendmentRepository amendmentRepository,ido)
         {
             _context = context;
         }
