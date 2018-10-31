@@ -18,4 +18,12 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Order\Controllers\" />
+    <Folder Include="Areas\Order\Models\" />
+    <Folder Include="Data\Interfaces\" />
+    <Folder Include="Data\Model\" />
+    <Folder Include="Data\Repository\" />
+  </ItemGroup>
+
 </Project>

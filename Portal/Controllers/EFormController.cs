@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Portal.Data.Interfaces;
-using Portal.Data.Model;
+using Portal.Areas.Order.Data.Interfaces;
+using Portal.Areas.Order.Data.Model;
 using Portal.ViewModel;
 
 namespace PortalAspCore.Controllers

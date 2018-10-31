@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portal.Data.Model
+namespace Portal.Areas.Order.Data.Model
 {
     [Table("ESS_Documents")]
     public class Document

@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portal.Data.Interfaces;
+using Portal.Areas.Order.Data.Interfaces;
+using Portal.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portal.Data.Repository
+namespace Portal.Areas.Order.Data.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {

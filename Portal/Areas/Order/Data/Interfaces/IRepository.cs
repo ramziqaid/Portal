@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portal.Data.Interfaces
+namespace Portal.Areas.Order.Data.Interfaces
 {
     public interface IRepository<T> where T : class
     {

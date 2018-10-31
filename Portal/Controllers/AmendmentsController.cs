@@ -5,21 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Portal.Areas.Order.Data.Model;
 using Portal.Data;
  
-using Portal.ViewModel;
-using Portal.Areas.Order.Data.Model;
-using Portal.Areas.Order.Data.Interfaces;
 
 namespace Portal.Controllers
 {
-    public class AmendmentController : Controller
+    public class AmendmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AmendmentController(IAmendmentRepository amendmentRepository, ApplicationDbContext context)
+        public AmendmentsController(ApplicationDbContext context)
         {
-             _context = context;
+            _context = context;
         }
 
         // GET: Amendments
@@ -53,9 +51,9 @@ namespace Portal.Controllers
         // GET: Amendments/Create
         public IActionResult Create()
         {
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonAr");
-            //ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
-            //ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
+            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID");
+            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
+            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
             return View();
         }
 
@@ -64,7 +62,7 @@ namespace Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,MonthYear,MonthDate,MonthDay,Description,Time,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,TimeIn,TimeOut,Type,FilePath,AmendmentReasonId,DocumentID,RequestID")] Amendment amendment)
+        public async Task<IActionResult> Create([Bind("ID,DocumentID,RequestID,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,Type,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Amendment amendment)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +100,7 @@ namespace Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,MonthYear,MonthDate,MonthDay,Description,Time,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,TimeIn,TimeOut,Type,FilePath,AmendmentReasonId,DocumentID,RequestID")] Amendment amendment)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,DocumentID,RequestID,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,Type,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Amendment amendment)
         {
             if (id != amendment.ID)
             {

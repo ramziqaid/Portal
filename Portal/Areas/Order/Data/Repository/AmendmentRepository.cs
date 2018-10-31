@@ -1,11 +1,12 @@
-﻿using Portal.Data.Interfaces;
-using Portal.Data.Model;
+﻿using Portal.Areas.Order.Data.Interfaces;
+using Portal.Areas.Order.Data.Model;
+using Portal.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portal.Data.Repository
+namespace Portal.Areas.Order.Data.Repository
 {
     public class AmendmentRepository : Repository<Amendment>, IAmendmentRepository
     {

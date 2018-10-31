@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Portal.Data.Model;
+using Portal.Areas.Order.Data.Model;
 using Portal.Models;
 
 namespace Portal.Data
@@ -26,6 +26,6 @@ namespace Portal.Data
 
         public DbSet<Request> ESS_Requests { get; set; }
 
-        public DbSet<Portal.Data.Model.Amendment> Amendment { get; set; }
+        public DbSet<Amendment> Amendment { get; set; }
     }
 }
