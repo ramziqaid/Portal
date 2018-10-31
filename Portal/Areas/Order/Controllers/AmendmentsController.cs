@@ -5,31 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Portal.Data;
- 
-using Portal.ViewModel;
 using Portal.Areas.Order.Data.Model;
-using Portal.Areas.Order.Data.Interfaces;
+using Portal.Data;
 
-namespace Portal.Controllers
+namespace Portal.Areas.Order.Controllers
 {
-    public class AmendmentController : Controller
+    [Area("Order")]
+    public class AmendmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AmendmentController(IAmendmentRepository amendmentRepository, ApplicationDbContext context)
+        public AmendmentsController(ApplicationDbContext context)
         {
-             _context = context;
+            _context = context;
         }
 
-        // GET: Amendments
+        // GET: Order/Amendments
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.ESS_Documents).Include(a => a.ESS_Requests);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Amendments/Details/5
+        // GET: Order/Amendments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,21 +48,21 @@ namespace Portal.Controllers
             return View(amendment);
         }
 
-        // GET: Amendments/Create
+        // GET: Order/Amendments/Create
         public IActionResult Create()
         {
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonAr");
-            //ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
-            //ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
+            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID");
+            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
+            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
             return View();
         }
 
-        // POST: Amendments/Create
+        // POST: Order/Amendments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,MonthYear,MonthDate,MonthDay,Description,Time,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,TimeIn,TimeOut,Type,FilePath,AmendmentReasonId,DocumentID,RequestID")] Amendment amendment)
+        public async Task<IActionResult> Create([Bind("ID,DocumentID,RequestID,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,Type,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Amendment amendment)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +76,7 @@ namespace Portal.Controllers
             return View(amendment);
         }
 
-        // GET: Amendments/Edit/5
+        // GET: Order/Amendments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,12 +95,12 @@ namespace Portal.Controllers
             return View(amendment);
         }
 
-        // POST: Amendments/Edit/5
+        // POST: Order/Amendments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,MonthYear,MonthDate,MonthDay,Description,Time,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,TimeIn,TimeOut,Type,FilePath,AmendmentReasonId,DocumentID,RequestID")] Amendment amendment)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,DocumentID,RequestID,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,Type,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Amendment amendment)
         {
             if (id != amendment.ID)
             {
@@ -135,7 +133,7 @@ namespace Portal.Controllers
             return View(amendment);
         }
 
-        // GET: Amendments/Delete/5
+        // GET: Order/Amendments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -156,7 +154,7 @@ namespace Portal.Controllers
             return View(amendment);
         }
 
-        // POST: Amendments/Delete/5
+        // POST: Order/Amendments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

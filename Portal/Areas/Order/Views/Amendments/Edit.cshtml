@@ -1,33 +1,48 @@
-﻿@model Portal.Data.Model.Amendment
+﻿@model Portal.Areas.Order.Data.Model.Amendment
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 <h4>Amendment</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="DocumentID" class="control-label"></label>
+                <select asp-for="DocumentID" class="form-control" asp-items="ViewBag.DocumentID"></select>
+                <span asp-validation-for="DocumentID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestID" class="control-label"></label>
+                <select asp-for="RequestID" class="form-control" asp-items="ViewBag.RequestID"></select>
+                <span asp-validation-for="RequestID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmendmentReasonId" class="control-label"></label>
+                <select asp-for="AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
+                <span asp-validation-for="AmendmentReasonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="MonthYear" class="control-label"></label>
                 <input asp-for="MonthYear" class="form-control" />
                 <span asp-validation-for="MonthYear" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MonthDate" class="control-label"></label>
-                <input asp-for="MonthDate" class="form-control"
-                       data-val="true" data-val-required="The ReleaseDate field is required." /> 
-                <span asp-validation-for="MonthDate" class="text-danger"  ></span>
+                <input asp-for="MonthDate" class="form-control" />
+                <span asp-validation-for="MonthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MonthDay" class="control-label"></label>
                 <input asp-for="MonthDay" class="form-control" />
                 <span asp-validation-for="MonthDay" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -37,26 +52,6 @@
                 <label asp-for="Time" class="control-label"></label>
                 <input asp-for="Time" class="form-control" />
                 <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TimeIn" class="control-label"></label>
@@ -79,19 +74,27 @@
                 <span asp-validation-for="FilePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AmendmentReasonId" class="control-label"></label>
-                <select asp-for="AmendmentReasonId" class ="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="DocumentID" class="control-label"></label>
-                <select asp-for="DocumentID" class ="form-control" asp-items="ViewBag.DocumentID"></select>
+                <label asp-for="CreatedBy" class="control-label"></label>
+                <input asp-for="CreatedBy" class="form-control" />
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RequestID" class="control-label"></label>
-                <select asp-for="RequestID" class ="form-control" asp-items="ViewBag.RequestID"></select>
-            </div>*@
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="ModifiedBy" class="control-label"></label>
+                <input asp-for="ModifiedBy" class="form-control" />
+                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedDate" class="control-label"></label>
+                <input asp-for="ModifiedDate" class="form-control" />
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

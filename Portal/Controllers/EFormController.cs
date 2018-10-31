@@ -7,7 +7,7 @@ using Portal.Areas.Order.Data.Interfaces;
 using Portal.Areas.Order.Data.Model;
 using Portal.ViewModel;
 
-namespace PortalAspCore.Controllers
+namespace Portal.Controllers
 {
     public class EFormController : Controller
     {

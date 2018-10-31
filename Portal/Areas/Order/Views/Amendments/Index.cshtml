@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Portal.Data.Model.Amendment>
+﻿@model IEnumerable<Portal.Areas.Order.Data.Model.Amendment>
 
 @{
     ViewData["Title"] = "Index";
@@ -28,18 +28,6 @@
                     @Html.DisplayNameFor(model => model.Time)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CreatedBy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModifiedBy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModifiedDate)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.TimeIn)
                 </th>
                 <th>
@@ -50,6 +38,18 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FilePath)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedBy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedDate)
                 </th>
             <th>
                 @Html.DisplayNameFor(model => model.AmendmentReason)
@@ -82,18 +82,6 @@
                 @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.TimeIn)
             </td>
             <td>
@@ -104,6 +92,18 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FilePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AmendmentReason.ID)

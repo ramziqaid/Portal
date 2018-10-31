@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Order\Controllers\" />
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Data\Interfaces\" />
     <Folder Include="Data\Model\" />
