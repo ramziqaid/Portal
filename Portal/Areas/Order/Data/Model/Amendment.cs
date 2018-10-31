@@ -42,13 +42,13 @@ namespace Portal.Areas.Order.Data.Model
         public string ModifiedDate { get; set; }
 
         public virtual AmendmentReason AmendmentReason { get; set; }
-        public virtual Document ESS_Documents { get; set; }
         public virtual Request ESS_Requests { get; set; }
+        public virtual RequestType ESS_RequestType { get; set; }
 
         [NotMapped]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        //[Display(Name = "LastNameTitle ", ResourceType = typeof(Resources.))]
+  
         [Display(Name = "Select Date ")]
+        [DataType(DataType.Date)]
         public DateTime? SelectDate { get; set; }
     }
 }

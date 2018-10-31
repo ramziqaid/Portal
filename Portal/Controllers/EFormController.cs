@@ -11,27 +11,27 @@ namespace Portal.Controllers
 {
     public class EFormController : Controller
     {
-        private readonly IRequestRepository _requestRepository;
+        private readonly IRequestTypeRepository _requestRepository;
 
-        public EFormController(IRequestRepository requestRepository )
+        public EFormController(IRequestTypeRepository requestRepository )
         {
             _requestRepository = requestRepository;
         }
 
         public IActionResult List(int? TypeID)
         {
-            IEnumerable<Request> requests;
+            IEnumerable<RequestType> requestsType;
             if (TypeID == null)
             {
-                requests = _requestRepository.GetAll();
+                requestsType = _requestRepository.GetAll();
             }
             else
             {
-                requests = _requestRepository.Find(p => p.RequestGroupID == TypeID);
+                requestsType = _requestRepository.Find(p => p.RequestGroupID == TypeID);
             }
             RequestListViewModel requestListViewModel = new RequestListViewModel
             {
-                Requests = requests,
+                RequestsType = requestsType,
                 TitleCategory = ""
             };
             return View(requestListViewModel);

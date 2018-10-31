@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 
 namespace Portal.Areas.Order.Data.Model
 {
-    [Table("ESS_Requests")]
+    [Table("ESS_Request")]
     public class Request
     {
-        public int id { get; set; }
-        public string Department { get; set; }
-        public string RequestName { get; set; }
-        public string ControllerName { get; set; }
-        public Nullable<int> RequestGroupID { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public string icons { get; set; }
+        public int ID { get; set; }
+        public long EmployeeID { get; set; }
+        public Nullable<int> RequestTypeID { get; set; }
+        public Nullable<int> StatusID { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; } 
+        public Nullable<bool> IsDelegate { get; set; }
+        public Nullable<bool> IsDelegateApprove { get; set; }
+        public Nullable<long> DelegateFromID { get; set; }
+        public Nullable<long> DelegateToID { get; set; }
+
+        public virtual ICollection<Amendment> Amendments { get; set; }
 
     }
 }

@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_Layout";
 }
 
 <h2>Index</h2>
@@ -13,6 +12,9 @@
 <table class="table">
     <thead>
         <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DocumentID)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.MonthYear)
                 </th>
@@ -56,9 +58,6 @@
                 @Html.DisplayNameFor(model => model.AmendmentReason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ESS_Documents)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ESS_Requests)
             </th>
             <th></th>
@@ -67,6 +66,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MonthYear)
             </td>
@@ -110,10 +112,7 @@
                 @Html.DisplayFor(modelItem => item.AmendmentReason.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ESS_Documents.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ESS_Requests.id)
+                @Html.DisplayFor(modelItem => item.ESS_Requests.ID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

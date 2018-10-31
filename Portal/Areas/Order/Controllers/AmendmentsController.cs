@@ -23,7 +23,7 @@ namespace Portal.Areas.Order.Controllers
         // GET: Order/Amendments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.ESS_Documents).Include(a => a.ESS_Requests);
+            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.ESS_Requests);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,7 +37,6 @@ namespace Portal.Areas.Order.Controllers
 
             var amendment = await _context.Amendment
                 .Include(a => a.AmendmentReason)
-                .Include(a => a.ESS_Documents)
                 .Include(a => a.ESS_Requests)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)
@@ -52,8 +51,7 @@ namespace Portal.Areas.Order.Controllers
         public IActionResult Create()
         {
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID");
-            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID");
-            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id");
+            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID");
             return View();
         }
 
@@ -71,8 +69,7 @@ namespace Portal.Areas.Order.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID", amendment.DocumentID);
-            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id", amendment.RequestID);
+            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID", amendment.RequestID);
             return View(amendment);
         }
 
@@ -90,8 +87,7 @@ namespace Portal.Areas.Order.Controllers
                 return NotFound();
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID", amendment.DocumentID);
-            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id", amendment.RequestID);
+            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID", amendment.RequestID);
             return View(amendment);
         }
 
@@ -128,8 +124,7 @@ namespace Portal.Areas.Order.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-            ViewData["DocumentID"] = new SelectList(_context.Set<Document>(), "ID", "ID", amendment.DocumentID);
-            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "id", "id", amendment.RequestID);
+            ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID", amendment.RequestID);
             return View(amendment);
         }
 
@@ -143,7 +138,6 @@ namespace Portal.Areas.Order.Controllers
 
             var amendment = await _context.Amendment
                 .Include(a => a.AmendmentReason)
-                .Include(a => a.ESS_Documents)
                 .Include(a => a.ESS_Requests)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)

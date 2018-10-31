@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Portal.Areas.Order.Data.Interfaces
 {
-  public  interface IRequestRepository: IRepository<Request>
+  public  interface IRequestTypeRepository: IRepository<RequestType>
     {
         
     }

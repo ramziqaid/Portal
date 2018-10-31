@@ -9,7 +9,7 @@ namespace Portal.ViewModel
 {
     public class RequestListViewModel
     {
-        public IEnumerable<Request> Requests { get; set; }
+        public IEnumerable<RequestType> RequestsType { get; set; }
         public string TitleCategory { get; set; }
     }
 }
