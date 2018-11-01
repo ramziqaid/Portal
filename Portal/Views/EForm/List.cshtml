@@ -1,9 +1,9 @@
 ﻿@model Portal.ViewModel.RequestListViewModel
 
 <div class="row marginTop">
-    @foreach (var item in Model.Requests)
+    @foreach (var item in Model.RequestsType)
     {
-        @Html.Partial("RequestLink", item)
+        @Html.Partial("RequestTypeLink", item)
         
     }
 </div>

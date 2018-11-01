@@ -12,12 +12,20 @@ namespace Portal.Areas.Order.Data.Model
     [Table("ESS_Amendment")]
     public class Amendment
     {
+        [Column(Order = 0)]
         public int ID { get; set; }
-        public int DocumentID { get; set; }
-        public int RequestID { get; set; }
 
         [Required]
+        [Display(Name = "Type ")]
+        [Column(Order = 1)]
+        public string Type { get; set; }
+
+        [Required]
+        [Column(Order = 1)]
         public int AmendmentReasonId { get; set; }
+        public virtual AmendmentReason AmendmentReason { get; set; }
+
+        
         public Nullable<int> MonthYear { get; set; }
         public Nullable<int> MonthDate { get; set; }
         public Nullable<int> MonthDay { get; set; }
@@ -29,9 +37,7 @@ namespace Portal.Areas.Order.Data.Model
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
 
-        [Required]
-        [Display(Name = "Reason ")]
-        public string Type { get; set; }
+   
 
         [Display(Name = "Attachment ")]
         public string FilePath { get; set; } 
@@ -41,9 +47,12 @@ namespace Portal.Areas.Order.Data.Model
         public string ModifiedBy { get; set; }
         public string ModifiedDate { get; set; }
 
-        public virtual AmendmentReason AmendmentReason { get; set; }
-        public virtual Request ESS_Requests { get; set; }
-        public virtual RequestType ESS_RequestType { get; set; }
+       
+       
+        public int RequestID { get; set; }
+        public virtual Request Request { get; set; }
+        public int RequestTypeID { get; set; }
+        public virtual RequestType RequestType { get; set; }
 
         [NotMapped]
   

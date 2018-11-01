@@ -24,8 +24,11 @@ namespace Portal.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<Request> ESS_Requests { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         public DbSet<Amendment> Amendment { get; set; }
+
+        public DbSet<RequestType> RequestType { get; set; }
+
     }
 }
