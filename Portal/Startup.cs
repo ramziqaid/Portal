@@ -14,6 +14,7 @@ using Portal.Services;
 
 using Portal.Areas.Order.Data.Repository;
 using Portal.Areas.Order.Data.Interfaces;
+using PortalAspCore.Data;
 
 namespace Portal
 {
@@ -86,6 +87,7 @@ namespace Portal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            DbInitializer.Seed(app);
         }
     }
 }
