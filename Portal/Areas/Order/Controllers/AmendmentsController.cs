@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Portal.Areas.Order.Data.Interfaces;
 using Portal.Areas.Order.Data.Model;
 using Portal.Data;
 
@@ -14,16 +16,20 @@ namespace Portal.Areas.Order.Controllers
     public class AmendmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IRequestRepository _requestRepository;
+        private readonly IAmendmentRepository _amendmentRepository;
 
-        public AmendmentsController(ApplicationDbContext context)
+        public AmendmentsController(ApplicationDbContext context, IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
         {
             _context = context;
+            _requestRepository = requestRepository;
+            _amendmentRepository = amendmentRepository;
         }
 
         // GET: Order/Amendments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.RequestType);
+            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.Request).Include(a => a.RequestType);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,6 +43,7 @@ namespace Portal.Areas.Order.Controllers
 
             var amendment = await _context.Amendment
                 .Include(a => a.AmendmentReason)
+                .Include(a => a.Request)
                 .Include(a => a.RequestType)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)
@@ -50,8 +57,9 @@ namespace Portal.Areas.Order.Controllers
         // GET: Order/Amendments/Create
         public IActionResult Create()
         {
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID");
-           // ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID");
+            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonEn");
+            //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID");
+            //ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id");
             return View();
         }
 
@@ -60,16 +68,27 @@ namespace Portal.Areas.Order.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,DocumentID,RequestID,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,Type,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Amendment amendment)
+        public async Task<IActionResult> Create(Amendment amendment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(amendment);
-                await _context.SaveChangesAsync();
+                Request request = new Request();
+                request.RequestTypeID = 5;
+                request.StatusID = 1;
+                request.EmployeeID = 1;
+                //request.Amendments = amendment;
+                _requestRepository.Create(request);
+                amendment.RequestID = request.ID;
+                _amendmentRepository.Create(amendment);
+
+               
+                //_context.Add(amendment);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-           // ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID", amendment.RequestID);
+            ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
+            ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
             return View(amendment);
         }
 
@@ -87,7 +106,8 @@ namespace Portal.Areas.Order.Controllers
                 return NotFound();
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-           // ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID", amendment.RequestID);
+            ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
+            ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
             return View(amendment);
         }
 
@@ -96,7 +116,7 @@ namespace Portal.Areas.Order.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,DocumentID,RequestID,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,Type,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Amendment amendment)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Type,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,RequestID,RequestTypeID")] Amendment amendment)
         {
             if (id != amendment.ID)
             {
@@ -124,7 +144,8 @@ namespace Portal.Areas.Order.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-           // ViewData["RequestID"] = new SelectList(_context.ESS_Requests, "ID", "ID", amendment.RequestID);
+            ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
+            ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
             return View(amendment);
         }
 
@@ -138,6 +159,7 @@ namespace Portal.Areas.Order.Controllers
 
             var amendment = await _context.Amendment
                 .Include(a => a.AmendmentReason)
+                .Include(a => a.Request)
                 .Include(a => a.RequestType)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)

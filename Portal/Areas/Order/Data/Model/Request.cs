@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +12,17 @@ namespace Portal.Areas.Order.Data.Model
     {
         [Column(Order = 0)]
         public int ID { get; set; }
+
         [Column(Order =1)]
+        [Required]
         public long EmployeeID { get; set; }
+
         [Column(Order = 2)]
-        public Nullable<int> RequestTypeID { get; set; }
+        [Required]
+        public  int RequestTypeID { get; set; }
+
         [Column(Order = 3)]
+        [Required]
         public Nullable<int> StatusID { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; } 

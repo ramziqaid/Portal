@@ -11,10 +11,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DocumentID)
+            @Html.DisplayNameFor(model => model.Type)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DocumentID)
+            @Html.DisplayFor(model => model.Type)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.MonthYear)
@@ -59,12 +59,6 @@
             @Html.DisplayFor(model => model.TimeOut)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.FilePath)
         </dt>
         <dd>
@@ -101,10 +95,16 @@
             @Html.DisplayFor(model => model.AmendmentReason.ID)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ESS_Requests)
+            @Html.DisplayNameFor(model => model.Request)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ESS_Requests.ID)
+            @Html.DisplayFor(model => model.Request.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestType.id)
         </dd>
     </dl>
 </div>

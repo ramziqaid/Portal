@@ -219,9 +219,10 @@ namespace Portal.Migrations
 
                     b.Property<bool?>("IsDelegateApprove");
 
-                    b.Property<int?>("RequestTypeID");
+                    b.Property<int>("RequestTypeID");
 
-                    b.Property<int?>("StatusID");
+                    b.Property<int?>("StatusID")
+                        .IsRequired();
 
                     b.HasKey("ID");
 

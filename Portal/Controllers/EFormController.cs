@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Portal.Areas.Order.Data.Interfaces;
@@ -21,13 +22,32 @@ namespace Portal.Controllers
         public IActionResult List(int? TypeID)
         {
             IEnumerable<RequestType> requestsType;
-            if (TypeID == null)
+
+            //if (TypeID == null)
+            //{
+            //    requestsType = _requestRepository.GetAll();
+            //}
+            //else
+            //{
+            //    requestsType = _requestRepository.Find(p => p.RequestGroupID == TypeID);
+            //}
+
+
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EForm/" + TypeID.ToString()).Result;
+
+            if (result.IsSuccessStatusCode)
             {
-                requestsType = _requestRepository.GetAll();
+                var readTask = result.Content.ReadAsAsync<IEnumerable<RequestType>>();
+                readTask.Wait();
+
+                requestsType =  readTask.Result;
             }
-            else
+            else //web api sent error response 
             {
-                requestsType = _requestRepository.Find(p => p.RequestGroupID == TypeID);
+
+                requestsType = Enumerable.Empty<RequestType>();
+
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
             }
             RequestListViewModel requestListViewModel = new RequestListViewModel
             {

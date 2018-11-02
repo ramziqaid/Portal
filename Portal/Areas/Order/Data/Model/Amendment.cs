@@ -33,7 +33,7 @@ namespace Portal.Areas.Order.Data.Model
         [Display(Name = "Justification ")]
         [MaxLength(500)]
         public string Description { get; set; }
-        public string Time { get; set; }
+        
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
 

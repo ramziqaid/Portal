@@ -13,7 +13,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.DocumentID)
+                    @Html.DisplayNameFor(model => model.Type)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.MonthYear)
@@ -37,9 +37,6 @@
                     @Html.DisplayNameFor(model => model.TimeOut)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.FilePath)
                 </th>
                 <th>
@@ -58,7 +55,10 @@
                 @Html.DisplayNameFor(model => model.AmendmentReason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ESS_Requests)
+                @Html.DisplayNameFor(model => model.Request)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestType)
             </th>
             <th></th>
         </tr>
@@ -67,7 +67,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DocumentID)
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MonthYear)
@@ -91,9 +91,6 @@
                 @Html.DisplayFor(modelItem => item.TimeOut)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.FilePath)
             </td>
             <td>
@@ -112,7 +109,10 @@
                 @Html.DisplayFor(modelItem => item.AmendmentReason.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ESS_Requests.ID)
+                @Html.DisplayFor(modelItem => item.Request.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestType.id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

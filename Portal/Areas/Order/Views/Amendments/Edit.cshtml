@@ -14,14 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="DocumentID" class="control-label"></label>
-                <input asp-for="DocumentID" class="form-control" />
-                <span asp-validation-for="DocumentID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestID" class="control-label"></label>
-                <select asp-for="RequestID" class="form-control" asp-items="ViewBag.RequestID"></select>
-                <span asp-validation-for="RequestID" class="text-danger"></span>
+                <label asp-for="Type" class="control-label"></label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AmendmentReasonId" class="control-label"></label>
@@ -64,11 +59,6 @@
                 <span asp-validation-for="TimeOut" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="FilePath" class="control-label"></label>
                 <input asp-for="FilePath" class="form-control" />
                 <span asp-validation-for="FilePath" class="text-danger"></span>
@@ -92,6 +82,16 @@
                 <label asp-for="ModifiedDate" class="control-label"></label>
                 <input asp-for="ModifiedDate" class="form-control" />
                 <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestID" class="control-label"></label>
+                <select asp-for="RequestID" class="form-control" asp-items="ViewBag.RequestID"></select>
+                <span asp-validation-for="RequestID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequestTypeID" class="control-label"></label>
+                <select asp-for="RequestTypeID" class="form-control" asp-items="ViewBag.RequestTypeID"></select>
+                <span asp-validation-for="RequestTypeID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

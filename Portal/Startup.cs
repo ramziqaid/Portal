@@ -50,6 +50,7 @@ namespace Portal
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
             services.AddTransient<IAmendmentRepository, AmendmentRepository>();
+            services.AddTransient<IRequestRepository, RequestRepository>();
 
             services.AddMvc();
             services.AddMemoryCache();
