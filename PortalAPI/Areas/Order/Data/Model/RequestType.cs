@@ -19,5 +19,6 @@ namespace PortalAPI.Areas.Order.Data.Model
         public Nullable<bool> IsActive { get; set; }
         public string icons { get; set; }
 
+        public virtual List<Request> Requests { get; set; }
     }
 }

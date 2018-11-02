@@ -31,7 +31,7 @@ namespace Portal.Areas.Order.Controllers
         // GET: Order/Amendments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.Request).Include(a => a.RequestType);
+            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.Request) ;
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -46,8 +46,7 @@ namespace Portal.Areas.Order.Controllers
             var amendment = await _context.Amendment
                 .Include(a => a.AmendmentReason)
                 .Include(a => a.Request)
-                .Include(a => a.RequestType)
-                .SingleOrDefaultAsync(m => m.ID == id);
+                              .SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)
             {
                 return NotFound();
@@ -115,7 +114,7 @@ namespace Portal.Areas.Order.Controllers
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
             ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-            ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
+            
             return View(amendment);
         }
 
@@ -153,7 +152,7 @@ namespace Portal.Areas.Order.Controllers
             }
             ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
             ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-            ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
+             
             return View(amendment);
         }
 
@@ -168,7 +167,7 @@ namespace Portal.Areas.Order.Controllers
             var amendment = await _context.Amendment
                 .Include(a => a.AmendmentReason)
                 .Include(a => a.Request)
-                .Include(a => a.RequestType)
+                 
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)
             {

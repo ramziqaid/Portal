@@ -23,8 +23,7 @@ namespace Portal.Areas.Order.Data.Model
         [Required]
         [Column(Order = 1)]
         public int AmendmentReasonId { get; set; }
-        public virtual AmendmentReason AmendmentReason { get; set; }
-
+        public virtual AmendmentReason AmendmentReason { get; set; } 
         
         public Nullable<int> MonthYear { get; set; }
         public Nullable<int> MonthDate { get; set; }
@@ -35,9 +34,7 @@ namespace Portal.Areas.Order.Data.Model
         public string Description { get; set; }
         
         public string TimeIn { get; set; }
-        public string TimeOut { get; set; }
-
-   
+        public string TimeOut { get; set; } 
 
         [Display(Name = "Attachment ")]
         public string FilePath { get; set; } 
@@ -51,8 +48,8 @@ namespace Portal.Areas.Order.Data.Model
        
         public int RequestID { get; set; }
         public virtual Request Request { get; set; }
-        public int RequestTypeID { get; set; }
-        public virtual RequestType RequestType { get; set; }
+
+    
 
         [NotMapped]
   

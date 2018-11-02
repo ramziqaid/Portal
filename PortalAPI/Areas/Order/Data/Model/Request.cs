@@ -19,7 +19,8 @@ namespace PortalAPI.Areas.Order.Data.Model
 
         [Column(Order = 2)]
         [Required]
-        public  int RequestTypeID { get; set; }
+        public int RequestTypeID { get; set; }
+        public virtual RequestType RequestType { get; set; }
 
         [Column(Order = 3)]
         [Required]

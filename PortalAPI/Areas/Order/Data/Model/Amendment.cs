@@ -35,9 +35,7 @@ namespace PortalAPI.Areas.Order.Data.Model
         public string Description { get; set; }
         
         public string TimeIn { get; set; }
-        public string TimeOut { get; set; }
-
-   
+        public string TimeOut { get; set; }  
 
         [Display(Name = "Attachment ")]
         public string FilePath { get; set; } 
@@ -45,14 +43,11 @@ namespace PortalAPI.Areas.Order.Data.Model
         public string CreatedBy { get; set; } 
         public string CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public string ModifiedDate { get; set; }
-
-       
+        public string ModifiedDate { get; set; } 
        
         public int RequestID { get; set; }
         public virtual Request Request { get; set; }
-        public int RequestTypeID { get; set; }
-        public virtual RequestType RequestType { get; set; }
+        
 
         [NotMapped]
   

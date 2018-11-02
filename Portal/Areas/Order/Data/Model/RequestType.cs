@@ -17,7 +17,8 @@ namespace Portal.Areas.Order.Data.Model
         public string ControllerName { get; set; }
         public Nullable<int> RequestGroupID { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public string icons { get; set; }
+        public string icons { get; set; } 
 
+        public virtual List<Request> Requests { get; set; }
     }
 }
