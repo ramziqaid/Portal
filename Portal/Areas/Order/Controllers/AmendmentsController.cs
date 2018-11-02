@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -76,19 +78,25 @@ namespace Portal.Areas.Order.Controllers
                 request.RequestTypeID = 5;
                 request.StatusID = 1;
                 request.EmployeeID = 1;
-                //request.Amendments = amendment;
-                _requestRepository.Create(request);
-                amendment.RequestID = request.ID;
-                _amendmentRepository.Create(amendment);
+                request.Amendments = new List<Amendment>();
+                request.Amendments.Add(new Amendment());
+                request.Amendments.Add(amendment);
 
-               
-                //_context.Add(amendment);
-                //await _context.SaveChangesAsync();
+                var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", request);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    TempData["Message"] = "تم الحفظ  !";
+                    return RedirectToAction("Index");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-            ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-            ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
+            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonEn", amendment.AmendmentReasonId);
+            //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
+            //ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
             return View(amendment);
         }
 
