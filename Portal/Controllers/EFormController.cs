@@ -23,16 +23,7 @@ namespace Portal.Controllers
         {
             IEnumerable<RequestType> requestsType;
 
-            //if (TypeID == null)
-            //{
-            //    requestsType = _requestRepository.GetAll();
-            //}
-            //else
-            //{
-            //    requestsType = _requestRepository.Find(p => p.RequestGroupID == TypeID);
-            //}
-
-
+            
             HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EForm/" + TypeID.ToString()).Result;
 
             if (result.IsSuccessStatusCode)

@@ -56,6 +56,7 @@ namespace PortalAspCore.Data
                     ApplicationUser administrator = new ApplicationUser();
                     administrator.Email = email;
                     administrator.UserName = "Administrator";
+                    administrator.EmployeeID = 0;
 
                     Task<IdentityResult> newUser = userManager.CreateAsync(administrator, "Ab-123456");
                     newUser.Wait();

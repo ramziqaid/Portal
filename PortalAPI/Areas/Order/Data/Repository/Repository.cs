@@ -26,13 +26,18 @@ namespace PortalAPI.Areas.Order.Data.Repository
         public void Create(T entity)
         {
             _context.Add(entity);
-            Save();
+           // Save();
+        }
+
+        public void AddRange(IEnumerable<T> entities)
+        {
+            _context.Set<T>().AddRange(entities);
         }
 
         public void Delete(T entity)
         {
             _context.Remove(entity);
-            Save();
+           // Save();
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
@@ -53,7 +58,7 @@ namespace PortalAPI.Areas.Order.Data.Repository
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            Save();
+            //Save();
         }
     }
 }

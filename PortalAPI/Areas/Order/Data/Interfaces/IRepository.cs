@@ -14,6 +14,7 @@ namespace PortalAPI.Areas.Order.Data.Interfaces
         T GetById(int id);
 
         void Create(T entity);
+        void AddRange(IEnumerable<T> entities);
 
         void Update(T entity);
 

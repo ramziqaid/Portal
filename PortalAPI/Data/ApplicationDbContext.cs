@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PortalAPI.Areas.Order.Data.Model;
+using PortalAPI.Data.Model;
 using PortalAPI.Models;
 
 namespace PortalAPI.Data
@@ -31,6 +32,8 @@ namespace PortalAPI.Data
         public DbSet<RequestType> RequestType { get; set; }
 
         public DbSet<PortalAPI.Areas.Order.Data.Model.AmendmentReason> AmendmentReason { get; set; }
+
+        public DbSet<EmployeeInfoView> EmployeeInfoView { get; set; }
 
     }
 }

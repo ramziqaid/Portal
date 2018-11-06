@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace PortalAPI.Areas.Order.Data.Interfaces
 {
-  public  interface IAmendmentRepository : IRepository<Amendment>
+    public interface IAmendmentRepository : IRepository<Amendment>
     {
-        
+        IEnumerable<Amendment> GetWithReasons(Func<Amendment, bool> predicate);
     }
+
 }

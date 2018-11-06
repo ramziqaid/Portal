@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PortalAPI.Areas.Order.Data;
 using PortalAPI.Areas.Order.Data.Interfaces;
 using PortalAPI.Areas.Order.Data.Model;
 using PortalAPI.Data;
@@ -15,22 +16,24 @@ namespace PortalAPI.Areas.Order.Controllers
     [Route("api/Amendments")]
     public class AmendmentsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UnitOfWork _unitOfWork;
         private readonly IRequestRepository _requestRepository;
         private readonly IAmendmentRepository _amendmentRepository;
+        private readonly ApplicationDbContext _context;
 
-        public AmendmentsController(ApplicationDbContext context, IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
+        public AmendmentsController(UnitOfWork unitOfWork,  IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
         {
-            _context = context;
+             _unitOfWork = unitOfWork;
             _requestRepository = requestRepository;
             _amendmentRepository = amendmentRepository;
+            
         }
 
         // GET: api/Amendments
         [HttpGet]
         public IEnumerable<Amendment> GetAmendment()
         {
-            return _context.Amendment;
+            return _amendmentRepository.GetAll();
         }
 
         // GET: api/Amendments/5
@@ -41,15 +44,12 @@ namespace PortalAPI.Areas.Order.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
-
+            var amendment =  _amendmentRepository.GetWithReasons(a =>a.ID==id); 
             if (amendment == null)
             {
                 return NotFound();
-            }
-
-            return Ok(amendment);
+            } 
+            return Ok(amendment); 
         }
 
         // PUT: api/Amendments/5
@@ -87,19 +87,24 @@ namespace PortalAPI.Areas.Order.Controllers
             return NoContent();
         }
 
-        // POST: api/Amendments
-        [HttpPost]
+        //POST: api/Amendments
+       [HttpPost]
         public async Task<IActionResult> PostAmendment([FromBody] Request request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            _unitOfWork.request.Create(request);
+
             _context.Requests.Add(request);
-            foreach(Amendment amendment in request.Amendments)
+            foreach (Amendment amendment in request.Amendments)
             {
-                amendment.RequestID = request.ID; 
+                amendment.RequestID = request.ID;
             }
+            _unitOfWork.amendment.AddRange(request.Amendments);
+            _unitOfWork.Complete();
+
             _context.Amendment.AddRange(request.Amendments);
             await _context.SaveChangesAsync();
 
@@ -132,4 +137,4 @@ namespace PortalAPI.Areas.Order.Controllers
             return _context.Amendment.Any(e => e.ID == id);
         }
     }
-}
+    }

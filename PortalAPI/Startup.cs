@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PortalAPI.Areas.Order.Data;
 using PortalAPI.Areas.Order.Data.Interfaces;
 using PortalAPI.Areas.Order.Data.Repository;
 using PortalAPI.Data;
@@ -29,6 +30,7 @@ namespace PortalAPI
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+             
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -39,6 +41,8 @@ namespace PortalAPI
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
             services.AddTransient<IAmendmentRepository, AmendmentRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
 
             services.AddMvc();
             services.AddMemoryCache();

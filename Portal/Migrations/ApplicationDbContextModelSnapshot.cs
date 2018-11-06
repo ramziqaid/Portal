@@ -156,10 +156,6 @@ namespace Portal.Migrations
 
                     b.Property<int>("RequestID");
 
-                    b.Property<int>("RequestTypeID");
-
-                    b.Property<string>("Time");
-
                     b.Property<string>("TimeIn");
 
                     b.Property<string>("TimeOut");
@@ -172,8 +168,6 @@ namespace Portal.Migrations
                     b.HasIndex("AmendmentReasonId");
 
                     b.HasIndex("RequestID");
-
-                    b.HasIndex("RequestTypeID");
 
                     b.ToTable("ESS_Amendment");
                 });
@@ -226,6 +220,8 @@ namespace Portal.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("RequestTypeID");
+
                     b.ToTable("ESS_Request");
                 });
 
@@ -263,6 +259,8 @@ namespace Portal.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<long>("EmployeeID");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -356,9 +354,12 @@ namespace Portal.Migrations
                         .WithMany("Amendments")
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
+            modelBuilder.Entity("Portal.Areas.Order.Data.Model.Request", b =>
+                {
                     b.HasOne("Portal.Areas.Order.Data.Model.RequestType", "RequestType")
-                        .WithMany()
+                        .WithMany("Requests")
                         .HasForeignKey("RequestTypeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

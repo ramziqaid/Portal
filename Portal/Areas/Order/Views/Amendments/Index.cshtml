@@ -15,20 +15,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Type)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MonthYear)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MonthDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MonthDay)
-                </th>
+                
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Time)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.TimeIn)
@@ -39,26 +28,16 @@
                 <th>
                     @Html.DisplayNameFor(model => model.FilePath)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedBy)
-                </th>
+              
                 <th>
                     @Html.DisplayNameFor(model => model.CreatedDate)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModifiedBy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModifiedDate)
-                </th>
+                
             <th>
                 @Html.DisplayNameFor(model => model.AmendmentReason)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Request)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestType)
             </th>
             <th></th>
         </tr>
@@ -69,20 +48,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthDay)
-            </td>
+             
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeIn)
@@ -93,27 +61,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FilePath)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
+        
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
+                @Html.DisplayFor(modelItem => item.AmendmentReason.AmendReasonEn)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AmendmentReason.ID)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Request.ID)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestType.id)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |

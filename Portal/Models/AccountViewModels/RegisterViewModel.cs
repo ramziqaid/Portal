@@ -17,6 +17,10 @@ namespace Portal.Models.AccountViewModels
         public string Roles { get; set; }
 
         [Required]
+        [Display(Name = "Employee Name")]
+        public long EmployeeID { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

@@ -211,7 +211,15 @@ namespace Portal.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            EmployeeController employeeController = new EmployeeController();
             ViewBag.Roles = new SelectList(db.Roles.Where(a => !a.Name.Contains("Administrator")).ToList(), "Name", "Name");
+            ViewBag.EmployeeID = new SelectList(employeeController.Get().Select(m => new
+            {
+                m.EmployeeID,
+                m.ArabicName,
+                m.EnglishName
+            }).Distinct().ToList(), "EmployeeID", "ArabicName");
+            
             return View();
         }
 
@@ -223,12 +231,21 @@ namespace Portal.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var userExist = _userManager.Users.Where(a => a.EmployeeID == model.EmployeeID);
+                if (userExist.Count() > 0)
+                {
+                    //var resultuserExist = new BadRequestObjectResult(new { message = "400 Bad Request", currentDate = DateTime.Now });
+                    //return   View(resultuserExist);
+                    //TempData["msg"] = "<script>alert('Change succesfully');</script>";
+                    ViewBag.FirstNameError = "Please write first name";
+                    return View();
+                } 
+
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, EmployeeID = model.EmployeeID };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
-
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

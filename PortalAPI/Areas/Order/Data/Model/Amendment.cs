@@ -25,7 +25,6 @@ namespace PortalAPI.Areas.Order.Data.Model
         public int AmendmentReasonId { get; set; }
         public virtual AmendmentReason AmendmentReason { get; set; }
 
-        
         public Nullable<int> MonthYear { get; set; }
         public Nullable<int> MonthDate { get; set; }
         public Nullable<int> MonthDay { get; set; }
@@ -33,24 +32,27 @@ namespace PortalAPI.Areas.Order.Data.Model
         [Display(Name = "Justification ")]
         [MaxLength(500)]
         public string Description { get; set; }
-        
+
         public string TimeIn { get; set; }
-        public string TimeOut { get; set; }  
+        public string TimeOut { get; set; }
 
         [Display(Name = "Attachment ")]
-        public string FilePath { get; set; } 
+        public string FilePath { get; set; }
 
-        public string CreatedBy { get; set; } 
+        public string CreatedBy { get; set; }
         public string CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public string ModifiedDate { get; set; } 
-       
+        public string ModifiedDate { get; set; }
+
+
+
         public int RequestID { get; set; }
         public virtual Request Request { get; set; }
-        
+
+
 
         [NotMapped]
-  
+
         [Display(Name = "Select Date ")]
         [DataType(DataType.Date)]
         public DateTime? SelectDate { get; set; }

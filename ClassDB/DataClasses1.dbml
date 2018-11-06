@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MicrosoftDynamicsAX2" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=MicrosoftDynamicsAX2;Integrated Security=True" SettingsObjectName="ClassDB.Properties.Settings" SettingsPropertyName="MicrosoftDynamicsAX2ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ESS_EmployeeInfoView2" Member="ESS_EmployeeInfoView2s">
+    <Type Name="ESS_EmployeeInfoView2">
+      <Column Name="EmployeeID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="personnelnumber" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="PASSWORD" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="PERSON" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ArabicName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="EnglishName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="ACTIVE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BASICSALARY" Type="System.Decimal" DbType="Decimal(32,16) NOT NULL" CanBeNull="false" />
+      <Column Name="GOSISALARY" Type="System.Decimal" DbType="Decimal(32,16) NOT NULL" CanBeNull="false" />
+      <Column Name="GROSSSALARY" Type="System.Decimal" DbType="Decimal(32,16) NOT NULL" CanBeNull="false" />
+      <Column Name="CONTRACTCODE" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="CONTRACTTYPE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="contractStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="contractEnd" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="JOININGDATE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="NOOFYEARS" Type="System.Decimal" DbType="Decimal(32,16) NOT NULL" CanBeNull="false" />
+      <Column Name="BIRTHDATE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EDUCATION" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="NATIONALITY" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="RELGION" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="SPONSERSHIP" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="STATUS" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GenderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GENDERName" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="ManagerID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="DirectManagerName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Company" Type="System.String" DbType="NVarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="IsManager" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsDepartmentManager" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VacationBalance" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WORKERGROUP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DepartmentID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="DepartmentName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="iqamaDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="iqamaExpiryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IqamaID" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="lastReturnVacationDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="position" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="positionID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PROFILEID" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

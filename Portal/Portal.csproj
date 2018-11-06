@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-Portal-7F8C122D-5CDD-43DE-A1EB-3A4541F0E48E</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20181103010538_inintal10.cs" />
+    <Compile Remove="Migrations\20181103010538_inintal10.Designer.cs" />
+    <Compile Remove="Migrations\20181103011556_inintal11.cs" />
+    <Compile Remove="Migrations\20181103011556_inintal11.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
@@ -22,7 +29,6 @@
   <ItemGroup>
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Data\Interfaces\" />
-    <Folder Include="Data\Model\" />
     <Folder Include="Data\Repository\" />
   </ItemGroup>
 

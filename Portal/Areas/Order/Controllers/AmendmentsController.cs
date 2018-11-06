@@ -31,8 +31,26 @@ namespace Portal.Areas.Order.Controllers
         // GET: Order/Amendments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.Request) ;
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.Request) ;
+            //return View(await applicationDbContext.ToListAsync());
+
+            IEnumerable<Amendment> amendments = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Amendments").Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IEnumerable<Amendment>>();
+                readTask.Wait();
+
+                amendments = readTask.Result;
+            }
+            else //web api sent error response 
+            { 
+                amendments = Enumerable.Empty<Amendment>(); 
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            } 
+            return View(amendments);
+
         }
 
         // GET: Order/Amendments/Details/5
@@ -41,18 +59,18 @@ namespace Portal.Areas.Order.Controllers
             if (id == null)
             {
                 return NotFound();
-            }
+            } 
+            Amendment amendment = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Amendments/" + id.ToString()).Result;
 
-            var amendment = await _context.Amendment
-                .Include(a => a.AmendmentReason)
-                .Include(a => a.Request)
-                              .SingleOrDefaultAsync(m => m.ID == id);
-            if (amendment == null)
+            if (result.IsSuccessStatusCode)
             {
-                return NotFound();
-            }
+                var readTask = result.Content.ReadAsAsync<Amendment>();
+                readTask.Wait();
 
-            return View(amendment);
+                amendment = readTask.Result;
+            }
+            return View( amendment);
         }
 
         // GET: Order/Amendments/Create
@@ -78,7 +96,7 @@ namespace Portal.Areas.Order.Controllers
                 request.StatusID = 1;
                 request.EmployeeID = 1;
                 request.Amendments = new List<Amendment>();
-                request.Amendments.Add(new Amendment());
+               // request.Amendments.Add(new Amendment());
                 request.Amendments.Add(amendment);
 
                 var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", request);

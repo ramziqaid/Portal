@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using PortalAPI.Areas.Order.Data.Interfaces;
 using PortalAPI.Areas.Order.Data.Model;
 using PortalAPI.Data;
@@ -14,6 +15,13 @@ namespace PortalAPI.Areas.Order.Data.Repository
         public AmendmentRepository(ApplicationDbContext context) : base(context)
         {
 
+        }
+
+        public IEnumerable<Amendment> GetWithReasons(Func<Amendment, bool> predicate)
+        {
+            return _context.Amendment
+                   .Include(a => a.AmendmentReason)
+                   .Where(predicate); 
         }
     }
 }
