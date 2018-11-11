@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using EfCoreGenericRepository;
+using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PortalAPI.Areas.Order.Data.Model;
-using PortalAPI.Data;
+ 
 
 namespace PortalAPI.Areas.Order.Controllers
 {
@@ -15,9 +16,9 @@ namespace PortalAPI.Areas.Order.Controllers
     [Route("api/AmendmentReasons")]
     public class AmendmentReasonsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PlutoContext _context;
 
-        public AmendmentReasonsController(ApplicationDbContext context)
+        public AmendmentReasonsController(PlutoContext context)
         {
             _context = context;
         }

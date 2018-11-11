@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using EfCoreGenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace EfCoreGenericRepository.DataAccess
+namespace EfCoreGenericRepository.Repository
 {
     public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -51,6 +52,7 @@ namespace EfCoreGenericRepository.DataAccess
 
             return queryable;
         }
+         
 
         #endregion
 
@@ -65,9 +67,24 @@ namespace EfCoreGenericRepository.DataAccess
 
         public virtual async Task<T> AddAsyn(T t)
         {
-            _context.Set<T>().Add(t);
+            await _context.Set<T>().AddAsync(t);
             // await _context.SaveChangesAsync();
             return t;
+
+        }
+
+        public virtual void AddRange(IEnumerable<T> t)
+        { 
+            _context.Set<T>().AddRange(t);
+            //_context.SaveChanges();
+           // return t;
+        }
+
+        public virtual async void AddRangeAsyn(IEnumerable<T> t)
+        {
+           await _context.Set<T>().AddRangeAsync(t);
+            // await _context.SaveChangesAsync();
+          //  return t;
 
         }
         #endregion

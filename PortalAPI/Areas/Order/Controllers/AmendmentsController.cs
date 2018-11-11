@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EfCoreGenericRepository;
+using EfCoreGenericRepository.Interfaces;
+using EfCoreGenericRepository.Models;
+using EfCoreGenericRepository.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PortalAPI.Areas.Order.Data;
-using PortalAPI.Areas.Order.Data.Interfaces;
-using PortalAPI.Areas.Order.Data.Model;
-using PortalAPI.Data;
+
 
 namespace PortalAPI.Areas.Order.Controllers
 {
@@ -16,17 +17,16 @@ namespace PortalAPI.Areas.Order.Controllers
     [Route("api/Amendments")]
     public class AmendmentsController : Controller
     {
-        private readonly UnitOfWork _unitOfWork;
+
         private readonly IRequestRepository _requestRepository;
         private readonly IAmendmentRepository _amendmentRepository;
-        private readonly ApplicationDbContext _context;
+        private readonly UnitOfWork unitOfWork;
 
-        public AmendmentsController(UnitOfWork unitOfWork,  IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
+        public AmendmentsController(PlutoContext plutoContext, IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
         {
-             _unitOfWork = unitOfWork;
             _requestRepository = requestRepository;
             _amendmentRepository = amendmentRepository;
-            
+            unitOfWork = new UnitOfWork(plutoContext);
         }
 
         // GET: api/Amendments
@@ -44,69 +44,64 @@ namespace PortalAPI.Areas.Order.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var amendment =  _amendmentRepository.GetWithReasons(a =>a.ID==id); 
+            var amendment = _amendmentRepository.GetWithReasons(a => a.ID == id);
             if (amendment == null)
             {
                 return NotFound();
-            } 
-            return Ok(amendment); 
+            }
+            return Ok(amendment);
         }
 
         // PUT: api/Amendments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmendment([FromRoute] int id, [FromBody] Amendment amendment)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            if (id != amendment.ID)
-            {
-                return BadRequest();
-            }
+            //if (id != amendment.ID)
+            //{
+            //    return BadRequest();
+            //}
 
-            _context.Entry(amendment).State = EntityState.Modified;
+            //_context.Entry(amendment).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AmendmentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!AmendmentExists(id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
 
             return NoContent();
         }
 
         //POST: api/Amendments
-       [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> PostAmendment([FromBody] Request request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-            _unitOfWork.request.Create(request);
-
-            _context.Requests.Add(request);
+            } 
+            unitOfWork.Request.Add(request); 
             foreach (Amendment amendment in request.Amendments)
             {
                 amendment.RequestID = request.ID;
-            }
-            _unitOfWork.amendment.AddRange(request.Amendments);
-            _unitOfWork.Complete();
-
-            _context.Amendment.AddRange(request.Amendments);
-            await _context.SaveChangesAsync();
+            } 
+            unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
+            await unitOfWork.CompleteAsync(); 
 
             return CreatedAtAction("GetAmendment", new { id = request.ID }, request);
         }
@@ -120,21 +115,21 @@ namespace PortalAPI.Areas.Order.Controllers
                 return BadRequest(ModelState);
             }
 
-            var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
+            var amendment = await unitOfWork.Amendment.GetAsync(id);// _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
             if (amendment == null)
             {
                 return NotFound();
             }
-
-            _context.Amendment.Remove(amendment);
-            await _context.SaveChangesAsync();
+            await unitOfWork.Amendment.DeleteAsyn(amendment);
+            await unitOfWork.CompleteAsync(); 
+            
 
             return Ok(amendment);
         }
 
-        private bool AmendmentExists(int id)
-        {
-            return _context.Amendment.Any(e => e.ID == id);
-        }
+        //private bool AmendmentExists(int id)
+        //{
+        //    return _context.Amendment.Any(e => e.ID == id);
+        //}
     }
-    }
+}

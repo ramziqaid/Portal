@@ -5,11 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using EfCoreGenericRepository.Interfaces;
+using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Portal.Areas.Order.Data.Interfaces;
-using Portal.Areas.Order.Data.Model;
+using Microsoft.EntityFrameworkCore; 
 using Portal.Data;
 
 namespace Portal.Areas.Order.Controllers

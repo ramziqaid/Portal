@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EfCoreGenericRepository;
+using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PortalAPI.Data;
-using PortalAPI.Data.Model;
+ 
 
 namespace PortalAPI.Controllers
 {
@@ -14,9 +15,9 @@ namespace PortalAPI.Controllers
     [Route("api/EmployeeInfoViews")]
     public class EmployeeInfoViewsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PlutoContext _context;
 
-        public EmployeeInfoViewsController(ApplicationDbContext context)
+        public EmployeeInfoViewsController(PlutoContext context)
         {
             _context = context;
         }

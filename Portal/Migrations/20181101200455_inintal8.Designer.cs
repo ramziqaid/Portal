@@ -129,7 +129,7 @@ namespace Portal.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Portal.Areas.Order.Data.Model.Amendment", b =>
+            modelBuilder.Entity("EfCoreGenericRepository.Models.Amendment", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -179,7 +179,7 @@ namespace Portal.Migrations
                     b.ToTable("ESS_Amendment");
                 });
 
-            modelBuilder.Entity("Portal.Areas.Order.Data.Model.AmendmentReason", b =>
+            modelBuilder.Entity("EfCoreGenericRepository.Models.AmendmentReason", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -201,7 +201,7 @@ namespace Portal.Migrations
                     b.ToTable("ESS_AmendmentReasons");
                 });
 
-            modelBuilder.Entity("Portal.Areas.Order.Data.Model.Request", b =>
+            modelBuilder.Entity("EfCoreGenericRepository.Models.Request", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -230,7 +230,7 @@ namespace Portal.Migrations
                     b.ToTable("ESS_Request");
                 });
 
-            modelBuilder.Entity("Portal.Areas.Order.Data.Model.RequestType", b =>
+            modelBuilder.Entity("EfCoreGenericRepository.Models.RequestType", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
@@ -346,19 +346,19 @@ namespace Portal.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Portal.Areas.Order.Data.Model.Amendment", b =>
+            modelBuilder.Entity("EfCoreGenericRepository.Models.Amendment", b =>
                 {
-                    b.HasOne("Portal.Areas.Order.Data.Model.AmendmentReason", "AmendmentReason")
+                    b.HasOne("EfCoreGenericRepository.Models.AmendmentReason", "AmendmentReason")
                         .WithMany("Amendments")
                         .HasForeignKey("AmendmentReasonId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Portal.Areas.Order.Data.Model.Request", "Request")
+                    b.HasOne("EfCoreGenericRepository.Models.Request", "Request")
                         .WithMany("Amendments")
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Portal.Areas.Order.Data.Model.RequestType", "RequestType")
+                    b.HasOne("EfCoreGenericRepository.Models.RequestType", "RequestType")
                         .WithMany()
                         .HasForeignKey("RequestTypeID")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,4 +1,5 @@
-﻿using Portal.Areas.Order.Data.Model;
+﻿using EfCoreGenericRepository.Models;
+ 
 
 using System;
 using System.Collections.Generic;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Mvc;
-using Portal.Data.Model;
-
+ 
 namespace Portal.Controllers
 {
     public class EmployeeController : Controller

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Portal.Areas.Order.Data.Model;
-using Portal.Data.Model;
+using Microsoft.EntityFrameworkCore; 
 using Portal.Models;
+
 
 namespace Portal.Data
 {

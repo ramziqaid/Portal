@@ -16,8 +16,10 @@
   <ItemGroup>
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Areas\Order\Views\" />
-    <Folder Include="Data\Interfaces\" />
-    <Folder Include="Data\Repository\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EfCoreGenericRepository\EfCoreGenericRepository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Portal.Data;
+using Microsoft.Extensions.DependencyInjection; 
 using Portal.Models;
-using Portal.Services;
-
-using Portal.Areas.Order.Data.Repository;
-using Portal.Areas.Order.Data.Interfaces;
+using Portal.Services;  
 using PortalAspCore.Data;
+using EfCoreGenericRepository;
+using EfCoreGenericRepository.Interfaces;
+using EfCoreGenericRepository.Repository;
+using Portal.Data;
 
 namespace Portal
 {
@@ -29,18 +29,26 @@ namespace Portal
         //        .Build();
         //}
 
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<PlutoContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<PlutoContext>()
+            //    .AddDefaultTokenProviders();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -51,6 +59,7 @@ namespace Portal
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
             services.AddTransient<IAmendmentRepository, AmendmentRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddMvc();
             services.AddMemoryCache();
@@ -88,7 +97,7 @@ namespace Portal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            DbInitializer.Seed(app);
+          //  DbInitializer.Seed(app);
         }
     }
 }

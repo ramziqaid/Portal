@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EfCoreGenericRepository;
+using EfCoreGenericRepository.Interfaces;
+using EfCoreGenericRepository.Models;
+using EfCoreGenericRepository.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PortalAPI.Areas.Order.Data.Interfaces;
-using PortalAPI.Areas.Order.Data.Model;
+ 
 using PortalAPI.ViewModel;
 
 namespace PortalAPI.Controllers
@@ -15,10 +18,12 @@ namespace PortalAPI.Controllers
     public class EFormController : Controller
     {
         private readonly IRequestTypeRepository _requestRepository;
+        private readonly UnitOfWork unitOfWork;
 
-        public EFormController(IRequestTypeRepository requestRepository)
+        public EFormController(IRequestTypeRepository requestRepository, PlutoContext plutoContext)
         {
             _requestRepository = requestRepository;
+            unitOfWork = new UnitOfWork(plutoContext);
         }
 
         // GET: api/EForm
@@ -48,13 +53,9 @@ namespace PortalAPI.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> Get(int id)
         {
-            IEnumerable<RequestType> requestsType;
-
-            requestsType = _requestRepository.Find(p => p.RequestGroupID == id);
-
-
-            return Ok(requestsType);
-
+            IEnumerable<RequestType> requestsType; 
+            requestsType=await unitOfWork.RequestType.FindAllAsync(p => p.RequestGroupID == id); 
+            return Ok(requestsType); 
         }
 
         // POST: api/EForm

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using EfCoreGenericRepository.Interfaces;
+using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Mvc;
-using Portal.Areas.Order.Data.Interfaces;
-using Portal.Areas.Order.Data.Model;
+ 
 using Portal.ViewModel;
 
 namespace Portal.Controllers

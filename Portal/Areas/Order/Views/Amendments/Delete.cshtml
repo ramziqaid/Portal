@@ -1,4 +1,4 @@
-﻿@model Portal.Areas.Order.Data.Model.Amendment
+﻿@model EfCoreGenericRepository.Models.Amendment
 
 @{
     ViewData["Title"] = "Delete";
@@ -41,12 +41,7 @@
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
+       
         <dt>
             @Html.DisplayNameFor(model => model.TimeIn)
         </dt>
@@ -101,14 +96,9 @@
         <dd>
             @Html.DisplayFor(model => model.Request.ID)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RequestType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RequestType.id)
-        </dd>
+        
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
