@@ -34,7 +34,10 @@ namespace EfCoreGenericRepository.Models
         [Column(Order = 3)]
         [Required]
         public Nullable<int> StatusID { get; set; }
+
         [DateValidation]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<bool> IsDelegate { get; set; }

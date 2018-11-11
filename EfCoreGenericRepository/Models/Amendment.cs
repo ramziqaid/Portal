@@ -40,6 +40,9 @@ namespace EfCoreGenericRepository.Models
         public string FilePath { get; set; }
 
         public string CreatedBy { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
         public string CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public string ModifiedDate { get; set; }
