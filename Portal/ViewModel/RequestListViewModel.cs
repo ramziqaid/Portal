@@ -1,6 +1,4 @@
-﻿using EfCoreGenericRepository.Models;
- 
-
+﻿using EfCoreGenericRepository.Models; 
 using System;
 using System.Collections.Generic;
 using System.Linq;

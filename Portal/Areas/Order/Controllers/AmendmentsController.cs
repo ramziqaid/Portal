@@ -16,14 +16,12 @@ namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
     public class AmendmentsController : Controller
-    {
-        private readonly ApplicationDbContext _context;
+    { 
         private readonly IRequestRepository _requestRepository;
         private readonly IAmendmentRepository _amendmentRepository;
 
-        public AmendmentsController(ApplicationDbContext context, IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
-        {
-            _context = context;
+        public AmendmentsController(  IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
+        { 
             _requestRepository = requestRepository;
             _amendmentRepository = amendmentRepository;
         }
@@ -76,7 +74,18 @@ namespace Portal.Areas.Order.Controllers
         // GET: Order/Amendments/Create
         public IActionResult Create()
         {
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonEn");
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("AmendmentReasons").Result;
+           IEnumerable< AmendmentReason> amendmentReason = null;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IEnumerable<AmendmentReason>>();
+                readTask.Wait(); 
+
+                amendmentReason = readTask.Result;
+                ViewData["AmendmentReasonId"] = new SelectList(amendmentReason, "ID", "AmendReasonEn");
+            }
+
+          
             //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID");
             //ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id");
             return View();
@@ -111,104 +120,114 @@ namespace Portal.Areas.Order.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "AmendReasonEn", amendment.AmendmentReasonId);
-            //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
+
+            HttpResponseMessage resultReasons = GlobalVaribales.WebApiClient.GetAsync("AmendmentReasons").Result;
+            IEnumerable<AmendmentReason> amendmentReason = null;
+            if (resultReasons.IsSuccessStatusCode)
+            {
+                var readTask = resultReasons.Content.ReadAsAsync<IEnumerable<AmendmentReason>>();
+                readTask.Wait();
+
+                amendmentReason = readTask.Result;
+                ViewData["AmendmentReasonId"] = new SelectList(amendmentReason, "ID", "AmendReasonEn");
+            }
+              //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
             //ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
             return View(amendment);
         }
 
         // GET: Order/Amendments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
-            if (amendment == null)
-            {
-                return NotFound();
-            }
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-            ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-            
-            return View(amendment);
-        }
+        //    var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
+        //    if (amendment == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
+        //    ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
 
-        // POST: Order/Amendments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Type,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,RequestID,RequestTypeID")] Amendment amendment)
-        {
-            if (id != amendment.ID)
-            {
-                return NotFound();
-            }
+        //    return View(amendment);
+        //}
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(amendment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AmendmentExists(amendment.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-            ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-             
-            return View(amendment);
-        }
+        //// POST: Order/Amendments/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("ID,Type,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,RequestID,RequestTypeID")] Amendment amendment)
+        //{
+        //    if (id != amendment.ID)
+        //    {
+        //        return NotFound();
+        //    }
 
-        // GET: Order/Amendments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(amendment);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!AmendmentExists(amendment.ID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
+        //    ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
 
-            var amendment = await _context.Amendment
-                .Include(a => a.AmendmentReason)
-                .Include(a => a.Request)
+        //    return View(amendment);
+        //}
+
+        //// GET: Order/Amendments/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var amendment = await _context.Amendment
+        //        .Include(a => a.AmendmentReason)
+        //        .Include(a => a.Request)
                  
-                .SingleOrDefaultAsync(m => m.ID == id);
-            if (amendment == null)
-            {
-                return NotFound();
-            }
+        //        .SingleOrDefaultAsync(m => m.ID == id);
+        //    if (amendment == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(amendment);
-        }
+        //    return View(amendment);
+        //}
 
-        // POST: Order/Amendments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Amendment.Remove(amendment);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Order/Amendments/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
+        //    _context.Amendment.Remove(amendment);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-        private bool AmendmentExists(int id)
-        {
-            return _context.Amendment.Any(e => e.ID == id);
-        }
+        //private bool AmendmentExists(int id)
+        //{
+        //    return _context.Amendment.Any(e => e.ID == id);
+        //}
     }
 }

@@ -42,7 +42,7 @@ namespace EfCoreGenericRepository.Models
         public string CreatedBy { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}")]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
         public string CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public string ModifiedDate { get; set; }

@@ -21,7 +21,7 @@ namespace PortalAPI.Areas.Order.Controllers
         public AmendmentReasonsController(PlutoContext context)
         {
             _context = context;
-        }
+        } 
 
         // GET: api/AmendmentReasons
         [HttpGet]
@@ -37,15 +37,12 @@ namespace PortalAPI.Areas.Order.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            var amendmentReason = await _context.AmendmentReason.SingleOrDefaultAsync(m => m.ID == id);
-
+            } 
+            var amendmentReason = await _context.AmendmentReason.SingleOrDefaultAsync(m => m.ID == id); 
             if (amendmentReason == null)
             {
                 return NotFound();
-            }
-
+            } 
             return Ok(amendmentReason);
         }
 
