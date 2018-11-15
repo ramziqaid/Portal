@@ -16,13 +16,12 @@ namespace PortalAPI.Controllers
     [Produces("application/json")]
     [Route("api/EForm")]
     public class EFormController : Controller
-    {
-        private readonly IRequestTypeRepository _requestRepository;
+    { 
         private readonly UnitOfWork unitOfWork;
 
-        public EFormController(IRequestTypeRepository requestRepository, PlutoContext plutoContext)
+        public EFormController(  PlutoContext plutoContext)
         {
-            _requestRepository = requestRepository;
+            
             unitOfWork = new UnitOfWork(plutoContext);
         }
 
@@ -32,20 +31,20 @@ namespace PortalAPI.Controllers
         public async Task<IActionResult> Get()
         {
             IEnumerable<RequestType> requestsType;
-            requestsType = _requestRepository.GetAll();
+            requestsType =await unitOfWork.RequestType.GetAllAsyn();
             return Ok(requestsType);
         }
 
-        [Route("api/EForm/GetFirst")]
-        [HttpGet]
-        public async Task<IActionResult> GetFirst()
-        {
-            IEnumerable<RequestType> requestsType;
+        //[Route("api/EForm/GetFirst")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetFirst()
+        //{
+        //    IEnumerable<RequestType> requestsType;
 
-            requestsType = _requestRepository.GetAll();
+        //    requestsType = _requestRepository.GetAll();
 
-            return Ok(requestsType);
-        }
+        //    return Ok(requestsType);
+        //}
 
         // GET: api/EForm/5
         [HttpGet("{id}", Name = "Get")]
@@ -56,22 +55,6 @@ namespace PortalAPI.Controllers
             return Ok(requestsType);
         }
 
-        // POST: api/EForm
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/EForm/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+      
     }
 }
