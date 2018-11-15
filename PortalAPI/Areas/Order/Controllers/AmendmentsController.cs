@@ -17,23 +17,20 @@ namespace PortalAPI.Areas.Order.Controllers
     [Route("api/Amendments")]
     public class AmendmentsController : Controller
     {
-
-        private readonly IRequestRepository _requestRepository;
-        private readonly IAmendmentRepository _amendmentRepository;
+ 
         private readonly UnitOfWork unitOfWork;
 
-        public AmendmentsController(PlutoContext plutoContext, IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
-        {
-            _requestRepository = requestRepository;
-            _amendmentRepository = amendmentRepository;
+        public AmendmentsController(PlutoContext plutoContext)
+        { 
             unitOfWork = new UnitOfWork(plutoContext);
         }
-
+     
         // GET: api/Amendments
         [HttpGet]
-        public IEnumerable<Amendment> GetAmendment()
+        public async Task<IEnumerable<Amendment>> GetAmendment()
         {
-            return _amendmentRepository.GetAll();
+            return await unitOfWork.Amendment.GetAllAsyn();
+           // return _amendmentRepository.GetAll();
         }
 
         // GET: api/Amendments/5
@@ -44,7 +41,7 @@ namespace PortalAPI.Areas.Order.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var amendment = _amendmentRepository.GetWithReasons(a => a.ID == id);
+            var amendment = unitOfWork.Amendment.GetWithReasons(a => a.ID == id);
             if (amendment == null)
             {
                 return NotFound();

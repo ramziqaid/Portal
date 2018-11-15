@@ -20,7 +20,14 @@ namespace EfCoreGenericRepository
         protected override void OnModelCreating(ModelBuilder builder)
         { 
             base.OnModelCreating(builder);
-            builder.Ignore<EmployeeInfoView>();
+
+            builder.Entity<EmployeeInfoView>(entity => {
+                entity.HasKey(e => e.ID);
+                entity.ToTable("ESS_EmployeeInfoView2");
+                entity.Property(e => e.EmployeeID).HasMaxLength(50);
+            });
+
+           // builder.Ignore<EmployeeInfoView>();
         }
 
         public virtual void Save()
@@ -82,7 +89,7 @@ namespace EfCoreGenericRepository
 
         public DbSet<AmendmentReason> AmendmentReason { get; set; }
 
-        public DbSet<EmployeeInfoView> EmployeeInfoView { get; set; }
+        public virtual DbSet<EmployeeInfoView> EmployeeInfoView { get; set; }
     }
 
     public class AppDbContextFactory : IDesignTimeDbContextFactory<PlutoContext>

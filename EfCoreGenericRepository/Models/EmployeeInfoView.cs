@@ -9,7 +9,7 @@ namespace EfCoreGenericRepository.Models
 {
     [NotMapped]
     [Table("ESS_EmployeeInfoView2")]
-    public class EmployeeInfoView
+    public partial class EmployeeInfoView
     {
         public long ID { get; set; }
 

@@ -41,12 +41,15 @@ namespace PortalAPI
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
             services.AddTransient<IAmendmentRepository, AmendmentRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IEmployeeInfoViewRepository, EmployeeInfoViewRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             
 
-            services.AddMvc();
+            //services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
+            services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
