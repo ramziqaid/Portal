@@ -9,21 +9,23 @@ using EfCoreGenericRepository.Interfaces;
 using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using Portal.Controllers;
 using Portal.Data;
+using Portal.ViewModel;
 
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
     public class AmendmentsController : Controller
-    { 
-        private readonly IRequestRepository _requestRepository;
-        private readonly IAmendmentRepository _amendmentRepository;
+    {
+       
+        private readonly AmendmentReasonController amendmentReasonController = new AmendmentReasonController();
+        private readonly EmployeeController employeeController = new EmployeeController();
 
-        public AmendmentsController(  IRequestRepository requestRepository, IAmendmentRepository amendmentRepository)
-        { 
-            _requestRepository = requestRepository;
-            _amendmentRepository = amendmentRepository;
+        public AmendmentsController( )
+        {
+             
         }
 
         // GET: Order/Amendments
@@ -43,10 +45,10 @@ namespace Portal.Areas.Order.Controllers
                 amendments = readTask.Result;
             }
             else //web api sent error response 
-            { 
-                amendments = Enumerable.Empty<Amendment>(); 
+            {
+                amendments = Enumerable.Empty<Amendment>();
                 ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-            } 
+            }
             return View(amendments);
 
         }
@@ -57,7 +59,7 @@ namespace Portal.Areas.Order.Controllers
             if (id == null)
             {
                 return NotFound();
-            } 
+            }
             Amendment amendment = null;
             HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Amendments/" + id.ToString()).Result;
 
@@ -68,27 +70,25 @@ namespace Portal.Areas.Order.Controllers
 
                 amendment = readTask.Result;
             }
-            return View( amendment);
+            return View(amendment);
         }
 
         // GET: Order/Amendments/Create
         public IActionResult Create()
-        {
-            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("AmendmentReasons").Result;
-           IEnumerable< AmendmentReason> amendmentReason = null;
-            if (result.IsSuccessStatusCode)
+        { 
+            IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
+            ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
+            IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
+            //  ViewBag.EmployeeID = employeeInfoViews;// new SelectList(amendmentReason.Distinct().ToList(), "EmployeeID", "ArabicName");
+            Request request = new Request();
+            request.RequestTypeID = 5;
+            request.StatusID = 1;
+            AmendmentViewModel amendmentView = new AmendmentViewModel
             {
-                var readTask = result.Content.ReadAsAsync<IEnumerable<AmendmentReason>>();
-                readTask.Wait(); 
-
-                amendmentReason = readTask.Result;
-                ViewData["AmendmentReasonId"] = new SelectList(amendmentReason, "ID", "AmendReasonEn");
-            }
-
-          
-            //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID");
-            //ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id");
-            return View();
+                employeeInfos = employeeInfoViews,
+                request=request
+            };
+            return View(amendmentView);
         }
 
         // POST: Order/Amendments/Create
@@ -96,17 +96,17 @@ namespace Portal.Areas.Order.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Amendment amendment)
+        public async Task<IActionResult> Create(AmendmentViewModel amendment)
         {
             if (ModelState.IsValid)
             {
                 Request request = new Request();
-                request.RequestTypeID = 5;
-                request.StatusID = 1;
-                request.EmployeeID = 1;
+                //request.RequestTypeID = 5;
+                //request.StatusID = 1;
+               // request.EmployeeID = 1;// amendment.EmployeeID;
                 request.Amendments = new List<Amendment>();
-               // request.Amendments.Add(new Amendment());
-                request.Amendments.Add(amendment);
+                // request.Amendments.Add(new Amendment());
+                request.Amendments.Add(amendment.amendment);
 
                 var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", request);
                 postTask.Wait();
@@ -121,18 +121,9 @@ namespace Portal.Areas.Order.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            HttpResponseMessage resultReasons = GlobalVaribales.WebApiClient.GetAsync("AmendmentReasons").Result;
-            IEnumerable<AmendmentReason> amendmentReason = null;
-            if (resultReasons.IsSuccessStatusCode)
-            {
-                var readTask = resultReasons.Content.ReadAsAsync<IEnumerable<AmendmentReason>>();
-                readTask.Wait();
-
-                amendmentReason = readTask.Result;
-                ViewData["AmendmentReasonId"] = new SelectList(amendmentReason, "ID", "AmendReasonEn");
-            }
-              //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-            //ViewData["RequestTypeID"] = new SelectList(_context.RequestType, "id", "id", amendment.RequestTypeID);
+            IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
+            ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
+            
             return View(amendment);
         }
 
@@ -204,7 +195,7 @@ namespace Portal.Areas.Order.Controllers
         //    var amendment = await _context.Amendment
         //        .Include(a => a.AmendmentReason)
         //        .Include(a => a.Request)
-                 
+
         //        .SingleOrDefaultAsync(m => m.ID == id);
         //    if (amendment == null)
         //    {

@@ -59,6 +59,7 @@ namespace Portal
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
             services.AddTransient<IAmendmentRepository, AmendmentRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IEmployeeInfoViewRepository, EmployeeInfoViewRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddMvc();

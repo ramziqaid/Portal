@@ -10,10 +10,10 @@ namespace Portal.Controllers
 {
     public class EmployeeController : Controller
     {
-        public IEnumerable< EmployeeInfoView> Get()
+        public  IEnumerable< EmployeeInfoView> Get()
         {
             IEnumerable<EmployeeInfoView> employeeInfoViews = null;
-            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EmployeeInfoViews").Result;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EmployeeInfoView").Result;
 
             if (result.IsSuccessStatusCode)
             {
@@ -28,7 +28,7 @@ namespace Portal.Controllers
         public EmployeeInfoView Find(long EmployeeID)
         {
             IEnumerable<EmployeeInfoView> employeeInfoViews = null;
-              HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EmployeeInfoViews/" + EmployeeID.ToString()).Result;
+              HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EmployeeInfoView/" + EmployeeID.ToString()).Result;
 
             if (result.IsSuccessStatusCode)
             {

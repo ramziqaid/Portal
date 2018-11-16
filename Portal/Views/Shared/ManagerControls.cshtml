@@ -1,9 +1,26 @@
-﻿
+﻿@model  AmendmentViewModel
 
-@*<div class="form-group">
-    <label asp-for="Author.Name" class="col-md-2 control-label"></label>
-    <div class="col-md-6">
-        <input asp-for="Author.Name" class="form-control" placeholder="Enter authors name" />
-        <span asp-validation-for="Author.Name" class="text-danger"></span>
+<div class="row">
+
+    <div class="form-check-inline">
+        <label class="form-check-label" for="radio1">
+            <input type="radio" class="form-check-input" id="me" name="optradio" value="option1" checked>Me
+        </label>
     </div>
-</div>*@
+
+    <div class="form-check-inline">
+        <label class="form-check-label" for="radio2">
+            <input type="radio" class="form-check-input" id="Employee" name="optradio" value="option2">Employee
+        </label>
+    </div> 
+
+    <div class="col-md-4">
+        @Html.DropDownListFor(m => m.request.EmployeeID,
+                               new SelectList(Model.employeeInfos.Select(x => new { Value = x.EmployeeID, Text = x.ArabicName }), "Value", "Text"), "Select an author",
+                               htmlAttributes: new { @class = "form-control border-input" })
+        <span asp-validation-for="request.Amendments" class="text-danger"></span>
+    </div>
+ 
+
+
+</div>

@@ -20,9 +20,11 @@ namespace EfCoreGenericRepository.Models
         [Column(Order = 1)]
         public string Type { get; set; }
 
+        
         [Required]
         [Column(Order = 1)]
         public int AmendmentReasonId { get; set; }
+        [Display(Name = "Reason")]
         public virtual AmendmentReason AmendmentReason { get; set; }
 
         public Nullable<int> MonthYear { get; set; }
@@ -41,6 +43,7 @@ namespace EfCoreGenericRepository.Models
 
         public string CreatedBy { get; set; }
 
+        [Display(Name = "Create Date ")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
         public string CreatedDate { get; set; }
