@@ -56,11 +56,14 @@ namespace Portal
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
             services.AddTransient<IAmendmentRepository, AmendmentRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IHousingRepository, HousingRepository>();
             services.AddTransient<IEmployeeInfoViewRepository, EmployeeInfoViewRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+          
 
             services.AddMvc();
             services.AddMemoryCache();
@@ -76,8 +79,8 @@ namespace Portal
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
                 app.UseStaticFiles();
-                //app.UseSession();
-                //app.UseIdentity();
+                app.UseSession();
+                app.UseIdentity();
             }
             else
             {
@@ -94,9 +97,10 @@ namespace Portal
                        name: "areas",
                        template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                      );
-                routes.MapRoute(
+                routes.MapRoute(  
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    //template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=EForm}/{action=List}/{id?}");
             });
           //  DbInitializer.Seed(app);
         }

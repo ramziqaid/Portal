@@ -17,20 +17,20 @@ namespace Portal.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
-            builder.Ignore<EmployeeInfoView>();
-        }
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //    // Customize the ASP.NET Identity model and override the defaults if needed.
+        //    // For example, you can rename the ASP.NET Identity table names and more.
+        //    // Add your customizations after calling base.OnModelCreating(builder);
+        //    builder.Ignore<EmployeeInfoView>();
+        //}
 
-        public DbSet<Request> Requests { get; set; }
+        //public DbSet<Request> Requests { get; set; }
 
-        public DbSet<Amendment> Amendment { get; set; }
+        //public DbSet<Amendment> Amendment { get; set; }
 
-        public DbSet<RequestType> RequestType { get; set; }
+        //public DbSet<RequestType> RequestType { get; set; }
 
 
     }

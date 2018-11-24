@@ -19,14 +19,38 @@ namespace Portal.Areas.Order.Controllers
     [Area("Order")]
     public class AmendmentsController : Controller
     {
-       
+
         private readonly AmendmentReasonController amendmentReasonController = new AmendmentReasonController();
         private readonly EmployeeController employeeController = new EmployeeController();
+        private ApplicationDbContext _context;
 
-        public AmendmentsController( )
+        public AmendmentsController(ApplicationDbContext context)
         {
-             
+             _context = context;
         }
+
+
+        //public IActionResult Create()
+        //{
+        //    var bookVM = new BookViewModel();
+
+        //    return View(bookVM);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(BookViewModel bookViewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        //bookViewModel.Authors = _authorRepository.GetAll();
+        //        return View(bookViewModel);
+        //    }
+
+
+
+        //    return RedirectToAction("List");
+        //}
 
         // GET: Order/Amendments
         public async Task<IActionResult> Index()
@@ -75,7 +99,7 @@ namespace Portal.Areas.Order.Controllers
 
         // GET: Order/Amendments/Create
         public IActionResult Create()
-        { 
+        {
             IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
             ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
@@ -83,30 +107,29 @@ namespace Portal.Areas.Order.Controllers
             Request request = new Request();
             request.RequestTypeID = 5;
             request.StatusID = 1;
-            AmendmentViewModel amendmentView = new AmendmentViewModel
+            //return View();
+            var requestView = new RequestViewModel
             {
-                employeeInfos = employeeInfoViews,
-                request=request
+                Request = request,
+                employeeInfos = employeeInfoViews
             };
-            return View(amendmentView);
+
+            return View(requestView);
         }
 
-        // POST: Order/Amendments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //// POST: Order/Amendments/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AmendmentViewModel amendment)
+        public async Task<IActionResult> Create(RequestViewModel requestModel)
         {
             if (ModelState.IsValid)
             {
-                Request request = new Request();
-                //request.RequestTypeID = 5;
-                //request.StatusID = 1;
-               // request.EmployeeID = 1;// amendment.EmployeeID;
-                request.Amendments = new List<Amendment>();
-                // request.Amendments.Add(new Amendment());
-                request.Amendments.Add(amendment.amendment);
+                Request request = requestModel.Request;               
+                // request.EmployeeID = 1;// amendment.EmployeeID;
+                request.Amendments = new List<Amendment>(); 
+                request.Amendments.Add(requestModel.Amendment);
 
                 var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", request);
                 postTask.Wait();
@@ -123,8 +146,8 @@ namespace Portal.Areas.Order.Controllers
 
             IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
             ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
-            
-            return View(amendment);
+
+            return View(requestModel);
         }
 
         // GET: Order/Amendments/Edit/5

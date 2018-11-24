@@ -1,67 +1,94 @@
-﻿@model   AmendmentViewModel
+﻿@model RequestViewModel
 
 @{
     ViewData["Title"] = "Create";
-}
+} 
 
-<h2>Create</h2>
-
-<h4>Amendment</h4>
 <hr />
-<div class="row">
-    <div class="col-md-8">
-        @await Html.PartialAsync("ManagerControls", Model)
-        <form asp-action="Create">
+<div class="row orderForm">
+    <form asp-controller="Amendments" asp-action="Create" method="post" class="form-horizontal" role="form">
+        <div class="col-md-12">
+            <h3 class="col-md-offset-2">Create new Amendment</h3>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="amendment.Type" class="control-label"></label>
-                @*<input asp-for="Type" class="form-control" />*@
-                <span asp-validation-for="amendment.Type" class="text-danger"></span>
+            @*@Html.HiddenFor(m => Model.Request.RequestTypeID)*@
 
-                Check In:   @Html.RadioButton("Type", "CheckIn")
-
-                Check Out: @Html.RadioButton("Type", "CheckOut")
-
-            </div>
-            <div class="form-group">
-                <label asp-for="amendment.AmendmentReasonId" class="control-label"></label>
-                <select asp-for="amendment.AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="amendment.MonthYear" class="control-label"></label>
-                <input asp-for="amendment.MonthYear" class="form-control" />
-                <span asp-validation-for="amendment.MonthYear" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="amendment.MonthDate" class="control-label"></label>
-                <input asp-for="amendment.MonthDate" class="form-control" />
-                <span asp-validation-for="amendment.MonthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="amendment.MonthDay" class="control-label"></label>
-                <input asp-for="amendment.MonthDay" class="form-control" />
-                <span asp-validation-for="amendment.MonthDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="amendment.Description" class="control-label"></label>
-                <textarea asp-for="amendment.Description" class="form-control">
-                    </textarea>
-                <span asp-validation-for="amendment.Description" class="text-danger"></span>
+            <div class=" col-md-offset-2 col-md-10">
+                @await Html.PartialAsync("ManagerControls", Model)
             </div>
 
             <div class="form-group">
-                <label asp-for="amendment.FilePath" class="control-label"></label>
-                <input asp-for="amendment.FilePath" class="form-control" />
-                <span asp-validation-for="amendment.FilePath" class="text-danger"></span>
-            </div>
+                <label asp-for="Amendment.Type" class="control-label col-md-2 "></label>
+                <div class="col-md-6">
+                    <span asp-validation-for="Amendment.Type" class="text-danger"></span>
+                    Check In:   @Html.RadioButton("Type", "CheckIn")
 
+                    Check Out: @Html.RadioButton("Type", "CheckOut")
+                </div>
+            </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label asp-for="Amendment.AmendmentReasonId" class="col-md-2 control-label"></label>
+                <div class="col-md-6">
+                    <select asp-for="Amendment.AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
+                </div>
             </div>
-        </form>
-    </div>
+
+            <div class="form-group">
+                <label asp-for="Amendment.MonthYear" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    <input asp-for="Amendment.MonthYear" class="form-control" />
+                    <span asp-validation-for="Amendment.MonthYear" class="text-danger"></span>
+                </div>
+            </div>
+         
+            <div class="form-group">
+                <label asp-for="Amendment.MonthDate" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    <input asp-for="Amendment.MonthDate" class="form-control" />
+                    <span asp-validation-for="Amendment.MonthDate" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amendment.MonthDay" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    <input asp-for="Amendment.MonthDay" class="form-control" />
+                    <span asp-validation-for="Amendment.MonthDay" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amendment.Description" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    <textarea asp-for="Amendment.Description" class="form-control">
+                </textarea>
+                    <span asp-validation-for="Amendment.Description" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amendment.FilePath" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    <input asp-for="Amendment.FilePath" class="form-control" />
+                    <span asp-validation-for="Amendment.FilePath" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="btn-group col-md-offset-2 col-md-6">
+                    <input class="btn btn-default" type="submit" value="Return" asp-controller="Amendments" asp-action="index" />
+                    <input class="btn btn-success" type="submit" value="Create" asp-controller="Amendments" asp-action="Create" />
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

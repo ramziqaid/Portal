@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Portal.ViewModel
 {
-    public class AmendmentViewModel
-    {
-        public Request request { get; set; }
-        public Amendment amendment { get; set; }
+    public class RequestViewModel
+    { 
+        public Request Request { get; set; }
         public IEnumerable<EmployeeInfoView> employeeInfos { get; set; }
+
+        public Amendment Amendment { get; set; }
     }
 }

@@ -92,11 +92,11 @@ namespace PortalAPI.Areas.Order.Controllers
             {
                 return BadRequest(ModelState);
             } 
-            unitOfWork.Request.Add(request); 
+            unitOfWork.Request.Add(request);
             foreach (Amendment amendment in request.Amendments)
             {
                 amendment.RequestID = request.ID;
-            } 
+            }
             unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
             await unitOfWork.CompleteAsync(); 
 

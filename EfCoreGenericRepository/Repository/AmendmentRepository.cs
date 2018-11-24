@@ -19,7 +19,7 @@ namespace EfCoreGenericRepository.Repository
 
         public IEnumerable<Amendment> GetWithReasons(Func<Amendment, bool> predicate)
         {
-            return _context.Amendment
+            return _context.Amendments
                    .Include(a => a.AmendmentReason)
                    .Where(predicate); 
         }

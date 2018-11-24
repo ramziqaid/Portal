@@ -27,7 +27,7 @@ namespace PortalAPI.Areas.Order.Controllers
         [HttpGet]
         public IEnumerable<AmendmentReason> GetAmendmentReason()
         {
-            return _context.AmendmentReason;
+            return _context.AmendmentReasons;
         }
 
         // GET: api/AmendmentReasons/5
@@ -38,7 +38,7 @@ namespace PortalAPI.Areas.Order.Controllers
             {
                 return BadRequest(ModelState);
             } 
-            var amendmentReason = await _context.AmendmentReason.SingleOrDefaultAsync(m => m.ID == id); 
+            var amendmentReason = await _context.AmendmentReasons.SingleOrDefaultAsync(m => m.ID == id); 
             if (amendmentReason == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace PortalAPI.Areas.Order.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.AmendmentReason.Add(amendmentReason);
+            _context.AmendmentReasons.Add(amendmentReason);
             await _context.SaveChangesAsync();
            
             return CreatedAtAction("GetAmendmentReason", new { id = amendmentReason.ID }, amendmentReason);
@@ -105,14 +105,14 @@ namespace PortalAPI.Areas.Order.Controllers
                 return BadRequest(ModelState);
             }
 
-            var amendmentReason = await _context.AmendmentReason.SingleOrDefaultAsync(m => m.ID == id);
+            var amendmentReason = await _context.AmendmentReasons.SingleOrDefaultAsync(m => m.ID == id);
             if (amendmentReason == null)
             {
                 return NotFound();
                
             }
         
-            _context.AmendmentReason.Remove(amendmentReason);
+            _context.AmendmentReasons.Remove(amendmentReason);
             await _context.SaveChangesAsync();
             
             return Ok(amendmentReason);
@@ -121,7 +121,7 @@ namespace PortalAPI.Areas.Order.Controllers
 
         private bool AmendmentReasonExists(int id)
         {
-            return _context.AmendmentReason.Any(e => e.ID == id);
+            return _context.AmendmentReasons.Any(e => e.ID == id);
         }
     }
 }

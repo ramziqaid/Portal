@@ -21,13 +21,14 @@ namespace EfCoreGenericRepository
         { 
             base.OnModelCreating(builder);
 
-            builder.Entity<EmployeeInfoView>(entity => {
+            builder.Entity<EmployeeInfoView>(entity =>
+            {
                 entity.HasKey(e => e.ID);
                 entity.ToTable("ESS_EmployeeInfoView2");
                 entity.Property(e => e.EmployeeID).HasMaxLength(50);
             });
 
-           // builder.Ignore<EmployeeInfoView>();
+            // builder.Ignore<EmployeeInfoView>();
         }
 
         public virtual void Save()
@@ -83,13 +84,16 @@ namespace EfCoreGenericRepository
 
         public DbSet<Request> Requests { get; set; }
 
-        public DbSet<Amendment> Amendment { get; set; }
+        public DbSet<Amendment> Amendments { get; set; }
 
-        public DbSet<RequestType> RequestType { get; set; }
+        public DbSet<RequestType> RequestTypes { get; set; }
 
-        public DbSet<AmendmentReason> AmendmentReason { get; set; }
+        public DbSet<AmendmentReason> AmendmentReasons { get; set; }
 
         public virtual DbSet<EmployeeInfoView> EmployeeInfoView { get; set; }
+
+        public DbSet<Housing> Housings { get; set; }
+
     }
 
     public class AppDbContextFactory : IDesignTimeDbContextFactory<PlutoContext>
@@ -97,7 +101,7 @@ namespace EfCoreGenericRepository
         public PlutoContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<PlutoContext>();
-            optionsBuilder.UseSqlServer("Data Source=.;Database=DrinkAndGo2;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Data Source=.;Database=MicrosoftDynamicsAX2;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             return new PlutoContext(optionsBuilder.Options);
         }

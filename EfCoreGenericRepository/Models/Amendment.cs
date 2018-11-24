@@ -15,27 +15,37 @@ namespace EfCoreGenericRepository.Models
         [Column(Order = 0)]
         public int ID { get; set; }
 
-        [Required]
+
         [Display(Name = "Type ")]
+        [Required(ErrorMessage = "Type required")]
         [Column(Order = 1)]
         public string Type { get; set; }
 
-        
+
         [Required]
         [Column(Order = 1)]
         public int AmendmentReasonId { get; set; }
         [Display(Name = "Reason")]
         public virtual AmendmentReason AmendmentReason { get; set; }
 
-        public Nullable<int> MonthYear { get; set; }
-        public Nullable<int> MonthDate { get; set; }
-        public Nullable<int> MonthDay { get; set; }
+        [Required]
+        public  int MonthYear { get; set; }
 
+        [Required]
+        public  int MonthDate { get; set; }
+
+        [Required]
+        public  int MonthDay { get; set; }
+
+        [Required]
         [Display(Name = "Justification ")]
         [MaxLength(500)]
         public string Description { get; set; }
 
+        [Required]
         public string TimeIn { get; set; }
+
+        [Required]
         public string TimeOut { get; set; }
 
         [Display(Name = "Attachment ")]
@@ -54,13 +64,11 @@ namespace EfCoreGenericRepository.Models
 
         public int RequestID { get; set; }
         public virtual Request Request { get; set; }
-
-
-
+         
         [NotMapped]
-
         [Display(Name = "Select Date ")]
         [DataType(DataType.Date)]
         public DateTime? SelectDate { get; set; }
+
     }
 }
