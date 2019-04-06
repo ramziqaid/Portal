@@ -99,8 +99,8 @@ namespace Portal
                      );
                 routes.MapRoute(  
                     name: "default",
-                    //template: "{controller=Home}/{action=Index}/{id?}");
-                    template: "{controller=EForm}/{action=List}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
+                    //template: "{controller=EForm}/{action=List}/{id?}");
             });
           //  DbInitializer.Seed(app);
         }

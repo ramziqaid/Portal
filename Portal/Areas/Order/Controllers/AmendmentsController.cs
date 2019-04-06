@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using EfCoreGenericRepository;
 using EfCoreGenericRepository.Interfaces;
 using EfCoreGenericRepository.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -45,9 +46,7 @@ namespace Portal.Areas.Order.Controllers
         //    {
         //        //bookViewModel.Authors = _authorRepository.GetAll();
         //        return View(bookViewModel);
-        //    }
-
-
+        //    } 
 
         //    return RedirectToAction("List");
         //}
@@ -105,8 +104,8 @@ namespace Portal.Areas.Order.Controllers
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
             //  ViewBag.EmployeeID = employeeInfoViews;// new SelectList(amendmentReason.Distinct().ToList(), "EmployeeID", "ArabicName");
             Request request = new Request();
-            request.RequestTypeID = 5;
-            request.StatusID = 1;
+            request.RequestTypeID =(int) EnumsType. RequestTypeId.Amendment;
+            request.StatusID =(int)EnumsType.RequestStatus.NewRequest;
             //return View();
             var requestView = new RequestViewModel
             {
@@ -126,12 +125,12 @@ namespace Portal.Areas.Order.Controllers
         {
             if (ModelState.IsValid)
             {
-                Request request = requestModel.Request;               
-                // request.EmployeeID = 1;// amendment.EmployeeID;
-                request.Amendments = new List<Amendment>(); 
-                request.Amendments.Add(requestModel.Amendment);
+                //Request request = requestModel.Request;               
+                //// request.EmployeeID = 1;// amendment.EmployeeID;
+                //request.Amendments = new List<Amendment>(); 
+                //request.Amendments.Add(requestModel.Amendment);
 
-                var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", request);
+                var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", requestModel.Request);
                 postTask.Wait();
 
                 var result = postTask.Result;

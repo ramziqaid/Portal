@@ -57,7 +57,7 @@ namespace EfCoreGenericRepository
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             TrackChanges();
-            return await base.SaveChangesAsync(cancellationToken);
+                        return await base.SaveChangesAsync(cancellationToken);
         }
 
         private void TrackChanges()

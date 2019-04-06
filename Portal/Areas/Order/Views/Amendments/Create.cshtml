@@ -2,79 +2,96 @@
 
 @{
     ViewData["Title"] = "Create";
-} 
+}
 
 <hr />
 <div class="row orderForm">
     <form asp-controller="Amendments" asp-action="Create" method="post" class="form-horizontal" role="form">
         <div class="col-md-12">
             <h3 class="col-md-offset-2">Create new Amendment</h3>
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
             @*@Html.HiddenFor(m => Model.Request.RequestTypeID)*@
+            <input type="hidden" asp-for="Request.RequestTypeID" />
+            <input type="hidden" asp-for="Request.StatusID" />
 
             <div class=" col-md-offset-2 col-md-10">
                 @await Html.PartialAsync("ManagerControls", Model)
             </div>
 
             <div class="form-group">
-                <label asp-for="Amendment.Type" class="control-label col-md-2 "></label>
-                <div class="col-md-6">
-                    <span asp-validation-for="Amendment.Type" class="text-danger"></span>
-                    Check In:   @Html.RadioButton("Type", "CheckIn")
+                <label asp-for="Request.Amendments[0].SelectDate" class="col-md-2 control-label"></label>
 
-                    Check Out: @Html.RadioButton("Type", "CheckOut")
-                </div>
-            </div>
+                <div class="col-md-6 input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
 
-            <div class="form-group">
-                <label asp-for="Amendment.AmendmentReasonId" class="col-md-2 control-label"></label>
-                <div class="col-md-6">
-                    <select asp-for="Amendment.AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
-                </div>
-            </div>
+                    <input type="date" asp-for="Request.Amendments[0].SelectDate" id="dpDateNow" class="form-control " />
 
-            <div class="form-group">
-                <label asp-for="Amendment.MonthYear" class="control-label col-md-2"></label>
-                <div class="col-md-6">
-                    <input asp-for="Amendment.MonthYear" class="form-control" />
-                    <span asp-validation-for="Amendment.MonthYear" class="text-danger"></span>
-                </div>
-            </div>
-         
-            <div class="form-group">
-                <label asp-for="Amendment.MonthDate" class="control-label col-md-2"></label>
-                <div class="col-md-6">
-                    <input asp-for="Amendment.MonthDate" class="form-control" />
-                    <span asp-validation-for="Amendment.MonthDate" class="text-danger"></span>
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    
                 </div>
 
             </div>
 
+
+
+
             <div class="form-group">
-                <label asp-for="Amendment.MonthDay" class="control-label col-md-2"></label>
+                <label asp-for="Request.Amendments[0].Type" class="control-label col-md-2 "></label>
                 <div class="col-md-6">
-                    <input asp-for="Amendment.MonthDay" class="form-control" />
-                    <span asp-validation-for="Amendment.MonthDay" class="text-danger"></span>
+                    @*<span asp-validation-for="Request.Amendments[0].Type" class="text-danger"></span>*@
+
+                    <div class="radio-inline">
+                        <input type="radio" asp-for="Request.Amendments[0].Type" value="CheckIn" />
+                        <label id="labelID" runat="server" for="">Check In</label>
+                    </div>
+
+                    <div class="radio-inline">
+                        <input type="radio" asp-for="Request.Amendments[0].Type" value="CheckOut" />
+                        <label id="ckout" runat="server" for="check_out">Check Out</label>
+                    </div>
                 </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label asp-for="Request.Amendments[0].Time" class="col-md-2 control-label"></label>
+
+                <div class="input-group bootstrap-timepicker timepicker col-md-6">
+
+                    <input asp-for="Request.Amendments[0].Time" class="form-control" id="timepicker1" />
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+                @*<span asp-validation-for="Request.Amendments[0].Time" class="text-danger"></span>*@
 
             </div>
 
+
             <div class="form-group">
-                <label asp-for="Amendment.Description" class="control-label col-md-2"></label>
+                <label asp-for="Request.Amendments[0].AmendmentReasonId" class="col-md-2 control-label"></label>
                 <div class="col-md-6">
-                    <textarea asp-for="Amendment.Description" class="form-control">
+                    <select asp-for="Request.Amendments[0].AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Request.Amendments[0].Description" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    <textarea asp-for="Request.Amendments[0].Description" class="form-control">
                 </textarea>
-                    <span asp-validation-for="Amendment.Description" class="text-danger"></span>
+                    @*<span asp-validation-for="Request.Amendments[0].Description" class="text-danger"></span>*@
                 </div>
 
             </div>
 
             <div class="form-group">
-                <label asp-for="Amendment.FilePath" class="control-label col-md-2"></label>
+                <label asp-for="Request.Amendments[0].FilePath" class="control-label col-md-2"></label>
                 <div class="col-md-6">
-                    <input asp-for="Amendment.FilePath" class="form-control" />
-                    <span asp-validation-for="Amendment.FilePath" class="text-danger"></span>
+                    <input asp-for="Request.Amendments[0].FilePath" class="form-control" />
+                    @*<span asp-validation-for="Request.Amendments[0].FilePath" class="text-danger"></span>*@
                 </div>
 
             </div>
@@ -88,7 +105,7 @@
         </div>
     </form>
 </div>
-
+ 
 
 <div>
     <a asp-action="Index">Back to List</a>

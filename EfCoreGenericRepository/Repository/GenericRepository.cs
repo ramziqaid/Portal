@@ -58,10 +58,9 @@ namespace EfCoreGenericRepository.Repository
 
         #region "Add"
         public virtual T Add(T t)
-        {
-
+        { 
             _context.Set<T>().Add(t);
-            //_context.SaveChanges();
+            //_context.Save();
             return t;
         }
 
@@ -80,7 +79,7 @@ namespace EfCoreGenericRepository.Repository
            // return t;
         }
 
-        public virtual async void AddRangeAsyn(IEnumerable<T> t)
+        public virtual async  void AddRangeAsyn(IEnumerable<T> t)
         {
            await _context.Set<T>().AddRangeAsync(t);
             // await _context.SaveChangesAsync();

@@ -15,38 +15,32 @@ namespace EfCoreGenericRepository.Models
         [Column(Order = 0)]
         public int ID { get; set; }
 
-
-        [Display(Name = "Type ")]
-        [Required(ErrorMessage = "Type required")]
-        [Column(Order = 1)]
-        public string Type { get; set; }
-
-
         [Required]
         [Column(Order = 1)]
         public int AmendmentReasonId { get; set; }
         [Display(Name = "Reason")]
         public virtual AmendmentReason AmendmentReason { get; set; }
 
-        [Required]
-        public  int MonthYear { get; set; }
+
+        [Display(Name = "Type ")]
+        [Required(ErrorMessage = "Type required")]
+        [Column(Order = 2)]
+        public string Type { get; set; }
+
+        [Column(Order = 3)]
+        [Required(ErrorMessage = "Time required")]
+        public string Time { get; set; }
 
         [Required]
-        public  int MonthDate { get; set; }
-
-        [Required]
-        public  int MonthDay { get; set; }
+        [Display(Name = "Select Date ")]
+        [DataType(DataType.Date)]
+        public DateTime? SelectDate { get; set; }
 
         [Required]
         [Display(Name = "Justification ")]
         [MaxLength(500)]
-        public string Description { get; set; }
-
-        [Required]
-        public string TimeIn { get; set; }
-
-        [Required]
-        public string TimeOut { get; set; }
+        public string Description { get; set; } 
+         
 
         [Display(Name = "Attachment ")]
         public string FilePath { get; set; }
@@ -55,20 +49,17 @@ namespace EfCoreGenericRepository.Models
 
         [Display(Name = "Create Date ")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}")]
         public string CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public string ModifiedDate { get; set; }
 
+        public string ModifiedBy { get; set; }
+        public string ModifiedDate { get; set; } 
 
 
         public int RequestID { get; set; }
         public virtual Request Request { get; set; }
-         
-        [NotMapped]
-        [Display(Name = "Select Date ")]
-        [DataType(DataType.Date)]
-        public DateTime? SelectDate { get; set; }
+
+      
 
     }
 }

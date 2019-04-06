@@ -26,8 +26,8 @@ namespace EfCoreGenericRepository.Models
         [Required]
         public long EmployeeID { get; set; }
 
-        [Column(Order = 2)]
         [Required]
+        [Column(Order = 2)]       
         public int RequestTypeID { get; set; }
         public virtual RequestType RequestType { get; set; }
 
@@ -45,7 +45,7 @@ namespace EfCoreGenericRepository.Models
         public Nullable<long> DelegateFromID { get; set; }
         public Nullable<long> DelegateToID { get; set; }
 
-        public virtual ICollection<Amendment> Amendments { get; set; }
+        public virtual List<Amendment> Amendments { get; set; }
        
     }
 

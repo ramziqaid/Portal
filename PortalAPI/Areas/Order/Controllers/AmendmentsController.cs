@@ -17,20 +17,20 @@ namespace PortalAPI.Areas.Order.Controllers
     [Route("api/Amendments")]
     public class AmendmentsController : Controller
     {
- 
+
         private readonly UnitOfWork unitOfWork;
 
         public AmendmentsController(PlutoContext plutoContext)
-        { 
+        {
             unitOfWork = new UnitOfWork(plutoContext);
         }
-     
+
         // GET: api/Amendments
         [HttpGet]
         public async Task<IEnumerable<Amendment>> GetAmendment()
         {
             return await unitOfWork.Amendment.GetAllAsyn();
-           // return _amendmentRepository.GetAll();
+            // return _amendmentRepository.GetAll();
         }
 
         // GET: api/Amendments/5
@@ -91,14 +91,16 @@ namespace PortalAPI.Areas.Order.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            } 
-            unitOfWork.Request.Add(request);
+            }
+            await unitOfWork.Request.AddAsyn(request);
+
             foreach (Amendment amendment in request.Amendments)
             {
                 amendment.RequestID = request.ID;
             }
             unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
-            await unitOfWork.CompleteAsync(); 
+
+            await unitOfWork.CompleteAsync();
 
             return CreatedAtAction("GetAmendment", new { id = request.ID }, request);
         }
@@ -118,8 +120,8 @@ namespace PortalAPI.Areas.Order.Controllers
                 return NotFound();
             }
             await unitOfWork.Amendment.DeleteAsyn(amendment);
-            await unitOfWork.CompleteAsync(); 
-            
+            await unitOfWork.CompleteAsync();
+
 
             return Ok(amendment);
         }
