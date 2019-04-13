@@ -17,11 +17,16 @@ namespace EfCoreGenericRepository.Repository
 
         }
 
-        public IEnumerable<Amendment> GetWithReasons(Func<Amendment, bool> predicate)
+        public async Task<IEnumerable<Amendment>> GetAllWithReasonsAsync()
         {
-            return _context.Amendments
+            return await _context.Amendments.Include(a => a.AmendmentReason).ToListAsync();
+        }
+
+        public   Amendment GetWithReasons(Func<Amendment, bool> predicate)
+        {
+            return   _context.Amendments
                    .Include(a => a.AmendmentReason)
-                   .Where(predicate); 
+                   .Where(predicate).FirstOrDefault(); 
         }
     }
 }

@@ -11,34 +11,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.RequestID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestID)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MonthYear)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MonthYear)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MonthDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MonthDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MonthDay)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MonthDay)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Time)
@@ -46,48 +28,23 @@
         <dd>
             @Html.DisplayFor(model => model.Time)
         </dd>
-   
-        <dt>
-            @Html.DisplayNameFor(model => model.FilePath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FilePath)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AmendmentReason)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AmendmentReason.ID)
+            @Html.DisplayFor(model => model.AmendmentReason.AmendReasonEn)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Request)
+            @Html.DisplayNameFor(model => model.SelectDate)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Request.ID)
+            @Html.DisplayFor(model => model.SelectDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
         </dd>
     
     </dl>

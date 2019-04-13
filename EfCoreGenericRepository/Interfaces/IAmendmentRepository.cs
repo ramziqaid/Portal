@@ -10,7 +10,8 @@ namespace EfCoreGenericRepository.Interfaces
 {
     public interface IAmendmentRepository : IGenericRepository<Amendment>
     {
-        IEnumerable<Amendment> GetWithReasons(Func<Amendment, bool> predicate);
+       Task< IEnumerable<Amendment>> GetAllWithReasonsAsync();
+        Amendment GetWithReasons(Func<Amendment, bool> predicate);
     }
 
 }

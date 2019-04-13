@@ -12,7 +12,7 @@ namespace EfCoreGenericRepository.Models
         public override bool IsValid(object value)
         {
             DateTime todayDate = Convert.ToDateTime(value);
-            return todayDate <= DateTime.Now;
+            return todayDate >= DateTime.Now;
         }
     }
 
@@ -33,13 +33,15 @@ namespace EfCoreGenericRepository.Models
 
         [Column(Order = 3)]
         [Required]
-        public Nullable<int> StatusID { get; set; }
+        public int StatusID { get; set; }
 
-        [DateValidation]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+       // [DateValidation]
+        //[DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public  DateTime CreatedDate { get; set; }
+
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<bool> IsDelegate { get; set; }
         public Nullable<bool> IsDelegateApprove { get; set; }
         public Nullable<long> DelegateFromID { get; set; }

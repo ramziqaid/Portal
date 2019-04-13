@@ -102,7 +102,7 @@ namespace Portal
                     template: "{controller=Home}/{action=Index}/{id?}");
                     //template: "{controller=EForm}/{action=List}/{id?}");
             });
-          //  DbInitializer.Seed(app);
+           DbInitializer.Seed(app);
         }
     }
 }

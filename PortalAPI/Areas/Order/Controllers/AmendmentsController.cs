@@ -25,11 +25,21 @@ namespace PortalAPI.Areas.Order.Controllers
             unitOfWork = new UnitOfWork(plutoContext);
         }
 
+
         // GET: api/Amendments
         [HttpGet]
         public async Task<IEnumerable<Amendment>> GetAmendment()
         {
-            return await unitOfWork.Amendment.GetAllAsyn();
+            try
+            {
+                IEnumerable<Amendment> obj = await unitOfWork.Amendment.GetAllWithReasonsAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
             // return _amendmentRepository.GetAll();
         }
 
@@ -37,15 +47,16 @@ namespace PortalAPI.Areas.Order.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAmendment([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var amendment = unitOfWork.Amendment.GetWithReasons(a => a.ID == id);
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+            Amendment amendment = unitOfWork.Amendment.GetWithReasons(a => a.ID == id);
             if (amendment == null)
             {
-                return NotFound();
+                return BadRequest();
             }
+            //return amendment;
             return Ok(amendment);
         }
 

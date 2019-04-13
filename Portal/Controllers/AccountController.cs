@@ -219,7 +219,7 @@ namespace Portal.Controllers
                 m.ArabicName,
                 m.EnglishName
             }).Distinct().ToList(), "EmployeeID", "ArabicName");
-            
+
             return View();
         }
 
@@ -239,7 +239,7 @@ namespace Portal.Controllers
                     //TempData["msg"] = "<script>alert('Change succesfully');</script>";
                     ViewBag.FirstNameError = "Please write first name";
                     return View();
-                } 
+                }
 
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, EmployeeID = model.EmployeeID };
 

@@ -1,28 +1,19 @@
-﻿@model  RequestViewModel
+﻿@model RequestViewModel
 
-<div class="row">
-    <div class="form-group">
-        <div class="form-check-inline col-md-2 ">
-            <label class="form-check-label" for="radio1">
-                <input type="radio" class="form-check-input" id="me" name="optradio"  value="option1" checked>Me
-            </label>
-        </div>
-
-        <div class=" col-md-6 ">
-            <div class="form-check-inline col-md-4 ">
-                <label class="form-check-label" for="radio2">
-                    <input type="radio" class="form-check-input" id="Employee" name="optradio" value="option2">Employee
-                </label>
-            </div>
-
-            <div class="col-md-8">
-                @Html.DropDownListFor(m => m.Request.EmployeeID,
-                                       new SelectList(Model.employeeInfos.Select(x => new { Value = x.EmployeeID, Text = x.ArabicName }), "Value", "Text"), "Select an author",
-                                       htmlAttributes: new { @class = "form-control border-input" })
-                <span asp-validation-for="Request.EmployeeID" class="text-danger"></span>
-            </div>
-        </div>
-        </div>
+<div class="form-group">
+    <label asp-for="Request.EmployeeID" class="col-md-2 control-label"></label>
+    <div class="col-md-6">
+        @Html.DropDownListFor(m => m.Request.EmployeeID,
+                          new SelectList(Model.employeeInfos.Select(x => new { Value = x.EmployeeID, Text = x.ArabicName }), "Value", "Text"),
+                          "Select an author",
+                          htmlAttributes: new { @class = "form-control border-input" })
       
-
+        <span asp-validation-for="Request.EmployeeID" class="text-danger"></span>
+    </div>
 </div>
+
+
+
+ 
+
+

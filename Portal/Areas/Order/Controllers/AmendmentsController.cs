@@ -8,28 +8,33 @@ using System.Threading.Tasks;
 using EfCoreGenericRepository;
 using EfCoreGenericRepository.Interfaces;
 using EfCoreGenericRepository.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Portal.Controllers;
 using Portal.Data;
 using Portal.ViewModel;
+using Microsoft.AspNetCore.Identity;
+using Portal.Models;
 
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
+    [Authorize]
     public class AmendmentsController : Controller
     {
 
         private readonly AmendmentReasonController amendmentReasonController = new AmendmentReasonController();
         private readonly EmployeeController employeeController = new EmployeeController();
         private ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AmendmentsController(ApplicationDbContext context)
+        public AmendmentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-             _context = context;
+            _context = context;
+            _userManager = userManager;
         }
-
 
         //public IActionResult Create()
         //{
@@ -52,6 +57,7 @@ namespace Portal.Areas.Order.Controllers
         //}
 
         // GET: Order/Amendments
+
         public async Task<IActionResult> Index()
         {
             //var applicationDbContext = _context.Amendment.Include(a => a.AmendmentReason).Include(a => a.Request) ;
@@ -104,15 +110,16 @@ namespace Portal.Areas.Order.Controllers
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
             //  ViewBag.EmployeeID = employeeInfoViews;// new SelectList(amendmentReason.Distinct().ToList(), "EmployeeID", "ArabicName");
             Request request = new Request();
-            request.RequestTypeID =(int) EnumsType. RequestTypeId.Amendment;
-            request.StatusID =(int)EnumsType.RequestStatus.NewRequest;
-            //return View();
+            request.RequestTypeID = (int)EnumsType.RequestTypeId.Amendment;
+            request.StatusID = (int)EnumsType.RequestStatus.NewRequest;
+            request.CreatedBy = _userManager.GetUserId(HttpContext.User);//User.Identity.Name; 
+           // request.CreatedDate = DateHelp.GetDateStr(DateTime.Now);
+
             var requestView = new RequestViewModel
             {
                 Request = request,
                 employeeInfos = employeeInfoViews
             };
-
             return View(requestView);
         }
 
@@ -124,12 +131,7 @@ namespace Portal.Areas.Order.Controllers
         public async Task<IActionResult> Create(RequestViewModel requestModel)
         {
             if (ModelState.IsValid)
-            {
-                //Request request = requestModel.Request;               
-                //// request.EmployeeID = 1;// amendment.EmployeeID;
-                //request.Amendments = new List<Amendment>(); 
-                //request.Amendments.Add(requestModel.Amendment);
-
+            {  
                 var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Amendments", requestModel.Request);
                 postTask.Wait();
 
@@ -145,7 +147,8 @@ namespace Portal.Areas.Order.Controllers
 
             IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
             ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
-
+            IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
+            requestModel.employeeInfos = employeeInfoViews;
             return View(requestModel);
         }
 
@@ -167,6 +170,44 @@ namespace Portal.Areas.Order.Controllers
 
         //    return View(amendment);
         //}
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Amendment amendment = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Amendments/" + id.ToString()).Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<Amendment>();
+                readTask.Wait();
+
+                amendment = readTask.Result;
+            }
+
+            if (amendment == null)
+            {
+                return NotFound();
+            }
+            IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
+            ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
+            IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
+
+            //ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
+            //ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
+
+            //var requestView = new RequestViewModel
+            //{
+            //    Request = request,
+            //    employeeInfos = employeeInfoViews
+            //};
+            //return View(requestView);
+
+            return View(amendment);
+        }
 
         //// POST: Order/Amendments/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -205,7 +246,31 @@ namespace Portal.Areas.Order.Controllers
 
         //    return View(amendment);
         //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, RequestViewModel requestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var postTask = GlobalVaribales.WebApiClient.PutAsJsonAsync("Amendments", requestModel.Request);
+                postTask.Wait();
 
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    TempData["Message"] = "تم الحفظ  !";
+                    return RedirectToAction("Index");
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
+            ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
+            IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
+            requestModel.employeeInfos = employeeInfoViews;
+            return View(requestModel);
+        }
         //// GET: Order/Amendments/Delete/5
         //public async Task<IActionResult> Delete(int? id)
         //{
