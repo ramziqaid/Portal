@@ -23,8 +23,7 @@ namespace PortalAPI.Areas.Order.Controllers
         public AmendmentsController(PlutoContext plutoContext)
         {
             unitOfWork = new UnitOfWork(plutoContext);
-        }
-
+        } 
 
         // GET: api/Amendments
         [HttpGet]
@@ -60,6 +59,28 @@ namespace PortalAPI.Areas.Order.Controllers
             return Ok(amendment);
         }
 
+       
+        //POST: api/Amendments
+        [HttpPost]
+        public async Task<IActionResult> PostAmendment([FromBody] Request request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await unitOfWork.Request.AddAsyn(request);
+
+            foreach (Amendment amendment in request.Amendments)
+            {
+                amendment.RequestID = request.ID;
+            }
+            unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
+
+            await unitOfWork.CompleteAsync();
+
+            return CreatedAtAction("GetAmendment", new { id = request.ID }, request);
+        }
+
         // PUT: api/Amendments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAmendment([FromRoute] int id, [FromBody] Amendment amendment)
@@ -93,27 +114,6 @@ namespace PortalAPI.Areas.Order.Controllers
             //}
 
             return NoContent();
-        }
-
-        //POST: api/Amendments
-        [HttpPost]
-        public async Task<IActionResult> PostAmendment([FromBody] Request request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await unitOfWork.Request.AddAsyn(request);
-
-            foreach (Amendment amendment in request.Amendments)
-            {
-                amendment.RequestID = request.ID;
-            }
-            unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
-
-            await unitOfWork.CompleteAsync();
-
-            return CreatedAtAction("GetAmendment", new { id = request.ID }, request);
         }
 
         // DELETE: api/Amendments/5

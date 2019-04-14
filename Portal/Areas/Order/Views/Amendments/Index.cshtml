@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EfCoreGenericRepository.Models.Amendment>
+﻿@model IEnumerable<EfCoreGenericRepository.Models.Request>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,20 +13,20 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RequestID)
+                @Html.DisplayNameFor(model => model.ID)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Amendments[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Time)
+                @Html.DisplayNameFor(model => model.Amendments[0].Time)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AmendmentReason)
+                @Html.DisplayNameFor(model => model.Amendments[0].AmendmentReason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SelectDate)
+                @Html.DisplayNameFor(model => model.Amendments[0].SelectDate)
             </th>
 
             <th>
@@ -41,29 +41,27 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestID)
+                    @Html.DisplayFor(modelItem => item.ID)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    @Html.DisplayFor(modelItem => item.Amendments[0].Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Time)
+                    @Html.DisplayFor(modelItem => item.Amendments[0].Time)
                 </td>
                  
                 <td>
-                    @Html.DisplayFor(modelItem => item.AmendmentReason.AmendReasonEn)
+                    @Html.DisplayFor(modelItem => item.Amendments[0].AmendmentReason.AmendReasonEn)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.SelectDate)
+                    @Html.DisplayFor(modelItem => item.Amendments[0].SelectDate)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.AmendmentReason.CreatedDate)
-                </td>
-
-                
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td> 
 
                 <td>
                     <div class="btn-group col- ">

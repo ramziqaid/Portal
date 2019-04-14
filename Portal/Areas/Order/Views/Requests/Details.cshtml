@@ -1,0 +1,72 @@
+﻿@model EfCoreGenericRepository.Models.Request
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StatusID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelegate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsDelegate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelegateApprove)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsDelegateApprove)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DelegateFromID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DelegateFromID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DelegateToID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DelegateToID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestType.id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

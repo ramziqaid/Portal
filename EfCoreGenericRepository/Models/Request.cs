@@ -48,7 +48,7 @@ namespace EfCoreGenericRepository.Models
         public Nullable<long> DelegateToID { get; set; }
 
         public virtual List<Amendment> Amendments { get; set; }
-       
+        public virtual List<Housing> Housings { get; set; }
     }
 
 }
