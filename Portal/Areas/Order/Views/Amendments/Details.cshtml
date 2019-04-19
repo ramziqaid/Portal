@@ -1,4 +1,4 @@
-﻿@model EfCoreGenericRepository.Models.Amendment
+﻿@model Request
 
 @{
     ViewData["Title"] = "Details";
@@ -10,43 +10,60 @@
     <h4>Amendment</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.RequestID)
+            Employee
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.RequestID)
+            @Html.DisplayFor(model => model.Employee.EnglishName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Amendments[0].RequestID)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Type)
+            @Html.DisplayFor(model => model.Amendments[0].RequestID)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.Amendments[0].Type)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Time)
+            @Html.DisplayFor(model => model.Amendments[0].Type)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.AmendmentReason)
+            @Html.DisplayNameFor(model => model.Amendments[0].Time)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AmendmentReason.AmendReasonEn)
+            @Html.DisplayFor(model => model.Amendments[0].Time)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.SelectDate)
+            @Html.DisplayNameFor(model => model.Amendments[0].AmendmentReasonId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SelectDate)
+            @Html.DisplayFor(model => model.Amendments[0].AmendmentReason.AmendReasonEn)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Amendments[0].SelectDate)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Amendments[0].SelectDate)
         </dd>
-    
+        <dt>
+            @Html.DisplayNameFor(model => model.Amendments[0].Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Amendments[0].Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd>
+            <a asp-action="DownloadFile" asp-controller="Requests"  
+               asp-route-filename="@Model.FileName">
+                @Model.FileName
+            </a>
+        </dd>
+     
+
     </dl>
 </div>
 <div>

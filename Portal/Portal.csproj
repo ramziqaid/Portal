@@ -29,6 +29,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\Order\Models\" />
+    <Folder Include="Components\" />
+    <Folder Include="Views\Shared\Components\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>

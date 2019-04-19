@@ -30,7 +30,7 @@ namespace PortalAPI.Areas.Order.Controllers
             try
             {
                 IEnumerable<Request> obj = await unitOfWork.Request.GetAllIncluding(
-                    c => c.Amendments 
+                    c => c.Amendments
                     ).ToListAsync();
                 return obj;
             }
@@ -41,94 +41,120 @@ namespace PortalAPI.Areas.Order.Controllers
         }
 
         // GET: api/Requests/5
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetRequest([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var request = await _context.Requests.SingleOrDefaultAsync(m => m.ID == id);
-
-        //    if (request == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(request);
-        //}
-
-        // PUT: api/Requests/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRequest([FromRoute] int id, [FromBody] Request request)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRequest([FromRoute] int id)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //if (id != request.ID)
-            //{
-            //    return BadRequest();
-            //}
+            IEnumerable<Request> request = await unitOfWork.Request.GetRequestsWithAllData(a => a.ID == id);
+                      
+            if (request == null)
+            {
+                return NotFound();
+            }
+            return Ok(request.FirstOrDefault());
+        }
 
-            //_context.Entry(request).State = EntityState.Modified;
+        [HttpGet]
+        [Route("[action]/{RequestTypeID}")]             
+        public async Task<IActionResult> GetRequestByType([FromRoute] int RequestTypeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!RequestExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
+            IEnumerable<Request> obj = await unitOfWork.Request.GetRequestsWithAllData(a => a.RequestTypeID == RequestTypeID);
 
-            return NoContent();
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return Ok(obj);
         }
 
         // POST: api/Requests
         [HttpPost]
         public async Task<IActionResult> PostRequest([FromBody] Request request)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await unitOfWork.Request.AddAsyn(request);
 
-            //_context.Requests.Add(request);
-            //await _context.SaveChangesAsync();
+            foreach (Amendment amendment in request.Amendments)
+            {
+                amendment.RequestID = request.ID;
+            }
+            unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
+            await unitOfWork.CompleteAsync();
+            return CreatedAtAction("GetAmendment", new { id = request.ID }, request);             
+        }
 
-            return CreatedAtAction("GetRequest", new { id = request.ID }, request);
+        // PUT: api/Requests/5
+        [HttpPut]
+        public async Task<IActionResult> PutRequest( [FromBody] Request request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (request.ID != request.Amendments[0].RequestID)
+            {
+                return BadRequest();
+            }
+            bool exits = unitOfWork.Request.Exists(d => d.ID == request.ID);
+            if (!exits)
+            {
+                return NotFound();
+            }
+            await unitOfWork.Request.UpdateAsyn(request, request.ID);
+            await unitOfWork.Amendment.UpdateAsyn(request.Amendments[0], request.Amendments[0].ID);
+
+            await unitOfWork.CompleteAsync();
+
+            return NoContent();
+             
         }
 
         //// DELETE: api/Requests/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteRequest([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequest([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            bool exits =  unitOfWork.Request.Exists(d =>d.ID==id);
+            if (! exits)
+            {
+                return NotFound();
+            }
 
-        //    var request = await _context.Requests.SingleOrDefaultAsync(m => m.ID == id);
-        //    if (request == null)
-        //    {
-        //        return NotFound();
-        //    }
+            //var amendment = await unitOfWork.Amendment.GetAsync(id); 
+            //if (amendment == null)
+            //{
+            //    return NotFound();
+            //}
+            //await unitOfWork.Amendment.DeleteAsyn(amendment);
 
-        //    _context.Requests.Remove(request);
-        //    await _context.SaveChangesAsync();
+            var request = await unitOfWork.Request.GetAsync( id);
+            if (request == null)
+            {
+                return NotFound();
+            }
+            await unitOfWork.Request.DeleteAsyn(request);
 
-        //    return Ok(request);
-        //}
+            await unitOfWork.CompleteAsync();
+
+
+            return Ok();
+             
+        }
 
         //private bool RequestExists(int id)
         //{

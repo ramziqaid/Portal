@@ -192,6 +192,11 @@ namespace EfCoreGenericRepository.Repository
 
         #endregion 
 
+        public bool  Exists(Expression<Func<T, bool>> match)
+        {
+            return _context.Set<T>().Any(match);
+        }
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

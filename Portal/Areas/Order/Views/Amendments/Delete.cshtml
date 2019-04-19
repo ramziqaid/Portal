@@ -1,4 +1,4 @@
-﻿@model EfCoreGenericRepository.Models.Amendment
+﻿@model Request
 
 @{
     ViewData["Title"] = "Delete";
@@ -12,91 +12,48 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Amendments[0].RequestID)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Type)
+            @Html.DisplayFor(model => model.Amendments[0].RequestID)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MonthYear)
+            @Html.DisplayNameFor(model => model.Amendments[0].Type)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MonthYear)
+            @Html.DisplayFor(model => model.Amendments[0].Type)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MonthDate)
+            @Html.DisplayNameFor(model => model.Amendments[0].Time)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MonthDate)
+            @Html.DisplayFor(model => model.Amendments[0].Time)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.MonthDay)
+            @Html.DisplayNameFor(model => model.Amendments[0].AmendmentReasonId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.MonthDay)
+            @Html.DisplayFor(model => model.Amendments[0].AmendmentReason.AmendReasonEn)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Amendments[0].SelectDate)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-       
-        <dt>
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-     
-        <dt>
-            @Html.DisplayNameFor(model => model.FilePath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FilePath)
+            @Html.DisplayFor(model => model.Amendments[0].SelectDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
+            @Html.DisplayNameFor(model => model.Amendments[0].Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.Amendments[0].Description)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AmendmentReason)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AmendmentReason.ID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Request)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Request.ID)
-        </dd>
-        
+
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input type="hidden" asp-for="@Model.ID" />
+        <input type="submit" asp-controller="Requests" asp-action="Delete" value="Delete" 
+           asp-route-ControlName="Amendments"  asp-route-FileName="@Model.FileName"  class="btn btn-default" new { onclick = "return confirm('Are you sure you wish to delete this Request?');"/> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

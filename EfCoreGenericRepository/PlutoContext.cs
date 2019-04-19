@@ -23,7 +23,7 @@ namespace EfCoreGenericRepository
 
             builder.Entity<EmployeeInfoView>(entity =>
             {
-                entity.HasKey(e => e.ID);
+                entity.HasKey(e => e.EmployeeID);
                 entity.ToTable("ESS_EmployeeInfoView2");
                 entity.Property(e => e.EmployeeID).HasMaxLength(50);
             });

@@ -1,24 +1,27 @@
-﻿@model EfCoreGenericRepository.Models.Amendment
+﻿@model RequestViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
- 
 <hr />
 <div class="row orderForm">
-    
-    <form asp-action="Edit" method="post" asp-controller="Amendments" class="form-horizontal" role="form">
+
+    <form asp-action="Edit" asp-controller="Amendments" class="form-horizontal" role="form"  enctype="multipart/form-data">
         <div class="col-md-12">
-            <h3 class="col-md-offset-2">Edit Amendment @Model.ID</h3>
+            <h3 class="col-md-offset-2">Edit Amendment @Model.Request.ID</h3>
             <div asp-validation-summary="All" class="text-danger"></div>
 
-            <input type="hidden" asp-for="ID" />
+
+            <input type="hidden" asp-for="Request.Amendments[0].RequestID" />
+            <input type="hidden" asp-for="Request.Amendments[0].ID" />
+
+            @await Html.PartialAsync("ManagerControls", Model)
 
             <div class="form-group">
-                <label asp-for="SelectDate" class="col-md-2 control-label"></label>
+                <label asp-for="Request.Amendments[0].SelectDate" class="col-md-2 control-label"></label>
                 <div class="col-md-6 input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-                    <input type="text" asp-for="SelectDate" id="dpDateNow" class="form-control " />
+                    <input type="text" asp-for="Request.Amendments[0].SelectDate" id="dpDateNow" class="form-control " />
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
@@ -27,31 +30,31 @@
 
 
             <div class="form-group">
-                <label asp-for="Type" class="control-label col-md-2 "></label>
+                <label asp-for="Request.Amendments[0].Type" class="control-label col-md-2 "></label>
                 <div class="col-md-6">
                     <div class="radio-inline">
-                        <input type="radio" asp-for="Type" value="CheckIn" />
+                        <input type="radio" asp-for="Request.Amendments[0].Type" value="CheckIn" />
                         <label id="labelID" runat="server" for="">Check In</label>
                     </div>
                     <div class="radio-inline">
-                        <input type="radio" asp-for="Type" value="CheckOut" />
+                        <input type="radio" asp-for="Request.Amendments[0].Type" value="CheckOut" />
                         <label id="ckout" runat="server" for="check_out">Check Out</label>
                     </div>
                 </div>
-            </div> 
+            </div>
 
 
             <div class="form-group">
-                <label asp-for="AmendmentReasonId" class="control-label  col-md-2"></label>
+                <label asp-for="Request.Amendments[0].AmendmentReasonId" class="control-label  col-md-2"></label>
                 <div class="col-md-6">
-                    <select asp-for="AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
+                    <select asp-for="Request.Amendments[0].AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="Time" class="col-md-2 control-label"></label>
+                <label asp-for="Request.Amendments[0].Time" class="col-md-2 control-label"></label>
                 <div class="input-group bootstrap-timepicker timepicker col-md-6">
-                    <input asp-for="Time" class="form-control" id="timepicker1" />
+                    <input asp-for="Request.Amendments[0].Time" class="form-control" id="timepicker1" />
                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                 </div>
             </div>
@@ -66,23 +69,27 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="FilePath" class="control-label"></label>
-                <input asp-for="FilePath" class="form-control" />
-                <span asp-validation-for="FilePath" class="text-danger"></span>
-            </div>
+                <label asp-for="Request.FileName" class="control-label col-md-2"></label>
+                <div class="col-md-6">
+                    @*<input type="file" name="file" />*@
+                    <input asp-for="file" class="form-control" type="file" />
+                    <span asp-validation-for="Request.FileName" class="text-danger"></span>
+                </div>
+              
+                </div>
 
 
-            <div class="form-group">
-                <a asp-action="Index" asp-controller="Amendments"  class="btn btn-danger">Back to List</a>
-                
-                <input type="submit" value="Save" class="btn btn-success" />
+                <div class="form-group">
+                    <a asp-action="Index" asp-controller="Amendments" class="btn btn-danger">Back to List</a>
+
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
             </div>
-        </div>
     </form>
 
 
 </div>
- 
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

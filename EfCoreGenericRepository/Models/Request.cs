@@ -19,12 +19,14 @@ namespace EfCoreGenericRepository.Models
     [Table("ESS_Request")]
     public class Request
     {
+        [Display(Name = "Request ID")]
         [Column(Order = 0)]
         public int ID { get; set; }
 
         [Column(Order = 1)]
         [Required]
         public long EmployeeID { get; set; }
+        public virtual EmployeeInfoView Employee { get; set; }
 
         [Required]
         [Column(Order = 2)]       
@@ -36,8 +38,8 @@ namespace EfCoreGenericRepository.Models
         public int StatusID { get; set; }
 
        // [DateValidation]
-        //[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{dd/MM/yyyy}")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public  DateTime CreatedDate { get; set; }
 
@@ -47,8 +49,13 @@ namespace EfCoreGenericRepository.Models
         public Nullable<long> DelegateFromID { get; set; }
         public Nullable<long> DelegateToID { get; set; }
 
+        [Display(Name = "Attachment")]
+        public  string FileName { get; set; }
+      
         public virtual List<Amendment> Amendments { get; set; }
         public virtual List<Housing> Housings { get; set; }
+
+     
     }
 
 }

@@ -1,13 +1,17 @@
 ﻿@model RequestViewModel
 
 <div class="form-group">
+    <input type="hidden" asp-for="Request.ID" />
+    <input type="hidden" asp-for="Request.RequestTypeID" />
+    <input type="hidden" asp-for="Request.StatusID" />
+    <input type="hidden" asp-for="Request.CreatedBy" />
     <label asp-for="Request.EmployeeID" class="col-md-2 control-label"></label>
     <div class="col-md-6">
         @Html.DropDownListFor(m => m.Request.EmployeeID,
                           new SelectList(Model.employeeInfos.Select(x => new { Value = x.EmployeeID, Text = x.ArabicName }), "Value", "Text"),
-                          "Select an author",
+                          "Select an Employee",
                           htmlAttributes: new { @class = "form-control border-input" })
-      
+
         <span asp-validation-for="Request.EmployeeID" class="text-danger"></span>
     </div>
 </div>

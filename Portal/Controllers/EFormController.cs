@@ -22,16 +22,12 @@ namespace Portal.Controllers
 
         public IActionResult List(int? TypeID)
         {
-            IEnumerable<RequestType> requestsType;
-
-            
+            IEnumerable<RequestType> requestsType;             
             HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("EForm/" + TypeID.ToString()).Result;
-
             if (result.IsSuccessStatusCode)
             {
                 var readTask = result.Content.ReadAsAsync<IEnumerable<RequestType>>();
                 readTask.Wait();
-
                 requestsType =  readTask.Result;
             }
             else //web api sent error response 

@@ -57,11 +57,9 @@ namespace EfCoreGenericRepository.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime CreatedDate { get; set; }
 
-
+        [Display(Name = "Request ID")]
         public int RequestID { get; set; }
         public virtual Request Request { get; set; }
-
-
-
+         
     }
 }

@@ -11,11 +11,13 @@ namespace EfCoreGenericRepository.Models
     [Table("ESS_EmployeeInfoView2")]
     public partial class EmployeeInfoView
     {
-        public long ID { get; set; }
+        //public long ID { get; set; }
 
+       
         public long  EmployeeID{ get; set; }
 
-        public string  personnelnumber{ get; set; }
+        [Display(Name = "Personnel Number")]
+        public string  Personnelnumber{ get; set; }
 
         public string  PASSWORD{ get; set; }
 
@@ -39,9 +41,9 @@ namespace EfCoreGenericRepository.Models
 
         public int  CONTRACTTYPE{ get; set; }
 
-        public System.DateTime  contractStart{ get; set; }
+        public System.DateTime  ContractStart{ get; set; }
 
-        public System.DateTime  contractEnd{ get; set; }
+        public System.DateTime  ContractEnd{ get; set; }
 
         public System.DateTime  JOININGDATE{ get; set; }
 
@@ -87,18 +89,21 @@ namespace EfCoreGenericRepository.Models
 
         public string  DepartmentName{ get; set; }
 
-        public System.Nullable<System.DateTime>  iqamaDate{ get; set; }
+        public System.Nullable<System.DateTime>  IqamaDate{ get; set; }
 
-        public System.Nullable<System.DateTime>  iqamaExpiryDate{ get; set; }
+        public System.Nullable<System.DateTime>  IqamaExpiryDate{ get; set; }
 
         public string  IqamaID{ get; set; }
 
         public System.DateTime  lastReturnVacationDate{ get; set; }
 
-        public string  position{ get; set; }
+        public string  Position{ get; set; }
 
-        public System.Nullable<long>  positionID{ get; set; }
+        public System.Nullable<long>  PositionID{ get; set; }
 
         public string  PROFILEID{ get; set; }
+
+        public virtual List<Request> Requests { get; set; }
+        
     }
 }

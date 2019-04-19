@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EfCoreGenericRepository.Repository
@@ -22,11 +23,12 @@ namespace EfCoreGenericRepository.Repository
             return await _context.Amendments.Include(a => a.AmendmentReason).ToListAsync();
         }
 
-        public   Amendment GetWithReasons(Func<Amendment, bool> predicate)
+        public async Task<Amendment> GetWithReasons(Expression<Func<Amendment, bool>> predicate )
         {
-            return   _context.Amendments
+            return await _context.Amendments
                    .Include(a => a.AmendmentReason)
-                   .Where(predicate).FirstOrDefault(); 
+                   .SingleOrDefaultAsync(predicate);
+      
         }
     }
 }

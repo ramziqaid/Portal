@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
 using Portal.Models;
-using Portal.Services;  
+using Portal.Services;
 using PortalAspCore.Data;
 using EfCoreGenericRepository;
 using EfCoreGenericRepository.Interfaces;
 using EfCoreGenericRepository.Repository;
 using Portal.Data;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Portal
 {
@@ -35,7 +37,7 @@ namespace Portal
             Configuration = configuration;
         }
 
-        
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -54,16 +56,20 @@ namespace Portal
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddSingleton<IFileProvider>(
+          new PhysicalFileProvider(
+              Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddTransient<IRequestTypeRepository, RequestTypeRepository>();
-            services.AddTransient<IAmendmentRepository, AmendmentRepository>();
             services.AddTransient<IRequestRepository, RequestRepository>();
+            services.AddTransient<IAmendmentRepository, AmendmentRepository>();          
             services.AddTransient<IHousingRepository, HousingRepository>();
             services.AddTransient<IEmployeeInfoViewRepository, EmployeeInfoViewRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-          
+
 
             services.AddMvc();
             services.AddMemoryCache();
@@ -97,12 +103,12 @@ namespace Portal
                        name: "areas",
                        template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                      );
-                routes.MapRoute(  
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                    //template: "{controller=EForm}/{action=List}/{id?}");
+                //template: "{controller=EForm}/{action=List}/{id?}");
             });
-           DbInitializer.Seed(app);
+            DbInitializer.Seed(app);
         }
     }
 }

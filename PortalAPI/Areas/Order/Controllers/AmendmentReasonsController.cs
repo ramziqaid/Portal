@@ -34,6 +34,11 @@ namespace PortalAPI.Areas.Order.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAmendmentReason([FromRoute] int id)
         {
+           // var blogs = _context.Requests
+           //.Include(blog => blog.Amendments).ThenInclude(author => author.AmendmentReason)
+           //.Include(c => c.RequestType)
+           //  .ToList(); 
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

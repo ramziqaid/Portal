@@ -33,8 +33,7 @@ namespace EfCoreGenericRepository.Interfaces
         IQueryable<T> GetAll();
         Task<ICollection<T>> GetAllAsyn();
         IQueryable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
-        Task<T> GetAsync(int id);
-          
+        Task<T> GetAsync(int id); 
 
 
         void Save();
@@ -42,5 +41,8 @@ namespace EfCoreGenericRepository.Interfaces
 
         T Update(T t, object key);
         Task<T> UpdateAsyn(T t, object key);
+
+        bool Exists(Expression<Func<T, bool>> match);
+        
     }
 }
