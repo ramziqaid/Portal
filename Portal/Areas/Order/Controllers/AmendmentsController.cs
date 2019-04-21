@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Hosting;
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
-    [Authorize]
+    [Authorize(Roles = "User")]   
     public class AmendmentsController : Controller
     {
 

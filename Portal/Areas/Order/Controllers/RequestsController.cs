@@ -11,10 +11,13 @@ using System.Net.Http;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Portal.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
+    [Authorize(Roles = "Admin, User")]
+ 
     public class RequestsController : Controller
     {
         //private readonly PlutoContext _context;
@@ -23,9 +26,7 @@ namespace Portal.Areas.Order.Controllers
         public RequestsController(ApplicationDbContext context)
         {
             _context = context;
-        }
-
-
+        } 
 
         public async Task<IActionResult> Index()
         {

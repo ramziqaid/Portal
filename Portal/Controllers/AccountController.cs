@@ -257,6 +257,7 @@ namespace Portal.Controllers
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
+
                 ViewBag.Roles = new SelectList(db.Roles.Where(a => !a.Name.Contains("Administrator")).ToList(), "Name", "Name");
                 AddErrors(result);
             }

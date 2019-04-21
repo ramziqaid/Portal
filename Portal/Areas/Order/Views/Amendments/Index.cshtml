@@ -9,84 +9,105 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-striped table-hover table-bordered">
-    <thead>
-        <tr>
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Data Table With Full Features</h3>
+    </div>
+    <table class="table table-bordered table-striped" id="example1">
+        <thead>
+            <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Amendments[0].Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amendments[0].Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amendments[0].AmendmentReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amendments[0].SelectDate)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amendments[0].Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amendments[0].Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amendments[0].AmendmentReason)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amendments[0].SelectDate)
+                </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileName)
-            </th>
-            <th>
-                Actions
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FileName)
+                </th>
+                <th>
+                    Actions
+                </th>
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            if (item.Amendments.Count>0)
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>
+                if (item.Amendments.Count > 0)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amendments[0].Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amendments[0].Time)
-                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amendments[0].Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amendments[0].Time)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amendments[0].AmendmentReason.AmendReasonEn)
-                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amendments[0].AmendmentReason.AmendReasonEn)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amendments[0].SelectDate)
-                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amendments[0].SelectDate)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        <a asp-action="DownloadFile" asp-controller="Requests"
-                           asp-route-filename="@item.FileName">
-                            @item.FileName
-                        </a>
-                     
-                    </td>
-                    <td>
-                        <div class="btn-group col- ">
-                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">Edit</a>
-                            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Details</a>
-                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
-                        </div>
-                    </td>
-                </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            <a asp-action="DownloadFile" asp-controller="Requests"
+                               asp-route-filename="@item.FileName">
+                                @item.FileName
+                            </a>
+
+                        </td>
+                        <td>
+                            <div class="btn-group col- ">
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
             }
+        </tbody>
+    </table>
+</div>
 
-        }
-    </tbody>
-</table>
+<script src="~/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        $('#example1').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })</script>
+
+ 

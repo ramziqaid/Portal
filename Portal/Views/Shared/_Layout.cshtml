@@ -8,10 +8,9 @@
     <environment include="Development">
       
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/site.css" /> 
         <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.css" />
-        <link rel="stylesheet" href="~/lib/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-
+        <link rel="stylesheet" href="~/lib/bootstrap-timepicker/css/bootstrap-timepicker.css" /> 
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -35,8 +34,19 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="EForm" asp-action="List">E-From</a></li>
-                    <li><a asp-area="Order" asp-controller="Requests" asp-action="Index">Requsts</a></li>
+                    <li><a asp-area="Order" asp-controller="Requests" asp-action="Index">Requsts</a></li> 
+                    <li>
+                        <a asp-controller="Requests" asp-area="Order"    asp-action="Index"
+                           class="dropdown-toggle" data-toggle="dropdown">E-Form<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a asp-area="" asp-controller="EForm" asp-action="List" asp-route-TypeID="1">Employee Requsts</a>                         
+                            </li>
+                            <li>
+                                <a asp-area="" asp-controller="EForm" asp-action="List" asp-route-TypeID="3">Gov. Requsts</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
