@@ -88,9 +88,15 @@ namespace PortalAPI.Areas.Order.Controllers
 
             foreach (Amendment amendment in request.Amendments)
             {
-                amendment.RequestID = request.ID;
+                amendment.RequestID = request.ID; 
+            }
+            foreach (RequestStage stage in request.RequestStages)
+            {
+                stage.RequestID = request.ID;
             }
             unitOfWork.Amendment.AddRangeAsyn(request.Amendments);
+            unitOfWork.RequestStage.AddRangeAsyn(request.RequestStages);
+
             await unitOfWork.CompleteAsync();
             return CreatedAtAction("GetAmendment", new { id = request.ID }, request);             
         }

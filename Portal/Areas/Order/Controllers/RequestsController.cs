@@ -12,6 +12,8 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Portal.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Portal.Models;
 
 namespace Portal.Areas.Order.Controllers
 {
@@ -22,10 +24,12 @@ namespace Portal.Areas.Order.Controllers
     {
         //private readonly PlutoContext _context;
         private ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RequestsController(ApplicationDbContext context)
+        public RequestsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         } 
 
         public async Task<IActionResult> Index()
@@ -71,6 +75,7 @@ namespace Portal.Areas.Order.Controllers
             return requests;
 
         }
+       
         //// GET: Order/Requests/Details/5
         //public async Task<IActionResult> Details(int? id)
         //{
@@ -169,6 +174,7 @@ namespace Portal.Areas.Order.Controllers
 
 
         // POST: Order/Amendments/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id,string ControlName,string FileName)
@@ -223,6 +229,18 @@ namespace Portal.Areas.Order.Controllers
         //}
 
 
+
+        public void AddStage(  Request request,long pEmployeeID, int pStageTypeID,string pActionName,string pNote)
+        {
+            RequestStage obj = new RequestStage();
+            obj.StageTypeID = pStageTypeID; 
+            obj.EmployeeID = pEmployeeID;
+            obj.ActionName = pActionName;
+            obj.Justification = pNote;
+            request.RequestStages = new List<RequestStage>();
+            request.RequestStages.Add(obj);
+        }
+
         private string GetUniqueFileName(string fileName)
         {
             fileName = Path.GetFileName(fileName);
@@ -233,7 +251,7 @@ namespace Portal.Areas.Order.Controllers
         }
 
     
-            public async Task<string> UploadFile(IFormFile file)
+       public async Task<string> UploadFile(IFormFile file)
         {
             string uniqueFileName = null;
             if (file != null)

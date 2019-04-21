@@ -37,7 +37,7 @@ namespace Portal.Areas.Order.Controllers
         {
             _context = context;
             _userManager = userManager;
-            _requestsController = new RequestsController(_context);
+            _requestsController = new RequestsController(_context, userManager);
         }
 
         // GET: Order/Amendments
@@ -96,8 +96,9 @@ namespace Portal.Areas.Order.Controllers
             request.RequestTypeID = (int)EnumsType.RequestTypeId.Amendment;
             request.StatusID = (int)EnumsType.RequestStatus.NewRequest;
             request.CreatedBy = _userManager.GetUserId(HttpContext.User);//User.Identity.Name; 
-                                                                         // request.CreatedDate = DateHelp.GetDateStr(DateTime.Now);
-
+            
+            // request.CreatedDate = DateHelp.GetDateStr(DateTime.Now);
+        
             var requestView = new RequestViewModel
             {
                 Request = request,
@@ -117,8 +118,11 @@ namespace Portal.Areas.Order.Controllers
                 {
                     requestModel.Request.FileName = await _requestsController.UploadFile(requestModel.file);
                 }
+                ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                _requestsController.AddStage(requestModel.Request, user.EmployeeID, 1, "Submit", null);
                 var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("Requests", requestModel.Request);
                 postTask.Wait();
+                 
 
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)

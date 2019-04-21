@@ -44,6 +44,8 @@ namespace EfCoreGenericRepository.Models
         public  DateTime CreatedDate { get; set; }
 
         public string CreatedBy { get; set; }
+       
+
         public Nullable<bool> IsDelegate { get; set; }
         public Nullable<bool> IsDelegateApprove { get; set; }
         public Nullable<long> DelegateFromID { get; set; }
@@ -54,8 +56,8 @@ namespace EfCoreGenericRepository.Models
       
         public virtual List<Amendment> Amendments { get; set; }
         public virtual List<Housing> Housings { get; set; }
+        public virtual List<RequestStage> RequestStages { get; set; }
 
-     
     }
 
 }

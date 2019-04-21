@@ -14,6 +14,7 @@ namespace EfCoreGenericRepository.Repository
             Request = new RequestRepository(_context);
             RequestType = new RequestTypeRepository(_context);
             Amendment = new AmendmentRepository(_context);
+            RequestStage = new RequestStageRepository(_context);
             employeeInfoView = new EmployeeInfoViewRepository(_context);
         } 
 
@@ -22,6 +23,10 @@ namespace EfCoreGenericRepository.Repository
         public IRequestTypeRepository RequestType { get; private set; }
 
         public IAmendmentRepository Amendment { get; private set; }
+
+        public IRequestStageRepository RequestStage { get; private set; }
+
+   
 
         public IEmployeeInfoViewRepository employeeInfoView { get; private set; }
 
