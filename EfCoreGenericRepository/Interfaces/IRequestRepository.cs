@@ -12,6 +12,7 @@ namespace EfCoreGenericRepository.Interfaces
     {
 
         Task<IEnumerable<Request>> GetRequestsWithAllData(Expression<Func<Request, bool>> predicate);
+        IEnumerable<Request> getRequest();
     }
 
 }

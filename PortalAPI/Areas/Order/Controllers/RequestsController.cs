@@ -48,9 +48,30 @@ namespace PortalAPI.Areas.Order.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             IEnumerable<Request> request = await unitOfWork.Request.GetRequestsWithAllData(a => a.ID == id);
                       
+            if (request == null)
+            {
+                return NotFound();
+            }
+            return Ok(request.FirstOrDefault());
+        }
+
+        // GET: api/Requests/5
+        [HttpGet]
+     
+        [Route("GetRequestForManager/{employeeID}")]
+        public async Task<IActionResult> GetRequestForManager([FromRoute] int employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            IEnumerable<Request> request =   unitOfWork.Request.getRequest();
+
             if (request == null)
             {
                 return NotFound();

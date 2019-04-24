@@ -5,19 +5,22 @@
     <input type="hidden" asp-for="Request.RequestTypeID" />
     <input type="hidden" asp-for="Request.StatusID" />
     <input type="hidden" asp-for="Request.CreatedBy" />
-    <label asp-for="Request.EmployeeID" class="col-md-2 control-label"></label>
-    <div class="col-md-6">
-        @Html.DropDownListFor(m => m.Request.EmployeeID,
-                          new SelectList(Model.employeeInfos.Select(x => new { Value = x.EmployeeID, Text = x.ArabicName }), "Value", "Text"),
-                          "Select an Employee",
-                          htmlAttributes: new { @class = "form-control border-input" })
+    <div class="form-group col-md-12">
+        <label asp-for="Request.EmployeeID" class=" control-label"></label>
+        
+            @Html.DropDownListFor(m => m.Request.EmployeeID,
+                              new SelectList(Model.employeeInfos.Select(x => new { Value = x.EmployeeID, Text = x.ArabicName }), "Value", "Text"),
+                              "Select an Employee",
+                              htmlAttributes: new { @class = "form-control border-input" })
 
-        <span asp-validation-for="Request.EmployeeID" class="text-danger"></span>
+            <span asp-validation-for="Request.EmployeeID" class="text-danger"></span>
+        
     </div>
-</div>
+       
+    </div>
 
 
 
- 
 
- 
+
+

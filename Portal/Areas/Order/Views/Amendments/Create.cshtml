@@ -5,8 +5,9 @@
 }
 
 <hr />
-<div class="row orderForm box box-primary">
-    <form asp-controller="Amendments" asp-action="Create" method="post" class="form-horizontal" role="form"     enctype="multipart/form-data" >
+ 
+
+    <form asp-controller="Amendments" asp-action="Create" method="post" role="form" enctype="multipart/form-data">
         <div class="col-md-12">
             <h3 class="col-md-offset-2">Create new Amendment</h3>
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -19,9 +20,9 @@
             @await Html.PartialAsync("ManagerControls", Model)
 
 
-            <div class="form-group">
-                <label asp-for="Request.Amendments[0].SelectDate" class="col-md-2 control-label"></label>
-                <div class="col-md-6 input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+            <div class="form-group col-md-6 date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                <label asp-for="Request.Amendments[0].SelectDate" class="control-label"></label>
+                <div class="input-group  col-md-12">
                     <input type="text" asp-for="Request.Amendments[0].SelectDate" id="dpDateNow" class="form-control "
                            cssClass="input-validation-error" data-val="true" />
                     <div class="input-group-addon">
@@ -30,10 +31,18 @@
                 </div>
             </div>
 
+            <div class="form-group col-md-6 timepicker">
+                <label asp-for="Request.Amendments[0].Time" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Request.Amendments[0].Time" class="form-control" id="timepicker1" />
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+            </div>
 
-            <div class="form-group">
-                <label asp-for="Request.Amendments[0].Type" class="control-label col-md-2 "></label>
-                <div class="col-md-6">
+
+            <div class="form-group col-md-6">
+                <label asp-for="Request.Amendments[0].Type" class="control-label col-md-12"></label>
+                <div class="form-group col-md-6">
                     <div class="radio-inline">
                         <input type="radio" asp-for="Request.Amendments[0].Type" value="CheckIn" />
                         <label id="labelID" runat="server" for="">Check In</label>
@@ -46,43 +55,23 @@
             </div>
 
 
-
-            <div class="form-group">
-                <label asp-for="Request.Amendments[0].Time" class="col-md-2 control-label"></label>
-                <div class="input-group  timepicker col-md-6">
-                    <input asp-for="Request.Amendments[0].Time" class="form-control" id="timepicker1" />
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Request.Amendments[0].AmendmentReason" class="control-label"></label>
+                <select asp-for="Request.Amendments[0].AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
             </div>
 
 
-            <div class="form-group">
-                <label asp-for="Request.Amendments[0].AmendmentReason" class="col-md-2 control-label"></label>
-                <div class="col-md-6">
-                    <select asp-for="Request.Amendments[0].AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-                <label asp-for="Request.Amendments[0].Description" class="control-label col-md-2"></label>
-                <div class="col-md-6">
-                    <textarea asp-for="Request.Amendments[0].Description" class="form-control">
+            <div class="form-group col-md-12">
+                <label asp-for="Request.Amendments[0].Description" class="control-label "></label>
+                <textarea asp-for="Request.Amendments[0].Description" class="form-control">
                 </textarea>
-                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Request.FileName" class="control-label col-md-2"></label>
-
-                <div class="col-md-6">
-                    <input asp-for="file" class="form-control" type="file" />
-
-                </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Request.FileName" class="control-label "></label>
+                <input asp-for="file" class="form-control" type="file" />
             </div>
 
-          
 
             <div class="form-group">
                 <div class="btn-group col-md-offset-2 col-md-6">
@@ -91,8 +80,10 @@
                 </div>
             </div>
         </div>
-    </form>
-</div> 
+
+
+</form>
+ 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

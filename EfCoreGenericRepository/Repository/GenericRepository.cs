@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EfCoreGenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
+ 
 namespace EfCoreGenericRepository.Repository
 {
     public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
@@ -194,8 +194,11 @@ namespace EfCoreGenericRepository.Repository
 
         public bool  Exists(Expression<Func<T, bool>> match)
         {
+       
             return _context.Set<T>().Any(match);
         }
+   
+
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

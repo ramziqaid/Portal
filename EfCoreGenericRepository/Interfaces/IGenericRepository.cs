@@ -43,6 +43,10 @@ namespace EfCoreGenericRepository.Interfaces
         Task<T> UpdateAsyn(T t, object key);
 
         bool Exists(Expression<Func<T, bool>> match);
+
         
+        
+
+
     }
 }

@@ -83,9 +83,14 @@
                         </td>
                         <td>
                             <div class="btn-group col- ">
-                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Details</a>
-                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">Edit
+                                    <span class='glyphicon glyphicon-edit'></span></a>
+                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
+                                    Details      <span class="glyphicon glyphicon-option-vertical"></span>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
+                                    Delete<span class="glyphicon glyphicon-trash"></span>
+                                </a>
                             </div>
                         </td>
                     </tr>
