@@ -31,6 +31,7 @@
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Components\" />
     <Folder Include="Views\Shared\Components\" />
+    <Folder Include="wwwroot\js\views\Order\Amendments\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

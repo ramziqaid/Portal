@@ -1,21 +1,15 @@
 ﻿@model RequestType
 
 
-<div class="col-sm-4 col-lg-4 col-md-4">
+<div class="col-sm-4 col-lg-4 col-md-4" style="max-height:200px;" >
     <div class="panel panel-primary">
         <div class="panel-heading">
 
         </div>
-        <div class="panel-body">
-
-
-            <h3>
-                <a asp-controller="@Model.ControllerName" asp-action="Index" asp-area="Order">@Model.RequestName</a>
-
-            </h3>
-
-
-
+        <div class="panel-body">  
+            <h4 style="max-height:200px;    font-size: 17px;" >
+                <a asp-controller="@Model.ControllerName" asp-action="Index" asp-area="Order">@Model.RequestName</a> 
+            </h4>  
         </div>
     </div>
 </div>

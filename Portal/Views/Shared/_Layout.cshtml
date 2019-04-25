@@ -6,21 +6,25 @@
     <title>@ViewData["Title"] - Portal</title>
 
     <environment include="Development">
-      
+
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" /> 
+        <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.css" />
-        <link rel="stylesheet" href="~/lib/bootstrap-timepicker/css/bootstrap-timepicker.css" /> 
+        <link rel="stylesheet" href="~/lib/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+        <!--datatables.net-->
+        <link rel="stylesheet" href="~/lib/DataTables/datatables.min.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <!--datatables.net-->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-success navbar-fixed-top"   >
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -34,13 +38,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="Order" asp-controller="Requests" asp-action="Index">Requsts</a></li> 
+                    <li><a asp-area="Order" asp-controller="Requests" asp-action="Index">Requsts</a></li>
                     <li>
-                        <a asp-controller="Requests" asp-area="Order"    asp-action="Index"
+                        <a asp-controller="Requests" asp-area="Order" asp-action="Index"
                            class="dropdown-toggle" data-toggle="dropdown">E-Form<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a asp-area="" asp-controller="EForm" asp-action="List" asp-route-TypeID="1">Employee Requsts</a>                         
+                                <a asp-area="" asp-controller="EForm" asp-action="List" asp-route-TypeID="1">Employee Requsts</a>
                             </li>
                             <li>
                                 <a asp-area="" asp-controller="EForm" asp-action="List" asp-route-TypeID="3">Gov. Requsts</a>
@@ -67,7 +71,8 @@
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
         <script src="~/lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-
+        <!--datatables.net-->
+        <script src="~/lib/DataTables/datatables.min.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -83,7 +88,8 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-
+        <!--datatables.net-->
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
