@@ -18,7 +18,7 @@ using Portal.Models;
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
-    [Authorize(Roles = "Admin, User")]
+    [Authorize(Roles = "Admin,User")]
  
     public class RequestsController : Controller
     {
