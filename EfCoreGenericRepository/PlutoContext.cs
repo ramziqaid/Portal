@@ -94,6 +94,8 @@ namespace EfCoreGenericRepository
 
         public DbSet<Housing> Housings { get; set; }
 
+        public DbSet<ESS_GetOrder> eSS_GetOrders { get; set; }
+
     }
 
     public class AppDbContextFactory : IDesignTimeDbContextFactory<PlutoContext>

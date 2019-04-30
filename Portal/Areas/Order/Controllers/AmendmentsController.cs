@@ -19,12 +19,13 @@ using Microsoft.AspNetCore.Identity;
 using Portal.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using static EfCoreGenericRepository.EnumsType;
 
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
     [Authorize(Roles = "User")]   
-    public class AmendmentsController : Controller
+    public class AmendmentsController : BaseController
     {
 
         private readonly AmendmentReasonController amendmentReasonController = new AmendmentReasonController();
@@ -42,28 +43,12 @@ namespace Portal.Areas.Order.Controllers
 
         // GET: Order/Amendments
         public async Task<IActionResult> Index()
-        {
-            //IEnumerable<Amendment> amendments = null;
-            //HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Amendments").Result;
-
-            //if (result.IsSuccessStatusCode)
-            //{
-            //    var readTask = result.Content.ReadAsAsync<IEnumerable<Amendment>>();
-            //    readTask.Wait();
-            //    amendments = readTask.Result;
-            //}
-            //else //web api sent error response 
-            //{
-            //    amendments = Enumerable.Empty<Amendment>();
-            //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-            //}
-
+        { 
             IEnumerable<Request> amendments = await _requestsController.IndexByType((int)EnumsType.RequestTypeId.Amendment);
             return View(amendments);
 
         }
-
-
+         
         // GET: Order/Amendments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -92,6 +77,7 @@ namespace Portal.Areas.Order.Controllers
             ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
             ViewBag.employeeInfoViews = employeeController.Get();
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
+
             Request request = new Request();
             request.RequestTypeID = (int)EnumsType.RequestTypeId.Amendment;
             request.StatusID = (int)EnumsType.RequestStatus.NewRequest;
@@ -127,38 +113,20 @@ namespace Portal.Areas.Order.Controllers
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    TempData["Message"] = "تم الحفظ  !";
-                    return RedirectToAction("Index");
+                    Alert("This is success message", NotificationType.success);
+                      return RedirectToAction(nameof(Index));
                 }
-
-                return RedirectToAction(nameof(Index));
+                 
             }
 
             IEnumerable<AmendmentReason> amendmentReason = amendmentReasonController.Get();
             ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
-            ViewBag.employeeInfoViews = employeeController.Get();
-
+            requestModel.employeeInfos = employeeController.Get();
+         
             return View(requestModel);
         }
 
-        // GET: Order/Amendments/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var amendment = await _context.Amendment.SingleOrDefaultAsync(m => m.ID == id);
-        //    if (amendment == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-        //    ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-
-        //    return View(amendment);
-        //}
+     
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -244,7 +212,7 @@ namespace Portal.Areas.Order.Controllers
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    TempData["Message"] = "تم الحفظ  !";
+                    Alert("This is success message", NotificationType.success);
                     return RedirectToAction("Index");
                 }
 
@@ -275,21 +243,20 @@ namespace Portal.Areas.Order.Controllers
         }
 
         // POST: Order/Amendments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (id == null)
             {
                 return NotFound();
-            }
-
+            } 
             HttpResponseMessage result = GlobalVaribales.WebApiClient.DeleteAsync("Requests/" + id.ToString()).Result;
             if (!result.IsSuccessStatusCode)
             {
                 return BadRequest();
             }
-
+            Alert("This is Delete message", NotificationType.info);
             return RedirectToAction(nameof(Index));
         }
 

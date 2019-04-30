@@ -7,14 +7,20 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-success" style="margin: 10px">
+    @*<a asp-action="Create" class="btn btn-success" style="margin: 10px">
+            <span class='glyphicon glyphicon-plus'></span>
+            Create New
+        </a>*@
+
+    <a class="btn btn-success" style="margin: 10px" onclick="ShowPopup('@Url.Action("Create","Amendments")','700','1200')">
         <span class='glyphicon glyphicon-plus'></span>
         Create New
     </a>
+
 </p>
 <div class="box">
     <div class="box-header">
-   
+
     </div>
     <table class="table table-bordered table-striped" id="example1">
         <thead>
@@ -85,16 +91,35 @@
 
                         </td>
                         <td>
-                            <div class="btn-group col- ">
-                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">
+                            <div class="btn-group ">
+                                @*<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">
+                                        <span class='glyphicon glyphicon-edit'></span>Edit
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-option-vertical"></span>Details
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-trash"></span>Delete
+                                    </a>*@
+
+                                <a class="btn btn-info" onclick=ShowPopup('/Order/Amendments/Edit/@item.ID','800','1000')>
                                     <span class='glyphicon glyphicon-edit'></span>Edit
                                 </a>
-                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
+                                <a class="btn btn-primary" onclick=ShowPopup('/Order/Amendments/Details/@item.ID','800','1000')>
                                     <span class="glyphicon glyphicon-option-vertical"></span>Details
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
+                                <a class="btn btn-danger" onclick=ShowPopup('/Order/Amendments/Delete/@item.ID','800','1000')>
                                     <span class="glyphicon glyphicon-trash"></span>Delete
                                 </a>
+
+
+                                @*<a class="btn btn-danger" onclick=Delete('@item.ID','Amendments','@item.FileName')>
+                                        <span class="glyphicon glyphicon-trash"></span>Delete
+                                    </a>*@
+                                <a class="btn btn-danger" onclick=Delete('@item.ID','Amendments','@item.FileName')>
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+
                             </div>
                         </td>
                     </tr>
@@ -120,4 +145,4 @@
     })
 </script>
 
- 
+

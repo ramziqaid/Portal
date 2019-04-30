@@ -59,28 +59,26 @@ namespace PortalAPI.Areas.Order.Controllers
         }
 
         // GET: api/Requests/5
-        [HttpGet]
-     
+        [HttpGet]     
         [Route("GetRequestForManager/{employeeID}")]
-        public async Task<IActionResult> GetRequestForManager([FromRoute] int employeeID)
+        public async Task<IActionResult> GetRequestForManager([FromRoute] long employeeID)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            } 
 
-
-            IEnumerable<Request> request =   unitOfWork.Request.getRequest();
-
+            IEnumerable<object> request =   unitOfWork.Request.getRequest();
             if (request == null)
             {
                 return NotFound();
             }
-            return Ok(request.FirstOrDefault());
+           // return Json(new { data = requests });
+            return Ok(request);
         }
 
         [HttpGet]
-        [Route("[action]/{RequestTypeID}")]             
+        [Route("GetRequestByType/{RequestTypeID}")]             
         public async Task<IActionResult> GetRequestByType([FromRoute] int RequestTypeID)
         {
             if (!ModelState.IsValid)
@@ -98,6 +96,7 @@ namespace PortalAPI.Areas.Order.Controllers
         }
 
         // POST: api/Requests
+        //[Route("api/Requests")]
         [HttpPost]
         public async Task<IActionResult> PostRequest([FromBody] Request request)
         {
@@ -122,6 +121,7 @@ namespace PortalAPI.Areas.Order.Controllers
             return CreatedAtAction("GetAmendment", new { id = request.ID }, request);             
         }
 
+     
         // PUT: api/Requests/5
         [HttpPut]
         public async Task<IActionResult> PutRequest( [FromBody] Request request)

@@ -51,16 +51,20 @@
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="@Model.ID" id="StuId" />
-        @*<input type="submit" asp-controller="Requests" asp-action="Delete" value="Delete"
-                       asp-route-ControlName="Amendments" asp-route-FileName="@Model.FileName"
-        class="btn btn-default" new { onclick="return confirm('Are you sure you wish to delete this Request?');" /> |*@ 
+        <input type="hidden" asp-for="@Model.ID" id="ID" />
 
         <a asp-action="Index">Back to List</a> |
-        <a href='#' class='btn btn-danger' onclick='DeleteStudentRecord(1)'>
-            Delete
-            <span class="glyphicon glyphicon-trash"></span>
-        </a> 
+        <input type="submit" asp-controller="Requests" asp-action="Delete" value="Delete"
+                       asp-route-ControlName="Amendments" asp-route-FileName="@Model.FileName"
+        class="btn btn-danger" new { onclick="return confirm('Are you sure you wish to delete this Request?');" /> |
+
+        @*<a href='#' class='btn btn-danger' onclick='DeleteStudentRecord(1)'>
+            <span class="glyphicon glyphicon-trash"></span>   Delete
+
+        </a>
+        <a class="btn btn-danger" onclick=Delete('@Model.ID','Amendments','@Model.FileName')>
+            <span class="glyphicon glyphicon-trash"></span>Delete
+        </a>*@
     </form>
 </div>
  
@@ -82,8 +86,7 @@
                     <input type="hidden" asp-for="@Model.ID" id="StuId" />
                     <a href="#" class="btn btn-primary" data-dismiss="modal" id="r">Cancle</a> |
                     <input type="submit" asp-controller="Requests" asp-action="Delete" value="Confirm"
-                           asp-route-ControlName="Amendments" asp-route-FileName="@Model.FileName" class="btn btn-danger"   />   
-
+                           asp-route-ControlName="Amendments" asp-route-FileName="@Model.FileName" class="btn btn-danger"/>    
                 </form>
             </div>
         </div>
@@ -96,12 +99,12 @@
 
     //Show The Popup Modal For DeleteComfirmation
     var DeleteStudentRecord = function (StudentId) {
-         $("#StuId").val(StudentId);
+        $("#ID").val(StudentId);
         $("#DeleteConfirmation").modal("show");
     }
 
     var ConfirmDelete = function () {
-        var StuId = $("#StuId").val();
+        var StuId = $("#ID").val();
         $.ajax({
             type: "POST",
             url: "Delete?Id=" + StuId,

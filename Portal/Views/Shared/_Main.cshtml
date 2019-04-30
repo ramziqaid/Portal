@@ -44,7 +44,11 @@
     <link rel="stylesheet" href="~/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="~/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-
+    <!--jqueryUI-->
+    <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.min.css" />
+    <!--datatables.net-->
+    <link rel="stylesheet" href="~/lib/DataTables/datatables.min.css" />
+    <script src="~/lib/sweetAlert/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -570,7 +574,10 @@
     <script src="~/AdminLTE/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
     <!-- bootstrap time picker -->
     <script src="~/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-
+    <!--jqueryUI-->
+    <script src="~/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <!--datatables.net-->
+    <script src="~/lib/DataTables/datatables.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
@@ -578,3 +585,4 @@
 <script type="text/javascript">
     $('#timepicker1').timepicker();
 </script>
+<script src="~/js/views/Order/Amendments/index.js"></script>

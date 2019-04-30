@@ -29,14 +29,14 @@ namespace EfCoreGenericRepository.Repository
 
         }
 
-        public IEnumerable<Request> getRequest()
+        public IEnumerable<ESS_GetOrder> getRequest()
         {
             var EmployeeID = new SqlParameter("@EmployeeID", 1);
             var ManagerID = new SqlParameter("@ManagerID", 1);
             var StageID = new SqlParameter("@StageID", 1);
             var OrderID = new SqlParameter("@OrderID", 1);
-            return _context.Requests
-             .FromSql("EXEC ESS_GetOrder @EmployeeID,@ManagerID,@StageID,@OrderID", EmployeeID, ManagerID, StageID, OrderID)
+            return _context.eSS_GetOrders
+                      .FromSql("EXEC ESS_GetOrder @EmployeeID,@ManagerID,@StageID,@OrderID", EmployeeID, ManagerID, StageID, OrderID)
              .ToList();
 
         }

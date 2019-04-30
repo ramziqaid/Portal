@@ -44,6 +44,14 @@ namespace EfCoreGenericRepository
             DoneRequest = 5
 
         }
+
+        public enum NotificationType
+        {
+            error,
+            success,
+            warning,
+            info
+        }
     }
  
 }

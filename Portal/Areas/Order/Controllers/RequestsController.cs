@@ -19,7 +19,7 @@ namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
     [Authorize(Roles = "Admin,User")]
- 
+
     public class RequestsController : Controller
     {
         //private readonly PlutoContext _context;
@@ -30,26 +30,28 @@ namespace Portal.Areas.Order.Controllers
         {
             _context = context;
             _userManager = userManager;
-        } 
+        }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Request> requests = null;
-            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Requests").Result;
+            return View();
 
-            if (result.IsSuccessStatusCode)
-            {
-                var readTask = result.Content.ReadAsAsync<IEnumerable<Request>>();
-                readTask.Wait();
+            //IEnumerable<Request> requests = null;
+            //HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Requests").Result;
 
-                requests = readTask.Result;
-            }
-            else //web api sent error response 
-            {
-                requests = Enumerable.Empty<Request>();
-                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-            }
-            return View(requests);
+            //if (result.IsSuccessStatusCode)
+            //{
+            //    var readTask = result.Content.ReadAsAsync<IEnumerable<Request>>();
+            //    readTask.Wait();
+
+            //    requests = readTask.Result;
+            //}
+            //else //web api sent error response 
+            //{
+            //    requests = Enumerable.Empty<Request>();
+            //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            //}
+            //return View(requests);
 
         }
 
@@ -75,109 +77,87 @@ namespace Portal.Areas.Order.Controllers
             return requests;
 
         }
-       
-        //// GET: Order/Requests/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var request = await _context.Requests
-        //        .Include(r => r.RequestType)
-        //        .SingleOrDefaultAsync(m => m.ID == id);
-        //    if (request == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> GetRequestForManager(long employeeID)
+        {
+            IEnumerable<Request> requests = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Requests/GetRequestForManager/" + employeeID.ToString()).Result;
 
-        //    return View(request);
-        //}
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IEnumerable<Request>>();
+                readTask.Wait();
 
-        //// GET: Order/Requests/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["RequestTypeID"] = new SelectList(_context.RequestTypes, "id", "id");
-        //    return View();
-        //}
+                requests = readTask.Result;
+            }
+            else //web api sent error response 
+            {
+                requests = Enumerable.Empty<Request>();
+                ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            }
 
-        //// POST: Order/Requests/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ID,EmployeeID,RequestTypeID,StatusID,CreatedDate,CreatedBy,IsDelegate,IsDelegateApprove,DelegateFromID,DelegateToID")] Request request)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(request);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["RequestTypeID"] = new SelectList(_context.RequestTypes, "id", "id", request.RequestTypeID);
-        //    return View(request);
-        //}
+            return View("Index", requests);
+         
+        }
 
-        //// GET: Order/Requests/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> AddAction(int RequestID,int StageTypeID)
+        {
+             
+            RequestStage requestStage = new RequestStage();
+            requestStage.RequestID = RequestID;
+            requestStage.StageTypeID = StageTypeID;
+ 
+            return View(requestStage);
+        }
 
-        //    var request = await _context.Requests.SingleOrDefaultAsync(m => m.ID == id);
-        //    if (request == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["RequestTypeID"] = new SelectList(_context.RequestTypes, "id", "id", request.RequestTypeID);
-        //    return View(request);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddAction(Request requestStage)
+        {
+            ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            requestStage.EmployeeID = user.EmployeeID;
 
-        //// POST: Order/Requests/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ID,EmployeeID,RequestTypeID,StatusID,CreatedDate,CreatedBy,IsDelegate,IsDelegateApprove,DelegateFromID,DelegateToID")] Request request)
-        //{
-        //    if (id != request.ID)
-        //    {
-        //        return NotFound();
-        //    }
+            var postTask = GlobalVaribales.WebApiClient.PostAsJsonAsync("RequestStage", requestStage);
+            postTask.Wait();
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(request);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!RequestExists(request.ID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["RequestTypeID"] = new SelectList(_context.RequestTypes, "id", "id", request.RequestTypeID);
-        //    return View(request);
-        //}
+            var result = postTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                TempData["Message"] = "تم الحفظ  !";
+                return RedirectToAction("Index");
+            }
 
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // GET: Order/Amendments/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Request request = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Requests/" + id.ToString()).Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<Request>();
+                readTask.Wait();
+
+                request = readTask.Result;
+            }
+
+            return View(request);
+        }
 
         // POST: Order/Amendments/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id,string ControlName,string FileName)
+        // [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id, string ControlName, string FileName)
         {
             if (id == null)
             {
@@ -190,7 +170,9 @@ namespace Portal.Areas.Order.Controllers
                 return BadRequest();
             }
             DeleteFile(FileName);
-            return RedirectToAction( nameof(Index), ControlName);
+            return RedirectToAction(nameof(Index), ControlName);
+
+            //return Json(new { success = true, message = "Delete success." });
         }
 
         //// GET: Order/Requests/Delete/5
@@ -230,10 +212,10 @@ namespace Portal.Areas.Order.Controllers
 
 
 
-        public void AddStage(  Request request,long pEmployeeID, int pStageTypeID,string pActionName,string pNote)
+        public void AddStage(Request request, long pEmployeeID, int pStageTypeID, string pActionName, string pNote)
         {
             RequestStage obj = new RequestStage();
-            obj.StageTypeID = pStageTypeID; 
+            obj.StageTypeID = pStageTypeID;
             obj.EmployeeID = pEmployeeID;
             obj.ActionName = pActionName;
             obj.Justification = pNote;
@@ -250,8 +232,8 @@ namespace Portal.Areas.Order.Controllers
                       + Path.GetExtension(fileName);
         }
 
-    
-       public async Task<string> UploadFile(IFormFile file)
+
+        public async Task<string> UploadFile(IFormFile file)
         {
             string uniqueFileName = null;
             if (file != null)
@@ -266,9 +248,9 @@ namespace Portal.Areas.Order.Controllers
                     await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
                 }
 
-            } 
+            }
             return uniqueFileName;
-          
+
         }
 
         public async Task<IActionResult> DownloadFile(string filename)

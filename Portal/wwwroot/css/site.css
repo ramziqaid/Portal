@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #ecf0f5 !important;
 }
 
 /* Wrapping element */
@@ -8,6 +9,8 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    background-color: white;
+    padding-top: 30px;
 }
 
 /* Carousel */
@@ -57,3 +60,7 @@
 }
 
 
+label {
+     
+    font-weight: 700;
+}
