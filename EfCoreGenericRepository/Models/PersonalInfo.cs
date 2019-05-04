@@ -7,7 +7,7 @@ using System.Text;
 namespace EfCoreGenericRepository.Models
 {
     [Table("ESS_Housing")]
-    public class Housing
+    public class PersonalInfo
     {
         public int ID { get; set; }
 

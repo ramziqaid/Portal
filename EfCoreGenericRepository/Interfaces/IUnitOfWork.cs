@@ -12,6 +12,8 @@ namespace EfCoreGenericRepository.Interfaces
         IAmendmentRepository Amendment { get; }
         IEmployeeInfoViewRepository employeeInfoView { get; }
 
+        IBankInfoRepository BankInfo { get; }
+
         int Complete();
     }
 }

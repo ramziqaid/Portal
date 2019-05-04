@@ -17,6 +17,7 @@ using EfCoreGenericRepository.Repository;
 using Portal.Data;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using System.Globalization;
 
 namespace Portal
 {
@@ -70,6 +71,10 @@ namespace Portal
             services.AddTransient<IEmployeeInfoViewRepository, EmployeeInfoViewRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            var cultureInfo = new CultureInfo("en-GB");
+            cultureInfo.NumberFormat.CurrencySymbol = "€";
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             services.AddMvc();
             services.AddMemoryCache();
@@ -92,11 +97,11 @@ namespace Portal
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+ 
             app.UseStaticFiles();
-
+         
             app.UseAuthentication();
-
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

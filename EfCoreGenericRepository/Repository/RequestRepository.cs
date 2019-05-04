@@ -25,6 +25,7 @@ namespace EfCoreGenericRepository.Repository
                  .Include(c => c.RequestType)
                  .Include(c => c.Employee)
                  .Include(c => c.Amendments).ThenInclude(a => a.AmendmentReason)
+                 .Include(c =>c.Housings)
                  .Where(predicate).ToListAsync();
 
         }

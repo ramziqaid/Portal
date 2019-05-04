@@ -39,7 +39,7 @@ namespace EfCoreGenericRepository.Models
 
        // [DateValidation]
         [DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public  DateTime CreatedDate { get; set; }
 

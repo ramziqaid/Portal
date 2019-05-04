@@ -1,76 +1,66 @@
-﻿@model EfCoreGenericRepository.Models.Housing
+﻿@model RequestViewModel
 
 @{
     ViewData["Title"] = "Edit";
+    //Layout = null;
 }
 
-<h2>Edit</h2>
-
-<h4>Housing</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<div class="row orderForm">
+
+    <form asp-action="Edit" asp-controller="Housings" role="form" enctype="multipart/form-data">
+        <div class="col-md-12">
+            <h3 class="col-md-offset-2">Edit Housings @Model.Request.ID</h3>
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="HouseingDetails" class="control-label"></label>
-                <input asp-for="HouseingDetails" class="form-control" />
-                <span asp-validation-for="HouseingDetails" class="text-danger"></span>
+
+
+            <input type="hidden" asp-for="Request.Housings[0].RequestID" />
+            <input type="hidden" asp-for="Request.Housings[0].ID" />
+            <input type="hidden" asp-for="Request.FileName" />
+
+            @await Html.PartialAsync("ManagerControls", Model)
+
+            <div class="form-group col-md-6 date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                <label asp-for="Request.Housings[0].LoanStartDate" class=" control-label"></label>
+                <div class="col-md-12 input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                    <input type="text" asp-for="Request.Housings[0].LoanStartDate" id="dpDateNow" class="form-control " />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-12">
+                <label asp-for="Request.Housings[0].Description" class="control-label "></label>
+                <textarea asp-for="Request.Housings[0].Description" class="form-control">
+                </textarea>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label asp-for="Request.FileName" class="control-label  "></label>
+
+                @*<input type="file" name="file" />*@
+                <input asp-for="file" class="form-control" type="file" />
+                <span asp-validation-for="Request.FileName" class="text-danger"></span>
+
+
             </div>
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+                <div class="btn-group col-md-offset-2 col-md-6">
+                    <a asp-action="Index" asp-controller="Housings" class="btn btn-danger">Back to List</a>
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
-                <span asp-validation-for="TotalAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MonthlyInstallment" class="control-label"></label>
-                <input asp-for="MonthlyInstallment" class="form-control" />
-                <span asp-validation-for="MonthlyInstallment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoOfInstallment" class="control-label"></label>
-                <input asp-for="NoOfInstallment" class="form-control" />
-                <span asp-validation-for="NoOfInstallment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContractPeriod" class="control-label"></label>
-                <input asp-for="ContractPeriod" class="form-control" />
-                <span asp-validation-for="ContractPeriod" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanStartDate" class="control-label"></label>
-                <input asp-for="LoanStartDate" class="form-control" />
-                <span asp-validation-for="LoanStartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LOANTYPECODE" class="control-label"></label>
-                <input asp-for="LOANTYPECODE" class="form-control" />
-                <span asp-validation-for="LOANTYPECODE" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestID" class="control-label"></label>
-                <select asp-for="RequestID" class="form-control" asp-items="ViewBag.RequestID"></select>
-                <span asp-validation-for="RequestID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
+
+
+        </div>
+    </form>
+
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

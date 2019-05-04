@@ -33,7 +33,7 @@ namespace EfCoreGenericRepository.Interfaces
         IQueryable<T> GetAll();
         Task<ICollection<T>> GetAllAsyn();
         IQueryable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
-        Task<T> GetAsync(int id); 
+        Task<T> GetAsync(long id); 
 
 
         void Save();

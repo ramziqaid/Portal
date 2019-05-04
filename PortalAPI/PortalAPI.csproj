@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Employee\Data\" />
+    <Folder Include="Areas\Employee\Models\" />
+    <Folder Include="Areas\Employee\Views\" />
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Areas\Order\Views\" />
   </ItemGroup>

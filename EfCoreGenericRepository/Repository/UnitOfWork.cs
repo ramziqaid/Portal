@@ -14,8 +14,12 @@ namespace EfCoreGenericRepository.Repository
             Request = new RequestRepository(_context);
             RequestType = new RequestTypeRepository(_context);
             Amendment = new AmendmentRepository(_context);
+            Housing = new HousingRepository(_context);
             RequestStage = new RequestStageRepository(_context);
             employeeInfoView = new EmployeeInfoViewRepository(_context);
+
+            //Dynamic AX
+            BankInfo = new BankInfoRepository(_context);
         } 
 
         public IRequestRepository Request { get; private set; }
@@ -24,11 +28,15 @@ namespace EfCoreGenericRepository.Repository
 
         public IAmendmentRepository Amendment { get; private set; }
 
-        public IRequestStageRepository RequestStage { get; private set; }
+        public IHousingRepository Housing { get; private set; }
 
+
+        public IRequestStageRepository RequestStage { get; private set; } 
    
 
         public IEmployeeInfoViewRepository employeeInfoView { get; private set; }
+
+        public IBankInfoRepository BankInfo { get; private set; }
 
         public int Complete()
         {

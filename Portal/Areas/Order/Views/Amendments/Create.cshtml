@@ -24,7 +24,7 @@
                 <label asp-for="Request.Amendments[0].SelectDate" class="control-label"></label>
                 <div class="input-group  col-md-12">
                     <input type="text" asp-for="Request.Amendments[0].SelectDate" id="dpDateNow" class="form-control "
-                           cssClass="input-validation-error" data-val="true"  />
+                           cssClass="input-validation-error" data-val="true" value=@ViewBag.Date />
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>

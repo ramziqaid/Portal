@@ -15,6 +15,8 @@ namespace Portal.ViewModel
 
         public Amendment Amendment { get; set; }
 
+        public Housing Housing { get; set; }
+
         public IFormFile file { set; get; }
     }
 }

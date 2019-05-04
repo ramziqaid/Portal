@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Portal.ViewModel
 {
-    public class BookViewModel
+    public class EmployeeViewModel
     {
-        public Book Book { get; set; }
-        public IEnumerable<Author> Authors { get; set; }
-   
-        public Amendment amendment { get; set; }
+        public BankInfo bankInfo { get; set; }
+
+        public IEnumerable<Author> Authors { get; set; } 
     }
 }

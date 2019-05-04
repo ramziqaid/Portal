@@ -18,9 +18,9 @@ using static EfCoreGenericRepository.EnumsType;
 
 namespace Portal.Areas.Order.Controllers
 {
-    [Area("Order")]
+    [Area("Employee")]
     [Authorize(Roles = "Admin,User")]
-    public class HousingsController : BaseController
+    public class BankinfoController : BaseController
     {
         private readonly AmendmentReasonController amendmentReasonController = new AmendmentReasonController();
         private readonly EmployeeController employeeController = new EmployeeController();
@@ -28,7 +28,7 @@ namespace Portal.Areas.Order.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RequestsController _requestsController;
 
-        public HousingsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public BankinfoController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -39,41 +39,62 @@ namespace Portal.Areas.Order.Controllers
         // GET: Order/Housings
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Request> amendments = await _requestsController.IndexByType((int)EnumsType.RequestTypeId.Housing);
-            return View(amendments);
+            long? id;
+            ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            id = user.EmployeeID;
+
+            BankInfo bankInfo = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("BankInfo/" + id.ToString()).Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<BankInfo>();
+                readTask.Wait();
+
+                bankInfo = readTask.Result;
+            }
+
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel
+            {
+                bankInfo = bankInfo
+            };
+            return View(employeeViewModel);
 
         }
 
         // GET: Order/Housings/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(long? id)
         {
+            ApplicationUser user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            id = user.EmployeeID;
             if (id == null)
             {
                 return NotFound();
             }
-            Request request = null;
-            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("Requests/" + id.ToString()).Result;
+
+            BankInfo bankInfo = null;
+            HttpResponseMessage result = GlobalVaribales.WebApiClient.GetAsync("BankInfo/" + id.ToString()).Result;
 
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<Request>();
+                var readTask = result.Content.ReadAsAsync<BankInfo>();
                 readTask.Wait();
 
-                request = readTask.Result;
+                bankInfo = readTask.Result;
             }
 
-            return View(request);
+            return View(bankInfo);
         }
 
         // GET: Order/Housings/Create
         public IActionResult Create()
         {
-         
+
             ViewBag.employeeInfoViews = employeeController.Get();
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
             ViewBag.Date = DateTime.Now.ToString("dd/MM/yyyy");
 
-           Request request = new Request();
+            Request request = new Request();
             request.RequestTypeID = (int)EnumsType.RequestTypeId.Housing;
             request.StatusID = (int)EnumsType.RequestStatus.NewRequest;
             request.CreatedBy = _userManager.GetUserId(HttpContext.User);//User.Identity.Name;  
@@ -112,7 +133,7 @@ namespace Portal.Areas.Order.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-            } 
+            }
             requestModel.employeeInfos = employeeController.Get();
 
             return View(requestModel);
@@ -139,7 +160,7 @@ namespace Portal.Areas.Order.Controllers
             {
                 return NotFound();
             }
-      
+
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
 
             var requestView = new RequestViewModel

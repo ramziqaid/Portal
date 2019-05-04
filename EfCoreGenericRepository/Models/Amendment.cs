@@ -48,14 +48,11 @@ namespace EfCoreGenericRepository.Models
         [Display(Name = "Justification ")]
         [MaxLength(500)]
         public string Description { get; set; }
+ 
 
-
-        [Display(Name = "Attachment ")]
-        public string FilePath { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime CreatedDate { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Request ID")]
         public int RequestID { get; set; }

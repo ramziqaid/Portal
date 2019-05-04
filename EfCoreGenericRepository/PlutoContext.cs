@@ -11,14 +11,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EfCoreGenericRepository
 {
-    public class PlutoContext : DbContext 
+    public class PlutoContext : DbContext
     {
         public PlutoContext(DbContextOptions<PlutoContext> options) : base(options)
-        { 
-        } 
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        { 
+        {
             base.OnModelCreating(builder);
 
             builder.Entity<EmployeeInfoView>(entity =>
@@ -27,6 +27,9 @@ namespace EfCoreGenericRepository
                 entity.ToTable("ESS_EmployeeInfoView2");
                 entity.Property(e => e.EmployeeID).HasMaxLength(50);
             });
+
+            builder.Entity<BankInfo>()
+             .HasKey(lc => new { lc.WORKER});
 
             // builder.Ignore<EmployeeInfoView>();
         }
@@ -57,7 +60,7 @@ namespace EfCoreGenericRepository
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             TrackChanges();
-                        return await base.SaveChangesAsync(cancellationToken);
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         private void TrackChanges()
@@ -95,6 +98,9 @@ namespace EfCoreGenericRepository
         public DbSet<Housing> Housings { get; set; }
 
         public DbSet<ESS_GetOrder> eSS_GetOrders { get; set; }
+
+        //Dyanmic AX
+        public DbSet<BankInfo> bankInfos { get; set; }
 
     }
 

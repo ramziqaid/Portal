@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Housing>
+﻿@model IEnumerable<EfCoreGenericRepository.Models.Request>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,83 +7,129 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*<a asp-action="Create" class="btn btn-success" style="margin: 10px">
+            <span class='glyphicon glyphicon-plus'></span>
+            Create New
+        </a>*@
+
+    <a class="btn btn-success" style="margin: 10px" onclick="ShowPopup('@Url.Action("Create","Housings")','700','1200')">
+        <span class='glyphicon glyphicon-plus'></span>
+        Create New
+    </a>
+
 </p>
-<table class="table">
-    <thead>
-        <tr>
+<div class="box">
+    <div class="box-header">
+
+    </div>
+    <table class="table table-bordered table-striped" id="example1">
+        <thead>
+            <tr>
+
                 <th>
-                    @Html.DisplayNameFor(model => model.HouseingDetails)
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Housings[0].LoanStartDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
+                    @Html.DisplayNameFor(model => model.Housings[0].Description)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
+                    @Html.DisplayNameFor(model => model.CreatedDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TotalAmount)
+                    @Html.DisplayNameFor(model => model.FileName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MonthlyInstallment)
+                    Actions
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NoOfInstallment)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ContractPeriod)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LoanStartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LOANTYPECODE)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Request)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HouseingDetails)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthlyInstallment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoOfInstallment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContractPeriod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoanStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LOANTYPECODE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Request.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Housings.Count > 0)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Housings[0].LoanStartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Housings[0].Description)
+                        </td>
+  
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            <a asp-action="DownloadFile" asp-controller="Requests"
+                               asp-route-filename="@item.FileName">
+                                @item.FileName
+                            </a>
+
+                        </td>
+                        <td>
+                            <div class="btn-group ">
+
+                                @*<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-info">
+                                        <span class='glyphicon glyphicon-edit'></span>Edit
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-option-vertical"></span>Details
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-trash"></span>Delete
+                                    </a>*@
+
+                                <a class="btn btn-info" onclick=ShowPopup('/Order/Housings/Edit/@item.ID','700','1200')>
+                                    <span class='glyphicon glyphicon-edit'></span>Edit
+                                </a>
+                                <a class="btn btn-primary" onclick=ShowPopup('/Order/Housings/Details/@item.ID','800','1000')>
+                                    <span class="glyphicon glyphicon-option-vertical"></span>Details
+                                </a>
+                                <a class="btn btn-danger" onclick=ShowPopup('/Order/Housings/Delete/@item.ID','800','1000')>
+                                    <span class="glyphicon glyphicon-trash"></span>Delete
+                                </a>
+
+
+                                @*<a class="btn btn-danger" onclick=Delete('@item.ID','Amendments','@item.FileName')>
+                                        <span class="glyphicon glyphicon-trash"></span>Delete
+                                    </a>*@
+
+                                @*<a class="btn btn-danger" onclick=Delete('@item.ID','Housings','@item.FileName')>
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>*@
+ 
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        $('#example1').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+</script>
+
+

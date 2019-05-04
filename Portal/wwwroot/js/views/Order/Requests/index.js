@@ -16,7 +16,7 @@ $(document).ready(function () {
             {
                 "data": "id",  
                 "render": function (data, type, row) {
-                    return " <div class='btn-group'><a class='btn btn-success ' onclick=ShowPopup('/Order/Requests/AddAction/?RequestID=" + data + "&StageTypeID=" + row.stageTypeID +"','800','800')><span class='glyphicon glyphicon-flash'></span>Action</a> " +
+                    return " <div class='btn-group wrapper'><a class='btn btn-success ' onclick=ShowPopup('/Order/Requests/AddAction/?RequestID=" + data + "&StageTypeID=" + row.stageTypeID +"','800','800')><span class='glyphicon glyphicon-flash'></span>Action</a> " +
                         "<a class='btn btn-primary'   onclick=ShowPopup('/Order/" + row.controllerName +"/Details/" + data + "','800','1200') > <i class='glyphicon glyphicon-option-vertical'></i> Details</a >  </div > ";
                 }
             }

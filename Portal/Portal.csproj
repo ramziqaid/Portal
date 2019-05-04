@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Employee\Data\" />
+    <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Order\Models\" />
     <Folder Include="Components\" />
     <Folder Include="Views\Shared\Components\" />
@@ -40,6 +42,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Employee\Views\Bankinfo\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Employee\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Order\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

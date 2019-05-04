@@ -12,93 +12,39 @@ using EfCoreGenericRepository.Repository;
 namespace PortalAPI.Areas.Order.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Requests")]
-    public class RequestsController : Controller
+    [Route("api/BankInfo")]
+    public class BankInfoController : Controller
     {
         private readonly UnitOfWork unitOfWork;
 
-        public RequestsController(PlutoContext plutoContext)
+        public BankInfoController(PlutoContext plutoContext)
         {
 
             unitOfWork = new UnitOfWork(plutoContext);
         }
 
-        // GET: api/Requests
-        [HttpGet]
-        public async Task<IEnumerable<Request>> GetRequests()
-        {
-            try
-            {
-                IEnumerable<Request> obj = await unitOfWork.Request.GetAllIncluding(
-                    c => c.Amendments
-                    ).ToListAsync();
-                return obj;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
-        // GET: api/Requests/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRequest([FromRoute] int id)
+        [HttpGet("{EmployeeID}")]
+        public async Task<IActionResult> BankInfo( long EmployeeID)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IEnumerable<Request> request = await unitOfWork.Request.GetRequestsWithAllData(a => a.ID == id);
+            BankInfo request = await unitOfWork.BankInfo.GetAsync(EmployeeID);
 
             if (request == null)
             {
                 return NotFound();
             }
-            return Ok(request.FirstOrDefault());
-        }
-
-        // GET: api/Requests/5
-        [HttpGet]
-        [Route("GetRequestForManager/{employeeID}")]
-        public async Task<IActionResult> GetRequestForManager([FromRoute] long employeeID)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            IEnumerable<object> request = unitOfWork.Request.getRequest();
-            if (request == null)
-            {
-                return NotFound();
-            }
-            // return Json(new { data = requests });
             return Ok(request);
         }
-
-        [HttpGet]
-        [Route("GetRequestByType/{RequestTypeID}")]
-        public async Task<IActionResult> GetRequestByType([FromRoute] int RequestTypeID)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            IEnumerable<Request> obj = await unitOfWork.Request.GetRequestsWithAllData(a => a.RequestTypeID == RequestTypeID);
-
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            return Ok(obj);
-        }
-
+ 
+       
         // POST: api/Requests
         //[Route("api/Requests")]
         [HttpPost]
-        public async Task<IActionResult> PostRequest([FromBody] Request request)
+        public async Task<IActionResult> PostBankInfo([FromBody] Request request)
         {
             if (!ModelState.IsValid)
             {
@@ -137,7 +83,7 @@ namespace PortalAPI.Areas.Order.Controllers
 
         // PUT: api/Requests/5
         [HttpPut]
-        public async Task<IActionResult> PutRequest([FromBody] Request request)
+        public async Task<IActionResult> PutBankInfo([FromBody] Request request)
         {
             if (!ModelState.IsValid)
             {

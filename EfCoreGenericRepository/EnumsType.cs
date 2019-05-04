@@ -10,7 +10,7 @@ namespace EfCoreGenericRepository
         {
             Amendment = 5,
             BusinessTripAssignment = 10,
-            HousingRequest = 15,
+            Housing = 15,
             ExitReEnterVisa = 20,
             EmployeeClearanceForm = 25,
             ResubmissionBusinessTripAssignment = 30,

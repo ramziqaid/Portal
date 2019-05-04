@@ -1,89 +1,62 @@
-﻿@model EfCoreGenericRepository.Models.Amendment
+﻿@model RequestViewModel
 
 @{
-    ViewData["Title"] = "Create2";
+    ViewData["Title"] = "Create";
 }
 
-<h2>Create2</h2>
-
-<h4>Amendment</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create2">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AmendmentReasonId" class="control-label"></label>
-                <select asp-for="AmendmentReasonId" class="form-control" asp-items="ViewBag.AmendmentReasonId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MonthYear" class="control-label"></label>
-                <input asp-for="MonthYear" class="form-control" />
-                <span asp-validation-for="MonthYear" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MonthDate" class="control-label"></label>
-                <input asp-for="MonthDate" class="form-control" />
-                <span asp-validation-for="MonthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MonthDay" class="control-label"></label>
-                <input asp-for="MonthDay" class="form-control" />
-                <span asp-validation-for="MonthDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-           
-            <div class="form-group">
-                <label asp-for="FilePath" class="control-label"></label>
-                <input asp-for="FilePath" class="form-control" />
-                <span asp-validation-for="FilePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RequestID" class="control-label"></label>
-                <select asp-for="RequestID" class="form-control" asp-items="ViewBag.RequestID"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<form asp-controller="Amendments" asp-action="Create" method="post" role="form" enctype="multipart/form-data">
+    <div class="col-md-12">
+        <h3 class="col-md-offset-2">Create new Amendment</h3>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input type="hidden" asp-for="Request.RequestTypeID" />
+        <input type="hidden" asp-for="Request.StatusID" />
+        <input type="hidden" asp-for="Request.CreatedBy" />
+
+
+        @await Html.PartialAsync("ManagerControls", Model)
+
+
+        <div class="form-group col-md-6 date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+            <label asp-for="Request.Housings[0].LoanStartDate" class="control-label"></label>
+            <div class="input-group  col-md-12">
+                <input type="text" asp-for="Request.Housings[0].LoanStartDate" id="dpDateNow" class="form-control "
+                       cssClass="input-validation-error" data-val="true" value=@ViewBag.Date />
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+        </div>
+          
+
+        <div class="form-group col-md-12">
+            <label asp-for="Request.Housings[0].Description" class="control-label "></label>
+            <textarea asp-for="Request.Housings[0].Description" class="form-control">
+                </textarea>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label asp-for="Request.FileName" class="control-label "></label>
+            <input asp-for="file" class="form-control" type="file" />
+        </div>
+
+
+        <div class="form-group">
+            <div class="btn-group col-md-offset-2 col-md-6">
+                <a asp-action="Index" asp-controller="Housings" class="btn btn-default">Return</a>
+                <input class="btn btn-success" type="submit" value="Create" asp-controller="Housings" asp-action="Create" />
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

@@ -24,7 +24,8 @@ using static EfCoreGenericRepository.EnumsType;
 namespace Portal.Areas.Order.Controllers
 {
     [Area("Order")]
-    [Authorize(Roles = "User")]   
+    //[Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin,User")]
     public class AmendmentsController : BaseController
     {
 
@@ -77,6 +78,7 @@ namespace Portal.Areas.Order.Controllers
             ViewBag.AmendmentReasonId = new SelectList(amendmentReason, "ID", "AmendReasonEn");
             ViewBag.employeeInfoViews = employeeController.Get();
             IEnumerable<EmployeeInfoView> employeeInfoViews = employeeController.Get();
+            ViewBag.Date = DateTime.Now.ToString("dd/MM/yyyy");
 
             Request request = new Request();
             request.RequestTypeID = (int)EnumsType.RequestTypeId.Amendment;
@@ -158,43 +160,7 @@ namespace Portal.Areas.Order.Controllers
             return View(requestView);
         }
 
-        //// POST: Order/Amendments/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ID,Type,AmendmentReasonId,MonthYear,MonthDate,MonthDay,Description,Time,TimeIn,TimeOut,FilePath,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,RequestID,RequestTypeID")] Amendment amendment)
-        //{
-        //    if (id != amendment.ID)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(amendment);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!AmendmentExists(amendment.ID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["AmendmentReasonId"] = new SelectList(_context.Set<AmendmentReason>(), "ID", "ID", amendment.AmendmentReasonId);
-        //    ViewData["RequestID"] = new SelectList(_context.Requests, "ID", "ID", amendment.RequestID);
-
-        //    return View(amendment);
-        //}
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, RequestViewModel requestView)

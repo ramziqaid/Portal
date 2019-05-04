@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EfCoreGenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
- 
+
 namespace EfCoreGenericRepository.Repository
 {
     public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
@@ -26,7 +26,7 @@ namespace EfCoreGenericRepository.Repository
         }
 
         public virtual async Task<ICollection<T>> GetAllAsyn()
-        { 
+        {
             return await _context.Set<T>().ToListAsync();
         }
 
@@ -35,7 +35,7 @@ namespace EfCoreGenericRepository.Repository
             return _context.Set<T>().Find(id);
         }
 
-        public virtual async Task<T> GetAsync(int id)
+        public virtual async Task<T> GetAsync(long id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -52,13 +52,13 @@ namespace EfCoreGenericRepository.Repository
 
             return queryable;
         }
-         
+
 
         #endregion
 
         #region "Add"
         public virtual T Add(T t)
-        { 
+        {
             _context.Set<T>().Add(t);
             //_context.Save();
             return t;
@@ -73,17 +73,18 @@ namespace EfCoreGenericRepository.Repository
         }
 
         public virtual void AddRange(IEnumerable<T> t)
-        { 
+        {
             _context.Set<T>().AddRange(t);
             //_context.SaveChanges();
-           // return t;
+            // return t;
         }
 
-        public virtual async  void AddRangeAsyn(IEnumerable<T> t)
+        public virtual async void AddRangeAsyn(IEnumerable<T> t)
         {
-           await _context.Set<T>().AddRangeAsync(t);
+            if (t != null)
+                await _context.Set<T>().AddRangeAsync(t);
             // await _context.SaveChangesAsync();
-          //  return t;
+            //  return t;
 
         }
         #endregion
@@ -181,9 +182,9 @@ namespace EfCoreGenericRepository.Repository
         #region "Save"
 
         public virtual void Save()
-        { 
+        {
             _context.SaveChanges();
-        } 
+        }
 
         public async virtual Task<int> SaveAsync()
         {
@@ -192,12 +193,12 @@ namespace EfCoreGenericRepository.Repository
 
         #endregion 
 
-        public bool  Exists(Expression<Func<T, bool>> match)
+        public bool Exists(Expression<Func<T, bool>> match)
         {
-       
+
             return _context.Set<T>().Any(match);
         }
-   
+
 
 
         private bool disposed = false;
